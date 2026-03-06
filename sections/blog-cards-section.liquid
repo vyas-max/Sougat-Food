@@ -40,7 +40,7 @@
     flex-direction: column;
     gap: 40px;
     margin-bottom: 80px;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .premium-recipe-item-{{ section.id }}:last-child {
@@ -65,18 +65,20 @@
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 20px;
   }
 
   @media screen and (min-width: 990px) {
     .premium-recipe-image-col-{{ section.id }} {
-      width: 50%;
+      width: 45%;
     }
   }
 
   .premium-recipe-image-wrapper-{{ section.id }} {
     position: relative;
     width: 100%;
-    padding-bottom: 110%; /* Makes image slightly taller than square */
+    padding-bottom: 120%;
     background: #f4f4f4;
   }
 
@@ -108,12 +110,11 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 
   @media screen and (min-width: 990px) {
     .premium-recipe-content-col-{{ section.id }} {
-      width: 50%;
+      width: 55%;
     }
   }
 
@@ -132,7 +133,7 @@
   }
 
   .premium-recipe-title-{{ section.id }} {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
     color: #111;
     margin: 0 0 25px 0;
@@ -188,46 +189,135 @@
     margin-bottom: 40px;
   }
   
-  .premium-recipe-desc-{{ section.id }} p {
-    margin: 0 0 16px 0;
-  }
-  .premium-recipe-desc-{{ section.id }} p:last-child {
-    margin-bottom: 0;
+  /* Accordion / Drawer Styles */
+  .recipe-drawer-{{ section.id }} {
+    border-top: 1px solid #eaeaea;
+    margin-top: 10px;
   }
 
-  .premium-recipe-action-{{ section.id }} {
-    display: inline-flex;
+  .recipe-drawer-trigger-{{ section.id }} {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 16px 40px;
-    background-color: {{ section.settings.button_color }};
-    color: {{ section.settings.button_text_color }};
-    text-decoration: none;
-    border-radius: 100px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    width: fit-content;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    justify-content: space-between;
+    width: 100%;
+    padding: 25px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #111;
+    text-align: left;
+    transition: color 0.3s ease;
   }
 
-  .premium-recipe-action-{{ section.id }}:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    background-color: #333;
-    color: #fff;
+  .recipe-drawer-trigger-{{ section.id }}:hover {
+    color: #555;
   }
 
-  .premium-recipe-action-icon-{{ section.id }} {
-    margin-left: 10px;
+  .recipe-drawer-icon-{{ section.id }} {
     width: 20px;
     height: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .premium-recipe-action-{{ section.id }}:hover .premium-recipe-action-icon-{{ section.id }} {
-    transform: translateX(5px);
+  .recipe-drawer-{{ section.id }}[open] .recipe-drawer-icon-{{ section.id }} {
+    transform: rotate(180deg);
+  }
+
+  .recipe-drawer-content-{{ section.id }} {
+    padding-bottom: 40px;
+    animation: slideDown 0.4s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .recipe-details-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .recipe-details-grid-{{ section.id }} {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .recipe-detail-box-{{ section.id }} h4 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .recipe-ingredients-list-{{ section.id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .recipe-ingredients-list-{{ section.id }} li {
+    padding: 12px 0;
+    border-bottom: 1px dashed #f0f0f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    font-size: 1.05rem;
+    color: #333;
+  }
+
+  .recipe-ingredients-list-{{ section.id }} li:last-child {
+    border-bottom: none;
+  }
+
+  .recipe-ingredients-list-{{ section.id }} input[type="checkbox"] {
+    margin-top: 5px;
+    accent-color: #111;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .recipe-method-steps-{{ section.id }} {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .recipe-method-steps-{{ section.id }} li {
+    position: relative;
+    padding-left: 50px;
+    margin-bottom: 30px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .recipe-method-steps-{{ section.id }} li::before {
+    content: attr(data-step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 34px;
+    height: 34px;
+    background: #f4f4f4;
+    color: #111;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
   }
 {%- endstyle -%}
 
@@ -256,7 +346,7 @@
                   class="premium-recipe-image-{{ section.id }}"
                   loading="lazy"
                   width="1200"
-                  height="1200"
+                  height="1440"
                 >
               {%- else -%}
                 {{ 'collection-1' | placeholder_svg_tag: 'premium-recipe-placeholder-' | append: section.id }}
@@ -321,11 +411,40 @@
               </div>
             {%- endif -%}
 
-            {%- if block.settings.button_label != blank -%}
-              <a href="{{ block.settings.button_link | default: '#' }}" class="premium-recipe-action-{{ section.id }}">
-                {{ block.settings.button_label }}
-                <svg class="premium-recipe-action-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-              </a>
+            {%- if block.settings.ingredients != blank or block.settings.instructions != blank -%}
+              <details class="recipe-drawer-{{ section.id }}">
+                <summary class="recipe-drawer-trigger-{{ section.id }}">
+                  View Full Recipe
+                  <svg class="recipe-drawer-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                
+                <div class="recipe-drawer-content-{{ section.id }}">
+                  <div class="recipe-details-grid-{{ section.id }}">
+                    
+                    {%- if block.settings.ingredients != blank -%}
+                      <div class="recipe-detail-box-{{ section.id }}">
+                        <h4>Ingredients</h4>
+                        <div class="recipe-ingredients-list-{{ section.id }}">
+                          {{ block.settings.ingredients | replace: '<li>', '<li><input type="checkbox">' }}
+                        </div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.instructions != blank -%}
+                      <div class="recipe-detail-box-{{ section.id }}">
+                        <h4>Instructions</h4>
+                        <div class="recipe-method-steps-{{ section.id }}">
+                          {% assign steps = block.settings.instructions | split: '<li>' %}
+                          {% for step in steps offset: 1 %}
+                            <li data-step="{{ forloop.index }}">{{ step | replace: '</li>', '' }}</li>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {%- endif -%}
+
+                  </div>
+                </div>
+              </details>
             {%- endif -%}
           </div>
 
@@ -355,18 +474,6 @@
       "type": "color",
       "id": "background_color",
       "label": "Section Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_color",
-      "label": "Button Background Color",
-      "default": "#111111"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button Text Color",
       "default": "#ffffff"
     },
     {
@@ -449,15 +556,20 @@
           "default": "<p>Experience the ultimate comfort food with this rich, creamy truffle mushroom risotto. It is slowly simmered to perfection, releasing mouth-watering aromas.</p>"
         },
         {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button Label",
-          "default": "Get the Recipe"
+          "type": "header",
+          "content": "Full Recipe Content"
         },
         {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
+          "type": "richtext",
+          "id": "ingredients",
+          "label": "Ingredients (Use Bullet Points)",
+          "default": "<ul><li>1 cup Arborio rice</li><li>2 cups sliced mushrooms</li><li>4 cups vegetable broth</li><li>1 tbsp Truffle oil</li></ul>"
+        },
+        {
+          "type": "richtext",
+          "id": "instructions",
+          "label": "Instructions (Use Bullet Points/Numbered List)",
+          "default": "<ul><li>Sauté mushrooms in a large pan until golden.</li><li>Add rice and toast for 2 minutes.</li><li>Slowly add broth one ladle at a time, stirring constantly.</li><li>Finish with truffle oil and serve hot.</li></ul>"
         }
       ]
     }
