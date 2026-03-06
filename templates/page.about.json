@@ -1,0 +1,1098 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "title": {
+          "type": "text",
+          "name": "t:names.title",
+          "settings": {
+            "text": "<h1>Welcome To Sougat</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h1",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "content": {
+          "type": "text",
+          "name": "t:names.content",
+          "settings": {
+            "text": "<p>Experience real fruits in their purest form — carefully freeze-dried to preserve natural taste, texture, and nutrition, without adding anything unnecessary.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-primary--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "image_WNQ9DD": {
+          "type": "image",
+          "name": "t:names.image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_8p42lc8p42lc8p42.png",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "content",
+        "image_WNQ9DD"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "scheme-about-cream",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "176923639961994b9e": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_b676a2f_MkVtwn": {
+          "type": "ai_gen_block_b676a2f",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_8eelda8eelda8eel.png",
+            "min_height": 400,
+            "desktop_width_percent": 100,
+            "padding_top": 0,
+            "padding_bottom": 100,
+            "border_radius": 0,
+            "enable_link": false,
+            "banner_link": "",
+            "open_in_new_tab": false,
+            "hover_opacity": 90
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_b676a2f_MkVtwn"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-cream",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "scrolling_image_marquee_FpU3wk": {
+      "type": "scrolling-image-marquee",
+      "blocks": {
+        "gallery_image_GpFTQW": {
+          "type": "gallery_image",
+          "settings": {
+            "side": "left",
+            "column": "1",
+            "image": "shopify://shop_images/Gemini_Generated_Image_ukjq9fukjq9fukjq.png",
+            "alt_text": ""
+          }
+        },
+        "gallery_image_ccrnzw": {
+          "type": "gallery_image",
+          "settings": {
+            "side": "left",
+            "column": "2",
+            "image": "shopify://shop_images/Gemini_Generated_Image_vz240uvz240uvz24.png",
+            "alt_text": ""
+          }
+        },
+        "gallery_image_cKRgVz": {
+          "type": "gallery_image",
+          "settings": {
+            "side": "right",
+            "column": "1",
+            "image": "shopify://shop_images/Gemini_Generated_Image_4ljsg64ljsg64ljs.png",
+            "alt_text": ""
+          }
+        },
+        "gallery_image_ztAeVU": {
+          "type": "gallery_image",
+          "settings": {
+            "side": "right",
+            "column": "2",
+            "image": "shopify://shop_images/Gemini_Generated_Image_cowttjcowttjcowt.png",
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "gallery_image_GpFTQW",
+        "gallery_image_ccrnzw",
+        "gallery_image_cKRgVz",
+        "gallery_image_ztAeVU"
+      ],
+      "name": "Scrolling image marquee",
+      "settings": {
+        "hero_badge": "Nutty goodness",
+        "heading": "Discover Nutty Goodness Daily",
+        "subheading": "",
+        "description": "Contact us for health tips & offers.",
+        "button_label": "Contact us",
+        "button_link": "",
+        "center_image": "shopify://shop_images/Gemini_Generated_Image_la2lykla2lykla2l.png",
+        "hero_radius": 32,
+        "background": "#fff2df",
+        "text_color": "#1f3c2c",
+        "card_background": "#fffaf3",
+        "card_radius": 10,
+        "scroll_speed": 26,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_iQ9V3p": {
+      "type": "section",
+      "blocks": {
+        "image_4jw33Y": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_fujsaqfujsaqfujs.png",
+            "link": "",
+            "image_ratio": "landscape",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_bCUUd9": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 55,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-about-cream",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_p8W8Bk": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Sougat</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_peXxQb": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Sougat creates clean, naturally delicious freeze-dried fruit snacks made from real fruits and vegetables. Using advanced freeze-drying technology, we preserve natural flavour, texture, and nutrition — without adding sugar, preservatives, or additives.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1.125rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_ckMhrh": {
+              "type": "button",
+              "settings": {
+                "label": "Discover Sougat",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_p8W8Bk",
+            "text_peXxQb",
+            "button_ckMhrh"
+          ]
+        }
+      },
+      "block_order": [
+        "image_4jw33Y",
+        "group_bCUUd9"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-cream",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "team_spotlight_slider_XdMgK9": {
+      "type": "team-spotlight-slider",
+      "blocks": {
+        "team_member_wCnU9V": {
+          "type": "team_member",
+          "settings": {
+            "highlight": "Creates bold, insight-driven narratives for every launch.",
+            "name": "Olivers West",
+            "role": "Marketing Strategist",
+            "bio": "Leads multi-channel strategy and ensures every message resonates with the brand voice while driving measurable engagement."
+          }
+        },
+        "team_member_fQDb3F": {
+          "type": "team_member",
+          "settings": {
+            "highlight": "Creates bold, insight-driven narratives for every launch.",
+            "name": "Olivers West",
+            "role": "Marketing Strategist",
+            "bio": "Leads multi-channel strategy and ensures every message resonates with the brand voice while driving measurable engagement."
+          }
+        },
+        "team_member_iRML7K": {
+          "type": "team_member",
+          "settings": {
+            "highlight": "Creates bold, insight-driven narratives for every launch.",
+            "name": "Olivers West",
+            "role": "Marketing Strategist",
+            "bio": "Leads multi-channel strategy and ensures every message resonates with the brand voice while driving measurable engagement."
+          }
+        }
+      },
+      "block_order": [
+        "team_member_wCnU9V",
+        "team_member_fQDb3F",
+        "team_member_iRML7K"
+      ],
+      "name": "Team spotlight slider",
+      "settings": {
+        "heading": "Meet the team",
+        "subheading": "Sharp minds behind our campaigns",
+        "card_background": "#132019",
+        "text_color": "#F5F1EB",
+        "accent_color": "#F0C27B",
+        "color_scheme": "scheme-about-deep",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "about_intro": {
+      "type": "section",
+      "blocks": {
+        "group_intro": {
+          "type": "group",
+          "name": "About Introduction",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-about-cream",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_heading": {
+              "type": "text",
+              "name": "Heading",
+              "settings": {
+                "text": "<h2>Who We Are</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h2",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_description": {
+              "type": "text",
+              "name": "Description",
+              "settings": {
+                "text": "<p>At Sougat Foods, we are passionate about delivering premium quality freeze-dried fruits and healthy snacks. Our mission is to provide natural, nutritious, and delicious food products that enhance your everyday life.</p>",
+                "width": "100%",
+                "max_width": "narrow",
+                "alignment": "center",
+                "type_preset": "body",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_heading",
+            "text_description"
+          ]
+        }
+      },
+      "block_order": [
+        "group_intro"
+      ],
+      "disabled": true,
+      "name": "About Introduction",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-cream",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "17692466019fd21763": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_051045c_U8CzBU": {
+          "type": "ai_gen_block_051045c",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_4ljsg64ljsg64ljs.png",
+            "image_border_radius": 8,
+            "heading": "Frequently Asked Questions",
+            "heading_size": 32,
+            "heading_color": "#38aa3d",
+            "heading_spacing": 30,
+            "question_1": "What are your shipping options?",
+            "answer_1": "<p>We offer standard and express shipping options. Standard shipping takes 5-7 business days, while express shipping takes 2-3 business days.</p>",
+            "question_2": "What is your return policy?",
+            "answer_2": "<p>We accept returns within 30 days of purchase. Items must be unused and in their original packaging.</p>",
+            "question_3": "Do you ship internationally?",
+            "answer_3": "<p>Yes, we ship to most countries worldwide. International shipping times vary by location.</p>",
+            "question_4": "How can I track my order?",
+            "answer_4": "<p>Once your order ships, you'll receive a tracking number via email. You can use this to track your package.</p>",
+            "question_5": "What payment methods do you accept?",
+            "answer_5": "<p>We accept all major credit cards, PayPal, and other secure payment methods.</p>",
+            "section_padding": 60,
+            "gap": 60,
+            "background_color": "#ffffff",
+            "item_spacing": 15,
+            "item_padding": 20,
+            "item_border_radius": 8,
+            "item_border_width": 1,
+            "item_background": "#ffffff",
+            "item_hover_background": "#f5f5f5",
+            "item_border_color": "#e6e6e6",
+            "question_size": 16,
+            "question_color": "#000000",
+            "icon_color": "#38aa3d",
+            "answer_size": 14,
+            "answer_color": "#666666",
+            "desktop_width_percent": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_051045c_U8CzBU"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "our_mission": {
+      "type": "section",
+      "blocks": {
+        "group_mission": {
+          "type": "group",
+          "name": "Our Mission",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-about-cream",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_mission_heading": {
+              "type": "text",
+              "name": "Mission Heading",
+              "settings": {
+                "text": "<h2>Our Mission</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h2",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_mission_content": {
+              "type": "text",
+              "name": "Mission Content",
+              "settings": {
+                "text": "<p>To bring the freshness and nutrition of nature directly to your table through innovative freeze-drying technology. We believe in creating products that are not only delicious but also preserve the natural goodness of fruits without any artificial additives.</p>",
+                "width": "100%",
+                "max_width": "narrow",
+                "alignment": "center",
+                "type_preset": "body",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_mission_heading",
+            "text_mission_content"
+          ]
+        }
+      },
+      "block_order": [
+        "group_mission"
+      ],
+      "disabled": true,
+      "name": "Our Mission",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-sage",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "our_values": {
+      "type": "section",
+      "blocks": {
+        "group_values": {
+          "type": "group",
+          "name": "Our Values",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-about-cream",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "icon_quality": {
+              "type": "icon-with-text",
+              "name": "Quality",
+              "settings": {
+                "icon": "star",
+                "icon_size": 32,
+                "title": "Quality First",
+                "title_tag": "h3",
+                "text": "<p>We source only the finest ingredients and maintain strict quality control at every step of our production process.</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            },
+            "icon_natural": {
+              "type": "icon-with-text",
+              "name": "Natural",
+              "settings": {
+                "icon": "leaf",
+                "icon_size": 32,
+                "title": "100% Natural",
+                "title_tag": "h3",
+                "text": "<p>No artificial colors, flavors, or preservatives. Just pure, natural goodness in every bite.</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            },
+            "icon_innovation": {
+              "type": "icon-with-text",
+              "name": "Innovation",
+              "settings": {
+                "icon": "lightning",
+                "icon_size": 32,
+                "title": "Innovation",
+                "title_tag": "h3",
+                "text": "<p>Using advanced freeze-drying technology to preserve nutrients and deliver exceptional taste.</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "icon_quality",
+            "icon_natural",
+            "icon_innovation"
+          ]
+        }
+      },
+      "block_order": [
+        "group_values"
+      ],
+      "disabled": true,
+      "name": "Our Values",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-cream",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 60,
+        "padding-block-end": 60
+      }
+    },
+    "company_info": {
+      "type": "section",
+      "blocks": {
+        "group_company": {
+          "type": "group",
+          "name": "Company Info",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-about-cream",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_company_name": {
+              "type": "text",
+              "name": "Company Name",
+              "settings": {
+                "text": "<h2>Shubhalaxmi Food Industry</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "icon_address": {
+              "type": "icon-with-text",
+              "name": "Address",
+              "settings": {
+                "icon": "map_pin",
+                "icon_size": 24,
+                "title": "Our Address",
+                "title_tag": "p",
+                "text": "<p>Jalan Industrial Estate<br/>Khasra no 90 / 1 & 90 / 2<br/>Jabalpur Road Lihigaon<br/>Nagpur (MH), Maharashtra, India<br/>441104</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            },
+            "icon_phone": {
+              "type": "icon-with-text",
+              "name": "Phone",
+              "settings": {
+                "icon": "phone",
+                "icon_size": 24,
+                "title": "Phone Number",
+                "title_tag": "p",
+                "text": "<p>+91-9607060709, +91 7972898280, +91 9356624928</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            },
+            "icon_email": {
+              "type": "icon-with-text",
+              "name": "Email",
+              "settings": {
+                "icon": "email",
+                "icon_size": 24,
+                "title": "Email",
+                "title_tag": "p",
+                "text": "<p>operations@shubhalaxmifoodproducts.com</p>",
+                "link": "",
+                "link_text": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
+            },
+            "text_gst": {
+              "type": "text",
+              "name": "GST",
+              "settings": {
+                "text": "<p><strong>GST No:</strong> 27ACQFS1317Q1ZF</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "body",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_company_name",
+            "icon_address",
+            "icon_phone",
+            "icon_email",
+            "text_gst"
+          ]
+        }
+      },
+      "block_order": [
+        "group_company"
+      ],
+      "disabled": true,
+      "name": "Company Information",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-about-cream",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 60,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "176923639961994b9e",
+    "scrolling_image_marquee_FpU3wk",
+    "section_iQ9V3p",
+    "team_spotlight_slider_XdMgK9",
+    "about_intro",
+    "17692466019fd21763",
+    "our_mission",
+    "our_values",
+    "company_info"
+  ]
+}

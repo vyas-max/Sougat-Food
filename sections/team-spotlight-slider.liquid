@@ -1,0 +1,529 @@
+{% comment %}
+  Team Spotlight Slider Section
+  Displays a dark pill-inspired testimonial card with sharp edges and slider controls
+{% endcomment %}
+
+{% liquid
+  assign section_id = 'team-spotlight-' | append: section.id
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign total_members = section.blocks.size
+%}
+
+<section
+  id="{{ section_id }}"
+  class="team-spotlight color-{{ section.settings.color_scheme }}"
+  style="--team-card-bg: {{ section.settings.card_background }}; --team-card-text: {{ section.settings.text_color }}; --team-accent: {{ section.settings.accent_color }}; --team-padding-top: {{ padding_top }}px; --team-padding-bottom: {{ padding_bottom }}px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="team-spotlight__wrapper">
+    {% if heading != blank or subheading != blank %}
+      <div class="team-spotlight__header">
+        {% if heading != blank %}
+          <p class="team-spotlight__eyebrow">{{ heading }}</p>
+        {% endif %}
+        {% if subheading != blank %}
+          <h2 class="team-spotlight__title">
+            {{ subheading }}
+          </h2>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if total_members > 0 %}
+      <div class="team-slider" data-team-slider="{{ section.id }}">
+        <button class="team-slider__nav" data-team-prev aria-label="Previous team member">
+          <span aria-hidden="true">{{ 'icon-arrow-left.svg' | inline_asset_content | default: '&larr;' }}</span>
+        </button>
+
+        <div class="team-slider__viewport">
+          <div class="team-slider__track" data-team-track>
+            {% for block in section.blocks %}
+              {% assign member = block.settings %}
+              <article
+                class="team-slide"
+                data-team-slide
+                data-block-id="{{ block.id }}"
+                data-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="team-slide__media">
+                  {% if member.headshot != blank %}
+                    {{
+                      member.headshot
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        width: member.headshot.width,
+                        height: member.headshot.height,
+                        alt: member.headshot.alt | default: member.name | default: 'Team member portrait'
+                    }}
+                  {% else %}
+                    <div class="team-slide__placeholder" role="img" aria-label="Team member placeholder">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="team-slide__content">
+                  {% if member.highlight != blank %}
+                    <p class="team-slide__highlight">{{ member.highlight }}</p>
+                  {% endif %}
+
+                  {% if member.name != blank %}
+                    <p class="team-slide__name">{{ member.name }}</p>
+                  {% endif %}
+
+                  {% if member.role != blank %}
+                    <p class="team-slide__role">{{ member.role }}</p>
+                  {% endif %}
+
+                  {% if member.bio != blank %}
+                    <p class="team-slide__bio">{{ member.bio }}</p>
+                  {% endif %}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+
+        <button class="team-slider__nav" data-team-next aria-label="Next team member">
+          <span aria-hidden="true">{{ 'icon-arrow-right.svg' | inline_asset_content | default: '&rarr;' }}</span>
+        </button>
+      </div>
+
+      <div class="team-slider__pagination" role="tablist" aria-label="Team member slides">
+        {% for block in section.blocks %}
+          <button
+            class="team-slider__dot{% if forloop.first %} is-active{% endif %}"
+            data-team-dot
+            data-index="{{ forloop.index0 }}"
+            aria-label="Go to {{ block.settings.name | default: 'team member' }}"
+            aria-controls="{{ section_id }}"
+            {% if forloop.first %}aria-current="true"{% endif %}
+          ></button>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="team-spotlight__empty">Add team members to populate this slider.</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    padding: var(--team-padding-top) 0 var(--team-padding-bottom);
+  }
+
+  #{{ section_id }} .team-spotlight__wrapper {
+    width: 100%;
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  #{{ section_id }} .team-spotlight__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    color: rgb(var(--color-foreground));
+  }
+
+  #{{ section_id }} .team-spotlight__eyebrow {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin: 0;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  #{{ section_id }} .team-spotlight__title {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.02em;
+  }
+
+  #{{ section_id }} .team-slider {
+    display: grid;
+    grid-template-columns: 64px 1fr 64px;
+    gap: 16px;
+    align-items: center;
+  }
+
+  #{{ section_id }} .team-slider__viewport {
+    overflow: hidden;
+    position: relative;
+  }
+
+  #{{ section_id }} .team-slider__track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  #{{ section_id }} .team-slide {
+    flex: 0 0 100%;
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+    background: var(--team-card-bg);
+    color: var(--team-card-text);
+    padding: clamp(24px, 4vw, 48px);
+    border-radius: 0;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  #{{ section_id }} .team-slide__media {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #{{ section_id }} .team-slide__media img,
+  #{{ section_id }} .team-slide__placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #{{ section_id }} .team-slide__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #{{ section_id }} .team-slide__highlight {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--team-accent);
+  }
+
+  #{{ section_id }} .team-slide__name {
+    margin: 0;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+  }
+
+  #{{ section_id }} .team-slide__role {
+    margin: 0;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  #{{ section_id }} .team-slide__bio {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  #{{ section_id }} .team-slider__nav {
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(var(--color-foreground), 0.4);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    border-radius: 0;
+  }
+
+  #{{ section_id }} .team-slider__nav:hover:not(:disabled) {
+    background: rgba(var(--color-foreground), 0.08);
+  }
+
+  #{{ section_id }} .team-slider__nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  #{{ section_id }} .team-slider__nav span svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  #{{ section_id }} .team-slider__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  #{{ section_id }} .team-slider__dot {
+    width: 38px;
+    height: 4px;
+    border: none;
+    background: rgba(var(--color-foreground), 0.3);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  #{{ section_id }} .team-slider__dot.is-active {
+    background: var(--team-accent);
+    transform: scaleX(1.1);
+  }
+
+  #{{ section_id }} .team-spotlight__empty {
+    text-align: center;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  @media (max-width: 1024px) {
+    #{{ section_id }} .team-slider {
+      grid-template-columns: 48px 1fr 48px;
+    }
+
+    #{{ section_id }} .team-slide {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    #{{ section_id }} .team-slide__content {
+      align-items: center;
+    }
+
+    #{{ section_id }} .team-slide__role {
+      letter-spacing: 0.2em;
+    }
+  }
+
+  @media (max-width: 599px) {
+    #{{ section_id }} .team-slider {
+      grid-template-columns: 1fr;
+    }
+
+    #{{ section_id }} .team-slider__nav {
+      width: 52px;
+      height: 52px;
+      justify-self: center;
+    }
+
+    #{{ section_id }} .team-slider__pagination {
+      gap: 6px;
+    }
+
+    #{{ section_id }} .team-slider__dot {
+      width: 20px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const sectionId = '{{ section.id }}';
+
+    function initTeamSlider(id) {
+      const sliderRoot = document.querySelector('[data-team-slider="' + id + '"]');
+      if (!sliderRoot) return;
+
+      const section = sliderRoot.closest('section');
+      const track = sliderRoot.querySelector('[data-team-track]');
+      const slides = sliderRoot.querySelectorAll('[data-team-slide]');
+      const prev = section?.querySelector('[data-team-prev]');
+      const next = section?.querySelector('[data-team-next]');
+      const dots = section?.querySelectorAll('[data-team-dot]') ?? [];
+
+      if (!track || !slides.length) return;
+
+      let index = 0;
+
+      function goTo(newIndex) {
+        index = Math.max(0, Math.min(newIndex, slides.length - 1));
+        track.style.transform = 'translateX(-' + index * 100 + '%)';
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === slides.length - 1;
+
+        dots.forEach((dot) => {
+          const isActive = Number(dot.dataset.index) === index;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      }
+
+      prev?.addEventListener('click', () => goTo(index - 1));
+      next?.addEventListener('click', () => goTo(index + 1));
+      dots.forEach((dot) => dot.addEventListener('click', () => goTo(Number(dot.dataset.index))));
+
+      section.teamSlider = {
+        goToBlock(blockId) {
+          const slide = section.querySelector('[data-block-id="' + blockId + '"]');
+          if (!slide) return;
+          goTo(Number(slide.dataset.index));
+        },
+      };
+
+      goTo(0);
+    }
+
+    function destroyTeamSlider(id) {
+      const section = document.getElementById('team-spotlight-' + id);
+      if (section && section.teamSlider) {
+        delete section.teamSlider;
+      }
+    }
+
+    const init = () => initTeamSlider(sectionId);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === sectionId) {
+        initTeamSlider(sectionId);
+      }
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      if (event.detail.sectionId === sectionId) {
+        destroyTeamSlider(sectionId);
+      }
+    });
+
+    document.addEventListener('shopify:block:select', (event) => {
+      if (event.detail.sectionId === sectionId) {
+        const section = document.getElementById('team-spotlight-' + sectionId);
+        section?.teamSlider?.goToBlock(event.detail.blockId);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Team spotlight slider",
+  "tag": "section",
+  "class": "section-team-spotlight",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Eyebrow heading",
+      "default": "Meet the team"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Main heading",
+      "default": "Sharp minds behind our campaigns"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#3A3A3A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Card text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#DCDCDC"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "headshot",
+          "label": "Portrait",
+          "info": "Portrait orientation works best"
+        },
+        {
+          "type": "text",
+          "id": "highlight",
+          "label": "Highlight line",
+          "default": "Creates bold, insight-driven narratives for every launch."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Olivers West"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Marketing Strategist"
+        },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Bio",
+          "default": "Leads multi-channel strategy and ensures every message resonates with the brand voice while driving measurable engagement."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team spotlight slider",
+      "blocks": [
+        {
+          "type": "team_member"
+        },
+        {
+          "type": "team_member"
+        },
+        {
+          "type": "team_member"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,485 @@
+{% comment %}
+  Product Accordion Section
+  Standalone section for product details accordion - renders below main product info
+{% endcomment %}
+
+{% assign product_ref = product %}
+
+{% capture description_content %}
+  {% if product_ref.description != blank %}
+    {{ product_ref.description }}
+  {% endif %}
+{% endcapture %}
+
+{% capture ingredients_content %}
+  {%- assign ingredients_value = product_ref.metafields.custom.ingredients.value -%}
+  {%- if ingredients_value != blank -%}
+    {%- if ingredients_value.type == 'root' and ingredients_value.children -%}
+      {%- for child in ingredients_value.children -%}
+        {%- if child.type == 'list' -%}
+          <ul>
+            {%- for item in child.children -%}
+              {%- if item.type == 'list-item' -%}
+                <li>
+                  {%- for text_node in item.children -%}
+                    {{ text_node.value }}
+                  {%- endfor -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- elsif child.type == 'paragraph' -%}
+          <p>
+            {%- for text_node in child.children -%}
+              {%- if text_node.type == 'text' -%}{{ text_node.value }}{%- endif -%}
+              {%- if text_node.type == 'bold' -%}<strong>{{ text_node.children[0].value }}</strong>{%- endif -%}
+              {%- if text_node.type == 'italic' -%}<em>{{ text_node.children[0].value }}</em>{%- endif -%}
+            {%- endfor -%}
+          </p>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {{ ingredients_value }}
+    {%- endif -%}
+  {%- endif -%}
+{% endcapture %}
+
+{% capture additional_info_content %}
+  {%- assign additional_info_value = product_ref.metafields.custom.additional_information.value -%}
+  {%- if additional_info_value != blank -%}
+    {%- if additional_info_value.type == 'root' and additional_info_value.children -%}
+      {%- for child in additional_info_value.children -%}
+        {%- if child.type == 'list' -%}
+          <ul>
+            {%- for item in child.children -%}
+              {%- if item.type == 'list-item' -%}
+                <li>
+                  {%- for text_node in item.children -%}
+                    {{ text_node.value }}
+                  {%- endfor -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- elsif child.type == 'paragraph' -%}
+          <p>
+            {%- for text_node in child.children -%}
+              {%- if text_node.type == 'text' -%}{{ text_node.value }}{%- endif -%}
+              {%- if text_node.type == 'bold' -%}<strong>{{ text_node.children[0].value }}</strong>{%- endif -%}
+              {%- if text_node.type == 'italic' -%}<em>{{ text_node.children[0].value }}</em>{%- endif -%}
+            {%- endfor -%}
+          </p>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {{ additional_info_value }}
+    {%- endif -%}
+  {%- endif -%}
+{% endcapture %}
+
+{% capture shipping_content %}
+  {{ section.settings.shipping_content }}
+{% endcapture %}
+
+{% assign description_stripped = description_content | strip %}
+{% assign ingredients_stripped = ingredients_content | strip %}
+{% assign additional_info_stripped = additional_info_content | strip %}
+{% assign shipping_stripped = shipping_content | strip %}
+
+{% assign has_tabs = false %}
+{% if description_stripped != '' %}{% assign has_tabs = true %}{% endif %}
+{% if ingredients_stripped != '' %}{% assign has_tabs = true %}{% endif %}
+{% if additional_info_stripped != '' %}{% assign has_tabs = true %}{% endif %}
+{% if shipping_stripped != '' %}{% assign has_tabs = true %}{% endif %}
+
+{% if has_tabs %}
+  <section class="product-accordion-section color-{{ section.settings.color_scheme }}">
+    <div class="product-accordion-section__container page-width">
+      <div class="product-tabs" data-product-tabs>
+        <div class="product-tabs__nav" role="tablist">
+          {% assign tab_index = 0 %}
+          {% if description_stripped != '' %}
+            {% assign tab_index = tab_index | plus: 1 %}
+            <button
+              type="button"
+              class="product-tabs__nav-item{% if tab_index == 1 %} is-active{% endif %}"
+              data-tab-trigger
+              data-tab-target="tab-description"
+              role="tab"
+              aria-controls="tab-description"
+              aria-selected="{% if tab_index == 1 %}true{% else %}false{% endif %}"
+            >
+              {{ section.settings.description_title }}
+            </button>
+          {% endif %}
+
+          {% if ingredients_stripped != '' %}
+            {% if tab_index == 0 %}{% assign is_first = true %}{% else %}{% assign is_first = false %}{% endif %}
+            {% assign tab_index = tab_index | plus: 1 %}
+            <button
+              type="button"
+              class="product-tabs__nav-item{% if is_first %} is-active{% endif %}"
+              data-tab-trigger
+              data-tab-target="tab-ingredients"
+              role="tab"
+              aria-controls="tab-ingredients"
+              aria-selected="{% if is_first %}true{% else %}false{% endif %}"
+            >
+              {{ section.settings.ingredients_title }}
+            </button>
+          {% endif %}
+
+          {% if additional_info_stripped != '' %}
+            {% if tab_index == 0 %}{% assign is_first = true %}{% else %}{% assign is_first = false %}{% endif %}
+            {% assign tab_index = tab_index | plus: 1 %}
+            <button
+              type="button"
+              class="product-tabs__nav-item{% if is_first %} is-active{% endif %}"
+              data-tab-trigger
+              data-tab-target="tab-additional"
+              role="tab"
+              aria-controls="tab-additional"
+              aria-selected="{% if is_first %}true{% else %}false{% endif %}"
+            >
+              {{ section.settings.additional_info_title }}
+            </button>
+          {% endif %}
+
+          {% if shipping_stripped != '' %}
+            {% if tab_index == 0 %}{% assign is_first = true %}{% else %}{% assign is_first = false %}{% endif %}
+            {% assign tab_index = tab_index | plus: 1 %}
+            <button
+              type="button"
+              class="product-tabs__nav-item{% if is_first %} is-active{% endif %}"
+              data-tab-trigger
+              data-tab-target="tab-shipping"
+              role="tab"
+              aria-controls="tab-shipping"
+              aria-selected="{% if is_first %}true{% else %}false{% endif %}"
+            >
+              {{ section.settings.shipping_title }}
+            </button>
+          {% endif %}
+        </div>
+
+        <div class="product-tabs__panels">
+          {% assign panel_index = 0 %}
+          {% if description_stripped != '' %}
+            {% assign panel_index = panel_index | plus: 1 %}
+            <div
+              id="tab-description"
+              class="product-tabs__panel{% if panel_index == 1 %} is-active{% endif %}"
+              data-tab-panel="tab-description"
+              role="tabpanel"
+              aria-labelledby="tab-description"
+            >
+              {{ description_content }}
+            </div>
+          {% endif %}
+
+          {% if ingredients_stripped != '' %}
+            {% if panel_index == 0 %}{% assign is_first_panel = true %}{% else %}{% assign is_first_panel = false %}{% endif %}
+            {% assign panel_index = panel_index | plus: 1 %}
+            <div
+              id="tab-ingredients"
+              class="product-tabs__panel{% if is_first_panel %} is-active{% endif %}"
+              data-tab-panel="tab-ingredients"
+              role="tabpanel"
+              aria-labelledby="tab-ingredients"
+            >
+              {{ ingredients_content }}
+            </div>
+          {% endif %}
+
+          {% if additional_info_stripped != '' %}
+            {% if panel_index == 0 %}{% assign is_first_panel = true %}{% else %}{% assign is_first_panel = false %}{% endif %}
+            {% assign panel_index = panel_index | plus: 1 %}
+            <div
+              id="tab-additional"
+              class="product-tabs__panel{% if is_first_panel %} is-active{% endif %}"
+              data-tab-panel="tab-additional"
+              role="tabpanel"
+              aria-labelledby="tab-additional"
+            >
+              {{ additional_info_content }}
+            </div>
+          {% endif %}
+
+          {% if shipping_stripped != '' %}
+            {% if panel_index == 0 %}{% assign is_first_panel = true %}{% else %}{% assign is_first_panel = false %}{% endif %}
+            {% assign panel_index = panel_index | plus: 1 %}
+            <div
+              id="tab-shipping"
+              class="product-tabs__panel{% if is_first_panel %} is-active{% endif %}"
+              data-tab-panel="tab-shipping"
+              role="tabpanel"
+              aria-labelledby="tab-shipping"
+            >
+              {{ shipping_content }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabContainers = document.querySelectorAll('[data-product-tabs]');
+
+    tabContainers.forEach((container) => {
+      const triggers = container.querySelectorAll('[data-tab-trigger]');
+      const panels = container.querySelectorAll('[data-tab-panel]');
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const target = trigger.getAttribute('data-tab-target');
+
+          triggers.forEach((button) => {
+            const isActive = button === trigger;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          panels.forEach((panel) => {
+            const matches = panel.getAttribute('data-tab-panel') === target;
+            panel.classList.toggle('is-active', matches);
+            panel.hidden = !matches;
+          });
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .product-accordion-section {
+    padding: 0;
+    margin-top: 0;
+    background: rgba(var(--color-scheme-background), 1);
+  }
+
+  .product-accordion-section__container {
+    width: min(var(--page-width, 1200px), 100%);
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 3vw, 3rem);
+  }
+
+  .product-tabs {
+    --tab-accent: #0f8a4b;
+    --tab-accent-soft: rgba(15, 138, 75, 0.35);
+    background: linear-gradient(135deg, rgba(242, 250, 246, 0.98), rgba(255, 255, 255, 0.96));
+    border: 1px solid rgba(17, 71, 46, 0.08);
+    border-radius: 28px;
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+    box-shadow: 0 30px 60px rgba(10, 44, 28, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-tabs::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 27px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(15, 138, 75, 0.05));
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .product-tabs__nav,
+  .product-tabs__panels {
+    position: relative;
+    z-index: 1;
+  }
+
+  .product-tabs__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(17, 71, 46, 0.12);
+    margin-bottom: 1.5rem;
+  }
+
+  .product-tabs__nav-item {
+    position: relative;
+    appearance: none;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 0.55rem 1.5rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    color: rgba(12, 40, 26, 0.7);
+    text-transform: none;
+    font-weight: 600;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .product-tabs__nav-item::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 22px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--tab-accent);
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 0.25s ease;
+  }
+
+  .product-tabs__nav-item:is(:hover, :focus-visible) {
+    color: rgba(12, 40, 26, 0.95);
+    border-color: rgba(15, 138, 75, 0.25);
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  .product-tabs__nav-item.is-active {
+    color: #0b5a35;
+    border-color: rgba(15, 138, 75, 0.4);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(15, 138, 75, 0.12));
+    box-shadow: 0 12px 25px rgba(15, 138, 75, 0.12);
+  }
+
+  .product-tabs__nav-item.is-active::after {
+    opacity: 1;
+  }
+
+  .product-tabs__panels {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .product-tabs__panel {
+    display: none;
+    line-height: 1.7;
+    color: rgba(12, 40, 26, 0.85);
+    font-size: 1rem;
+    background: #fff;
+    border-radius: 24px;
+    border: 1px solid rgba(15, 138, 75, 0.08);
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    box-shadow: 0 20px 40px rgba(10, 44, 28, 0.05);
+    transform-origin: top;
+  }
+
+  .product-tabs__panel.is-active {
+    display: block;
+    animation: tabPanelReveal 0.4s ease;
+  }
+
+  @keyframes tabPanelReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .product-tabs__panel ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .product-tabs__panel li {
+    margin-bottom: 0.35rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-accordion-section__container {
+      padding: 0 clamp(1rem, 6vw, 2rem);
+    }
+
+    .product-tabs {
+      padding: 1.25rem;
+      border-radius: 22px;
+    }
+
+    .product-tabs__nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 0.5rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .product-tabs__nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-tabs__nav-item {
+      font-size: 0.88rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+      padding-inline: 1.1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Accordion",
+  "tag": "section",
+  "class": "section-product-accordion",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Titles"
+    },
+    {
+      "type": "text",
+      "id": "description_title",
+      "label": "Description Title",
+      "default": "Description"
+    },
+    {
+      "type": "text",
+      "id": "ingredients_title",
+      "label": "Ingredients Title",
+      "default": "Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "additional_info_title",
+      "label": "Additional Information Title",
+      "default": "Additional Information"
+    },
+    {
+      "type": "text",
+      "id": "shipping_title",
+      "label": "Shipping & Returns Title",
+      "default": "Shipping & Returns"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Content"
+    },
+    {
+      "type": "html",
+      "id": "shipping_content",
+      "label": "Shipping & Returns Content",
+      "default": "<p><strong>Shipping:</strong> We offer free shipping on orders over ₹500. Orders are processed within 1-2 business days and delivered within 5-7 business days.</p><p><strong>Returns:</strong> We accept returns within 30 days of purchase. Items must be unused and in original packaging.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Accordion"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}

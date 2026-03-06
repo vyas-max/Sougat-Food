@@ -1,0 +1,307 @@
+<section id="marquee-strip-{{ section.id }}" class="marquee-strip" aria-label="{{ section.settings.label | default: 'Brand marquee' }}">
+  <div class="marquee-strip__inner" aria-hidden="true">
+    {% assign icon_character = section.settings.icon_character | default: '✦' | strip %}
+    {% capture marquee_items_html %}
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <li class="marquee-strip__item" {{ block.shopify_attributes }}>
+            <span class="marquee-strip__text">{{ block.settings.text | default: 'Marquee item' }}</span>
+            {% if icon_character != blank %}
+              <span class="marquee-strip__icon" aria-hidden="true">{{ icon_character }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        {% assign default_items = "FREE SHIPPING|SECURE PAYMENT|FLEXIBLE PRICE|BLACK FRIDAY SALE|ORIGINAL PRODUCT" | split: "|" %}
+        {% for item in default_items %}
+          <li class="marquee-strip__item">
+            <span class="marquee-strip__text">{{ item }}</span>
+            {% if icon_character != blank %}
+              <span class="marquee-strip__icon" aria-hidden="true">{{ icon_character }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+
+    <div class="marquee-strip__lines">
+      <div class="marquee-strip__line marquee-strip__line--primary" data-marquee-line>
+        <ul class="marquee-strip__track" data-marquee-track data-speed="primary">
+          {{ marquee_items_html }}
+          {{ marquee_items_html }}
+        </ul>
+      </div>
+      <div class="marquee-strip__line marquee-strip__line--secondary" data-marquee-line>
+        <ul class="marquee-strip__track" data-marquee-track data-speed="secondary">
+          {{ marquee_items_html }}
+          {{ marquee_items_html }}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #marquee-strip-{{ section.id }} {
+      --marquee-bg: {{ section.settings.background | default: 'transparent' }};
+      --marquee-text: {{ section.settings.text_color | default: '#111111' }};
+      --marquee-accent: {{ section.settings.accent_color | default: '#cddfcf' }};
+      --marquee-speed-primary: {{ section.settings.speed | default: 18 }}s;
+      --marquee-speed-secondary: {{ section.settings.speed_second_line | default: 22 }}s;
+      --marquee-line-gap: {{ section.settings.line_gap | default: 16 }}px;
+      --marquee-icon-size: {{ section.settings.icon_size | default: 14 }}px;
+      --marquee-padding-top: {{ section.settings.padding_top | default: 12 }}px;
+      --marquee-padding-bottom: {{ section.settings.padding_bottom | default: 12 }}px;
+      --marquee-text-size: 85px;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      background: var(--marquee-bg);
+      color: var(--marquee-text);
+      overflow: hidden;
+      border-top: none;
+      border-bottom: none;
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__inner {
+      padding-block-start: var(--marquee-padding-top);
+      padding-block-end: var(--marquee-padding-bottom);
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__lines {
+      display: flex;
+      flex-direction: column;
+      gap: var(--marquee-line-gap);
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__line {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__track {
+      --marquee-item-gap: clamp(2rem, 4vw, 3.5rem);
+      display: flex;
+      align-items: center;
+      gap: var(--marquee-item-gap);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      width: max-content;
+      flex-wrap: nowrap;
+      will-change: transform;
+      animation-name: marquee-strip-scroll-{{ section.id }};
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__line--primary .marquee-strip__track {
+      animation-duration: var(--marquee-speed-primary);
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__line--secondary .marquee-strip__track {
+      animation-duration: var(--marquee-speed-secondary);
+      animation-direction: reverse;
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__item {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.75rem, 2vw, 1.5rem);
+      font-size: clamp(30px, 2vw, 40px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    #marquee-strip-{{ section.id }} .marquee-strip__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--marquee-icon-size);
+      color: var(--marquee-accent);
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    @keyframes marquee-strip-scroll-{{ section.id }} {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      #marquee-strip-{{ section.id }} .marquee-strip__item {
+        letter-spacing: 0.06em;
+        font-size: clamp(0.95rem, 5vw, calc(var(--marquee-text-size) - 10px));
+      }
+    }
+
+    @media (max-width: 480px) {
+      #marquee-strip-{{ section.id }} .marquee-strip__item {
+        letter-spacing: 0.05em;
+        font-size: clamp(0.85rem, 6vw, calc(var(--marquee-text-size) - 18px));
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const section = document.getElementById('marquee-strip-{{ section.id }}');
+      if (!section) return;
+
+      const lines = section.querySelectorAll('[data-marquee-line]');
+      if (!lines.length) return;
+
+      const populateTrack = (line) => {
+        const track = line.querySelector('[data-marquee-track]');
+        if (!track) return;
+
+        const baseHTML = track.dataset.baseHtml || track.innerHTML;
+        track.dataset.baseHtml = baseHTML;
+
+        const viewportWidth = line.offsetWidth || section.offsetWidth;
+        track.innerHTML = baseHTML + baseHTML;
+
+        while (track.scrollWidth < viewportWidth * 2) {
+          track.insertAdjacentHTML('beforeend', baseHTML);
+        }
+      };
+
+      lines.forEach(populateTrack);
+
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        window.clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(() => {
+          lines.forEach((line) => populateTrack(line));
+        }, 200);
+      });
+    });
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Scrolling marquee strip",
+  "tag": "section",
+  "class": "section-marquee-strip",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Accessible label",
+      "default": "Promotional marquee"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color",
+      "default": "#f8f8f3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Divider color",
+      "default": "#cddfcf"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Animation duration (seconds)",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "speed_second_line",
+      "label": "Second line duration (seconds)",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "line_gap",
+      "label": "Gap between lines",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "icon_character",
+      "label": "Icon between items",
+      "default": "✦",
+      "info": "Leave blank to hide the icon."
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size (px)",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Marquee item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "FREE SHIPPING"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling marquee strip",
+      "blocks": [
+        { "type": "item", "settings": { "text": "FREE SHIPPING" } },
+        { "type": "item", "settings": { "text": "SECURE PAYMENT" } },
+        { "type": "item", "settings": { "text": "FLEXIBLE PRICING" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

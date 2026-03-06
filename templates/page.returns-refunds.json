@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "returns-refunds-policy",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "accent_color": "#38aa3d",
+        "accent_background": "#f6f7f8",
+        "card_background": "#fcfcfd",
+        "card_border": "#dfe3e6",
+        "contact_background": "#1b1f24",
+        "contact_text_color": "#f5f5f5",
+        "body_text_color": "#111417",
+        "contact_email": "operations@shubhalaxmifoodproducts.com",
+        "contact_phone": "+91 7972898280",
+        "brand_line": "SOUGAT – A Brand of Shubhalaxmi Food Industry"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,243 @@
+{% comment %}
+  Available At Section
+  Displays retailer partner logos where products are available
+{% endcomment %}
+
+{% liquid
+  assign section_title = section.settings.title
+%}
+
+<style>
+  .available-at-section-{{ section.id }} {
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .available-at-section-{{ section.id }} .available-at-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .available-at-section-{{ section.id }} .available-at-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .available-at-section-{{ section.id }} .available-at-logos {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .available-at-section-{{ section.id }} .retailer-logo-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100px;
+    height: 30px;
+    overflow: hidden;
+  }
+
+  .available-at-section-{{ section.id }} .retailer-logo-item a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.2s ease;
+  }
+
+  .available-at-section-{{ section.id }} .retailer-logo-item a:hover {
+    opacity: 0.7;
+  }
+
+  .available-at-section-{{ section.id }} .retailer-logo-item img,
+  .available-at-section-{{ section.id }} .retailer-logo-item .retailer-logo-img {
+    max-width: 100px !important;
+    max-height: 30px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  .available-at-section-{{ section.id }} .retailer-logo-placeholder {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+  }
+
+  @media (max-width: 767px) {
+    .available-at-section-{{ section.id }} .available-at-wrapper {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .available-at-section-{{ section.id }} .available-at-logos {
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .available-at-section-{{ section.id }} .retailer-logo-item {
+      width: 80px;
+      height: 24px;
+    }
+
+    .available-at-section-{{ section.id }} .retailer-logo-item img,
+    .available-at-section-{{ section.id }} .retailer-logo-item .retailer-logo-img {
+      max-width: 80px !important;
+      max-height: 24px !important;
+    }
+  }
+</style>
+
+<section
+  class="available-at-section-{{ section.id }} color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="page-width">
+    <div class="available-at-wrapper">
+      {% if section_title != blank %}
+        <p class="available-at-title">{{ section_title }}</p>
+      {% endif %}
+      
+      <div class="available-at-logos">
+        {% for block in section.blocks %}
+          {% if block.type == 'retailer_logo' %}
+            <div class="retailer-logo-item" {{ block.shopify_attributes }}>
+              {% if block.settings.retailer_link != blank %}
+                <a href="{{ block.settings.retailer_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ block.settings.retailer_name | default: 'Retailer' }}">
+              {% endif %}
+              
+              {% if block.settings.retailer_logo != blank %}
+                <img
+                  src="{{ block.settings.retailer_logo | image_url: width: 200 }}"
+                  alt="{{ block.settings.retailer_name | default: 'Retailer logo' }}"
+                  class="retailer-logo-img"
+                  loading="lazy"
+                >
+              {% else %}
+                <span class="retailer-logo-placeholder">{{ block.settings.retailer_name | default: 'Logo' }}</span>
+              {% endif %}
+              
+              {% if block.settings.retailer_link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Available At",
+  "tag": "section",
+  "class": "section-available-at",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Available at:"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "retailer_logo",
+      "name": "Retailer Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "retailer_logo",
+          "label": "Retailer Logo"
+        },
+        {
+          "type": "text",
+          "id": "retailer_name",
+          "label": "Retailer Name",
+          "info": "Used for accessibility"
+        },
+        {
+          "type": "url",
+          "id": "retailer_link",
+          "label": "Retailer Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Available At",
+      "blocks": [
+        {
+          "type": "retailer_logo",
+          "settings": {
+            "retailer_name": "Walmart"
+          }
+        },
+        {
+          "type": "retailer_logo",
+          "settings": {
+            "retailer_name": "Amazon"
+          }
+        },
+        {
+          "type": "retailer_logo",
+          "settings": {
+            "retailer_name": "Flipkart"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

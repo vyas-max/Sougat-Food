@@ -1,0 +1,439 @@
+{%- comment -%}
+  Collection Hero Banner Section
+  Uses collection metafield image (collection.metafields.custom.herobannner) as background
+{%- endcomment -%}
+
+{% liquid
+  comment
+    Try different ways to access the metafield image
+    - For file_reference/media_image type: collection.metafields.custom.herobannner.value
+    - For direct access: collection.metafields.custom.herobannner
+  endcomment
+  
+  assign hero_image = collection.metafields.custom.herobannner.value
+  
+  if hero_image == blank
+    assign hero_image = collection.metafields.custom.herobannner
+  endif
+  
+  assign has_hero_image = false
+  if hero_image != blank and hero_image != nil
+    assign has_hero_image = true
+  endif
+%}
+
+{%- comment -%} Debug info in theme customizer {%- endcomment -%}
+{% if request.design_mode and has_hero_image == false %}
+  <div style="background: #f0f0f0; padding: 40px; text-align: center; border: 2px dashed #ccc;">
+    <p style="margin: 0 0 10px; font-weight: bold;">Collection Hero Banner</p>
+    <p style="margin: 0; color: #666;">No metafield image found. Please set the <code>custom.herobannner</code> metafield (type: File → Image) on this collection, or upload a fallback image in section settings.</p>
+    <p style="margin: 10px 0 0; font-size: 12px; color: #999;">Debug: collection.metafields.custom.herobannner = {{ collection.metafields.custom.herobannner | json }}</p>
+  </div>
+{% endif %}
+
+{% if has_hero_image %}
+<section
+  id="CollectionHero-{{ section.id }}"
+  class="collection-hero-banner color-{{ section.settings.color_scheme }}"
+  style="
+    --hero-min-height: {{ section.settings.section_height }}px;
+    --hero-min-height-mobile: {{ section.settings.section_height_mobile }}px;
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --content-max-width: {{ section.settings.content_max_width }}px;
+  "
+>
+  {%- comment -%} Background Image {%- endcomment -%}
+  <div class="collection-hero-banner__media">
+    {{
+      hero_image
+      | image_url: width: 3840
+      | image_tag:
+        loading: 'eager',
+        fetchpriority: 'high',
+        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+        sizes: '100vw',
+        class: 'collection-hero-banner__image'
+    }}
+    {%- comment -%} Overlay {%- endcomment -%}
+    {% if section.settings.show_overlay %}
+      <div class="collection-hero-banner__overlay"></div>
+    {% endif %}
+  </div>
+
+  {%- comment -%} Content {%- endcomment -%}
+  <div class="collection-hero-banner__content">
+    <div class="collection-hero-banner__inner">
+      <div class="collection-hero-banner__text-wrapper text-align-{{ section.settings.text_alignment }}">
+        {%- if section.settings.show_title -%}
+          <h1 class="collection-hero-banner__title">
+            {{ collection.title }}
+          </h1>
+        {%- endif -%}
+
+        {%- if section.settings.show_description and collection.description != blank -%}
+          <div class="collection-hero-banner__description">
+            {{ section.settings.custom_description | default: collection.description }}
+          </div>
+        {%- elsif section.settings.custom_description != blank -%}
+          <div class="collection-hero-banner__description">
+            {{ section.settings.custom_description }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a
+            href="{{ section.settings.button_link | default: '#ProductGrid' }}"
+            class="collection-hero-banner__button button button--primary"
+          >
+            {{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
+  {%- comment -%} Fallback when no metafield image is set {%- endcomment -%}
+  {% if section.settings.fallback_image != blank %}
+    <section
+      id="CollectionHero-{{ section.id }}"
+      class="collection-hero-banner color-{{ section.settings.color_scheme }}"
+      style="
+        --hero-min-height: {{ section.settings.section_height }}px;
+        --hero-min-height-mobile: {{ section.settings.section_height_mobile }}px;
+        --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+        --content-max-width: {{ section.settings.content_max_width }}px;
+      "
+    >
+      <div class="collection-hero-banner__media">
+        {{
+          section.settings.fallback_image
+          | image_url: width: 3840
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+            sizes: '100vw',
+            class: 'collection-hero-banner__image'
+        }}
+        {% if section.settings.show_overlay %}
+          <div class="collection-hero-banner__overlay"></div>
+        {% endif %}
+      </div>
+
+      <div class="collection-hero-banner__content">
+        <div class="collection-hero-banner__inner">
+          <div class="collection-hero-banner__text-wrapper text-align-{{ section.settings.text_alignment }}">
+            {%- if section.settings.show_title -%}
+              <h1 class="collection-hero-banner__title">
+                {{ collection.title }}
+              </h1>
+            {%- endif -%}
+
+            {%- if section.settings.show_description and collection.description != blank -%}
+              <div class="collection-hero-banner__description">
+                {{ section.settings.custom_description | default: collection.description }}
+              </div>
+            {%- elsif section.settings.custom_description != blank -%}
+              <div class="collection-hero-banner__description">
+                {{ section.settings.custom_description }}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.button_label != blank -%}
+              <a
+                href="{{ section.settings.button_link | default: '#ProductGrid' }}"
+                class="collection-hero-banner__button button button--primary"
+              >
+                {{ section.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endif %}
+
+{% stylesheet %}
+  .collection-hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: var(--hero-min-height-mobile);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-hero-banner {
+      min-height: var(--hero-min-height);
+    }
+  }
+
+  .collection-hero-banner__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .collection-hero-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .collection-hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, var(--overlay-opacity)) 0%,
+      rgba(0, 0, 0, calc(var(--overlay-opacity) * 0.6)) 50%,
+      rgba(0, 0, 0, calc(var(--overlay-opacity) * 0.2)) 100%
+    );
+    z-index: 1;
+  }
+
+  .collection-hero-banner__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-block: 40px;
+    padding-inline: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-hero-banner__content {
+      padding-block: 60px;
+      padding-inline: 40px;
+    }
+  }
+
+  .collection-hero-banner__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+
+  .collection-hero-banner__text-wrapper {
+    width: 100%;
+  }
+
+  .collection-hero-banner__text-wrapper.text-align-left {
+    text-align: left;
+    margin-inline-end: auto;
+  }
+
+  .collection-hero-banner__text-wrapper.text-align-center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .collection-hero-banner__text-wrapper.text-align-right {
+    text-align: right;
+    margin-inline-start: auto;
+  }
+
+  .collection-hero-banner__title {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin: 0 0 0.5em;
+    color: var(--color-foreground);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .collection-hero-banner__description {
+    font-size: clamp(0.9rem, 2vw, 1.125rem);
+    line-height: 1.6;
+    margin-bottom: 1.5em;
+    color: var(--color-foreground);
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .collection-hero-banner__description p {
+    margin: 0;
+  }
+
+  .collection-hero-banner__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 32px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 50px;
+    background-color: var(--color-button);
+    color: var(--color-button-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .collection-hero-banner__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-hero-banner__button {
+      padding: 14px 40px;
+      font-size: 0.9375rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Hero Banner",
+  "tag": "section",
+  "class": "collection-hero-banner-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section uses the collection metafield 'custom.herobannner' (type: Image) as the background image. Make sure to set up this metafield in your collection admin."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section height (Desktop)",
+      "min": 200,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "label": "Section height (Mobile)",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "custom_description",
+      "label": "Custom description (optional)",
+      "info": "Leave empty to use collection description"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave empty to scroll to products"
+    },
+    {
+      "type": "header",
+      "content": "Fallback"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image",
+      "info": "Displayed when no metafield image is set"
+    },
+    {
+      "type": "header",
+      "content": "Color scheme"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Hero Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,219 @@
+{%- liquid
+  assign accent_color = section.settings.accent_color | default: '#38aa3d'
+  assign body_text_color = section.settings.body_text_color | default: '#111417'
+  assign contact_background = section.settings.contact_background | default: '#1b1f24'
+  assign contact_text_color = section.settings.contact_text_color | default: '#f5f5f5'
+-%}
+
+<section class="policy policy--{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="policy__wrapper page-width">
+    <header class="policy__header">
+      <p class="policy__eyebrow">Delivery &amp; Dispatch</p>
+      <h1 class="policy__title">Shipping Policy – SOUGAT (Shubhalaxmi Food Industry)</h1>
+    </header>
+
+    <div class="policy__lede">
+      <p>Shipping charges may apply on orders placed on the SOUGAT website.</p>
+      <p>Shipping charges depend on factors such as delivery location, order size, and product weight, and may change from time to time.</p>
+      <ul class="policy__list">
+        <li>Any applicable shipping charges will be clearly shown before checkout and are charged separately from the product price.</li>
+        <li>Each order can be delivered to one address only, as mentioned at the time of placing the order.</li>
+        <li>To deliver products to multiple addresses, separate orders must be placed.</li>
+        <li>Orders are shipped from our SOUGAT facility or authorized partner facilities to locations across India.</li>
+        <li>We aim to dispatch orders within 5–10 business days after order confirmation and successful payment.</li>
+        <li>Deliveries are usually made between 9:00 AM and 6:00 PM, on working days (Thursday to Wednesday), excluding public holidays.</li>
+        <li>If delivery is delayed or returned due to incorrect address, contact details, or any error from the customer’s side, any additional re-shipping cost will be borne by the customer.</li>
+        <li>If you notice that the package is damaged, opened, or tampered with at the time of delivery, please do not accept the package.</li>
+        <li>Immediately contact us with your order reference number and wait for further instructions from our team.</li>
+        <li>If you face any delivery-related issues, please reach out to us at operations@shubhalaxmifoodproducts.com.</li>
+      </ul>
+    </div>
+
+    <div class="policy__contact" style="--contact-background: {{ contact_background }}; --contact-text: {{ contact_text_color }};">
+      <div>
+        <p class="policy__eyebrow policy__eyebrow--light">Need shipping support?</p>
+        <div class="policy__contact-grid">
+          <div>
+            <p class="policy__contact-label">Email</p>
+            <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+          </div>
+          {% if section.settings.contact_phone != blank %}
+            <div>
+              <p class="policy__contact-label">Phone</p>
+              <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone }}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <p class="policy__brand">{{ section.settings.brand_line }}</p>
+  </div>
+</section>
+
+<style>
+  .policy--{{ section.id }} {
+    padding-block: clamp(48px, 6vw, 108px);
+  }
+
+  .policy--{{ section.id }} .policy__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 56px);
+  }
+
+  .policy--{{ section.id }} .policy__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .policy--{{ section.id }} .policy__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: {{ accent_color }};
+    margin: 0;
+  }
+
+  .policy--{{ section.id }} .policy__eyebrow--light {
+    color: var(--contact-text);
+  }
+
+  .policy--{{ section.id }} .policy__title {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: {{ accent_color }};
+  }
+
+  .policy--{{ section.id }} .policy__lede {
+    max-width: 860px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .policy--{{ section.id }} .policy__lede p {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: {{ body_text_color }};
+  }
+
+  .policy--{{ section.id }} .policy__list {
+    margin: 0;
+    padding-left: 20px;
+    color: {{ body_text_color }};
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .policy--{{ section.id }} .policy__list li::marker {
+    color: {{ accent_color }};
+  }
+
+  .policy--{{ section.id }} .policy__contact {
+    border-radius: 0;
+    background: var(--contact-background);
+    color: var(--contact-text);
+    padding: clamp(28px, 5vw, 48px);
+    max-width: 860px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .policy--{{ section.id }} .policy__contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+  }
+
+  .policy--{{ section.id }} .policy__contact-label {
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  .policy--{{ section.id }} .policy__contact a {
+    color: var(--contact-text);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .policy--{{ section.id }} .policy__brand {
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: {{ accent_color }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Shipping Policy",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#38aa3d"
+    },
+    {
+      "type": "color",
+      "id": "body_text_color",
+      "label": "Body text color",
+      "default": "#111417"
+    },
+    {
+      "type": "color",
+      "id": "contact_background",
+      "label": "Contact block background",
+      "default": "#1b1f24"
+    },
+    {
+      "type": "color",
+      "id": "contact_text_color",
+      "label": "Contact block text color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Support email",
+      "default": "operations@shubhalaxmifoodproducts.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Support phone",
+   
+    },
+    {
+      "type": "text",
+      "id": "brand_line",
+      "label": "Brand line",
+      "default": "SOUGAT – A Brand of Shubhalaxmi Food Industry"
+    }
+  ]
+}
+{% endschema %}

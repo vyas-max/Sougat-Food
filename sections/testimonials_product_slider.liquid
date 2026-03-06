@@ -1,0 +1,1011 @@
+{% liquid
+  assign testimonial_blocks = section.blocks | where: 'type', 'testimonial'
+  assign total_testimonials = testimonial_blocks | size
+  assign accent_color = section.settings.accent_color | default: '#ff7a45'
+%}
+
+<style>
+  #testimonials-product-slider-{{ section.id }} {
+    --tps-shell-max: 1240px;
+    --tps-card-gap: clamp(20px, 3vw, 40px);
+    --tps-card-radius: 32px;
+    --tps-card-bg: rgba(255, 255, 255, 0.92);
+    --tps-card-border: rgba(255, 255, 255, 0.45);
+    {% comment %} --tps-card-shadow: 0 55px 120px rgba(15, 23, 42, 0.2); {% endcomment %}
+    --tps-accent: {{ accent_color }};
+    padding-block: var(--section-padding-top, 72px) var(--section-padding-bottom, 72px);
+    position: relative;
+    background: var(--color-background);
+    overflow: hidden;
+  }
+
+  #testimonials-product-slider-{{ section.id }}::before,
+  #testimonials-product-slider-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent 65%);
+    filter: blur(60px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }}::before {
+    top: -120px;
+    left: -40px;
+  }
+
+  #testimonials-product-slider-{{ section.id }}::after {
+    bottom: -160px;
+    right: -60px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-shell {
+    width: min(100%, var(--tps-shell-max));
+    margin-inline: auto;
+    padding: clamp(32px, 5vw, 64px);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 65px 140px rgba(15, 23, 42, 0.25);
+    backdrop-filter: blur(24px);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-shell--full-width {
+    width: calc(100% - clamp(16px, 5vw, 96px));
+    max-width: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: clamp(24px, 4vw, 56px);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-heading {
+    flex: 1 1 460px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    color: rgb(var(--color-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.72rem;
+    margin-bottom: 18px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tps-accent);
+    box-shadow: 0 0 12px rgba(255, 122, 69, 0.65);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-title {
+    font-size: clamp(2.4rem, 4vw, 3.85rem);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-foreground));
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-description {
+    max-width: 540px;
+    margin: 0;
+    color: rgba(var(--color-foreground-rgb, var(--color-foreground)), 0.75);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    border: none;
+    background: var(--tps-accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 18px 35px rgba(255, 122, 69, 0.35);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-cta svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 45px rgba(255, 122, 69, 0.45);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 180px;
+    align-items: flex-end;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-pagination {
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground-rgb, var(--color-foreground)), 0.6);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-nav {
+    display: inline-flex;
+    gap: 12px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.25);
+    color: rgb(var(--color-foreground));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-nav-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-nav-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-carousel {
+    margin-top: clamp(22px, 5vw, 34px);
+    position: relative;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-track {
+    display: flex;
+    gap: var(--tps-card-gap);
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-card {
+    flex: 0 0 min(380px, calc(33% - var(--tps-card-gap)));
+    min-width: 280px;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--tps-card-radius);
+    background: var(--tps-card-bg);
+    border: 1px solid var(--tps-card-border);
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    box-shadow: var(--tps-card-shadow);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-card::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(var(--tps-card-radius) - 2px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-card__glow {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 55%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 216, 196, 0.45) 100%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-rating__stars {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-rating__stars svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffce80;
+    filter: drop-shadow(0 2px 6px rgba(255, 206, 128, 0.45));
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-rating__value {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 42, 0.55);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-review-text {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(15, 23, 42, 0.88);
+    position: relative;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-review-text::before,
+  #testimonials-product-slider-{{ section.id }} .tps-review-text::after {
+    content: '“';
+    position: absolute;
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(var(--color-foreground-rgb, var(--color-foreground)), 0.08);
+    font-family: inherit;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-review-text::before {
+    top: -20px;
+    left: -10px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-review-text::after {
+    content: '”';
+    bottom: -30px;
+    right: 6px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-reviewer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1 1 auto;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.08);
+    flex-shrink: 0;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-avatar span {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(15, 23, 42, 0.55);
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-reviewer strong {
+    display: block;
+    font-size: 1rem;
+    color: rgb(var(--color-foreground));
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-reviewer span {
+    font-size: 0.85rem;
+    color: rgba(15, 23, 42, 0.55);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip {
+    flex: 0 1 auto;
+    padding: 10px 14px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.6);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip:hover {
+    border-color: var(--tps-accent);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__media {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(15, 23, 42, 0.08);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip:hover .tps-product-chip__media img {
+    transform: scale(1.08);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__body {
+    flex: 1;
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__tagline {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 42, 0.55);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__title {
+    margin: 2px 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-product-chip__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--tps-accent);
+  }
+
+  #testimonials-product-slider-{{ section.id }} .tps-empty {
+    margin-top: 24px;
+    color: rgba(var(--color-foreground-rgb, var(--color-foreground)), 0.6);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  #testimonials-product-slider-{{ section.id }}.tps-single-card .tps-nav-btn {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1024px) {
+    #testimonials-product-slider-{{ section.id }} .tps-shell {
+      border-radius: 32px;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-controls {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-card {
+      flex: 0 0 min(420px, 75%);
+    }
+  }
+
+  @media (max-width: 699px) {
+    #testimonials-product-slider-{{ section.id }} .tps-shell {
+      padding: 28px;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-header {
+      gap: 20px;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-card {
+      min-width: 85vw;
+      flex: 0 0 85vw;
+      padding: 24px;
+      gap: 22px;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-card__footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #testimonials-product-slider-{{ section.id }} .tps-product-chip {
+      width: 100%;
+    }
+  }
+</style>
+
+{% assign slider_id = 'tps-track-' | append: section.id %}
+
+<section
+  id="testimonials-product-slider-{{ section.id }}"
+  class="testimonials-product-slider color-{{ section.settings.color_scheme }}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="tps-shell tps-shell--{{ section.settings.section_width }}">
+    <div class="tps-header">
+      <div class="tps-heading">
+        {% if section.settings.eyebrow != blank %}
+          <p class="tps-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        <h2 class="tps-title">
+          {{ section.settings.heading | default: 'Customer voices' | escape }}
+        </h2>
+        {% if section.settings.description != blank %}
+          <p class="tps-description">{{ section.settings.description | escape | newline_to_br }}</p>
+        {% endif %}
+        {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+          <a class="tps-cta" href="{{ section.settings.cta_link }}">
+            <span>{{ section.settings.cta_label | escape }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+      <div class="tps-controls" aria-label="Testimonials slider controls">
+        <span class="tps-pagination" aria-live="polite">{{ total_testimonials | default: 0 | plus: 0 | prepend: '01 / 0' }}</span>
+        <div class="tps-nav">
+          <button
+            type="button"
+            class="tps-nav-btn tps-prev"
+            aria-label="Previous testimonials"
+            aria-controls="{{ slider_id }}"
+            data-section-id="{{ section.id }}"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="tps-nav-btn tps-next"
+            aria-label="Next testimonials"
+            aria-controls="{{ slider_id }}"
+            data-section-id="{{ section.id }}"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {% if total_testimonials > 0 %}
+      <div class="tps-carousel" role="region" aria-label="{{ section.settings.heading | default: 'Customer testimonials' | escape }}">
+        <div class="tps-track" id="{{ slider_id }}">
+          {% for block in testimonial_blocks %}
+            {% assign reviewer_meta = block.settings.reviewer_role %}
+            {% if block.settings.reviewer_location != blank %}
+              {% if reviewer_meta != blank %}
+                {% assign reviewer_meta = reviewer_meta | append: ' &middot; ' | append: block.settings.reviewer_location %}
+              {% else %}
+                {% assign reviewer_meta = block.settings.reviewer_location %}
+              {% endif %}
+            {% endif %}
+            <article class="tps-card" {{ block.shopify_attributes }}>
+              <span class="tps-card__glow" aria-hidden="true"></span>
+              {% if block.settings.rating > 0 %}
+                <div class="tps-rating" aria-label="Rated {{ block.settings.rating }} out of 5">
+                  <span class="tps-rating__stars">
+                    {% for i in (1..5) %}
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="{% if i <= block.settings.rating %}#ffbd59{% else %}rgba(15,23,42,0.12){% endif %}" />
+                      </svg>
+                    {% endfor %}
+                  </span>
+                  <span class="tps-rating__value">{{ block.settings.rating }}/5</span>
+                </div>
+              {% endif %}
+
+              {% if block.settings.review_text != blank %}
+                <p class="tps-review-text">{{ block.settings.review_text | escape | newline_to_br }}</p>
+              {% endif %}
+
+              <div class="tps-card__footer">
+                <div class="tps-reviewer">
+                  <div class="tps-avatar">
+                    {% if block.settings.reviewer_avatar != blank %}
+                      {{
+                        block.settings.reviewer_avatar
+                        | image_url: width: 120
+                        | image_tag: loading: 'lazy', sizes: '64px', alt: block.settings.reviewer_name | escape
+                      }}
+                    {% else %}
+                      <span>{{ block.settings.reviewer_name | slice: 0, 1 | upcase | default: '?' }}</span>
+                    {% endif %}
+                  </div>
+                  <div>
+                    <strong>{{ block.settings.reviewer_name | default: 'Happy Customer' | escape }}</strong>
+                    {% if reviewer_meta != blank %}
+                      <span>{{ reviewer_meta }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+
+                {% if block.settings.product_link != blank %}
+                  <a
+                    class="tps-product-chip"
+                    href="{{ block.settings.product_link }}"
+                    aria-label="View {{ block.settings.product_title | escape }}"
+                  >
+                {% else %}
+                  <div class="tps-product-chip" role="presentation">
+                {% endif %}
+                    <div class="tps-product-chip__media">
+                      {% if block.settings.product_image != blank %}
+                        {{
+                          block.settings.product_image
+                          | image_url: width: 200
+                          | image_tag: loading: 'lazy', sizes: '64px', alt: block.settings.product_title | escape
+                        }}
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                    </div>
+                    <div class="tps-product-chip__body">
+                      {% if block.settings.product_tagline != blank %}
+                        <span class="tps-product-chip__tagline">{{ block.settings.product_tagline | escape }}</span>
+                      {% endif %}
+                      {% if block.settings.product_title != blank %}
+                        <p class="tps-product-chip__title">{{ block.settings.product_title | escape }}</p>
+                      {% endif %}
+                      {% if block.settings.product_link != blank %}
+                        <span class="tps-product-chip__cta">
+                          Shop now
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                          </svg>
+                        </span>
+                      {% endif %}
+                    </div>
+                {% if block.settings.product_link != blank %}
+                  </a>
+                {% else %}
+                  </div>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <p class="tps-empty">Add testimonial blocks to populate this slider.</p>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (function() {
+    const registry = window.__SougatTestimonialsSlider || (window.__SougatTestimonialsSlider = {});
+
+    function formatNumber(value) {
+      return value < 10 ? '0' + value : String(value);
+    }
+
+    function destroyTestimonialsProductSlider(sectionId) {
+      const teardown = registry[sectionId];
+      if (typeof teardown === 'function') {
+        teardown();
+        delete registry[sectionId];
+      }
+    }
+
+    function initTestimonialsProductSlider(sectionId) {
+      destroyTestimonialsProductSlider(sectionId);
+
+      const section = document.getElementById('testimonials-product-slider-' + sectionId);
+      if (!section) return;
+
+      const track = section.querySelector('.tps-track');
+      const cards = track ? Array.from(track.querySelectorAll('.tps-card')) : [];
+      if (!track || !cards.length) return;
+
+      const prevBtn = section.querySelector('.tps-prev');
+      const nextBtn = section.querySelector('.tps-next');
+      const pagination = section.querySelector('.tps-pagination');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let currentIndex = 0;
+      let scrollAnimationFrame;
+
+      function getGap() {
+        const styles = window.getComputedStyle(track);
+        const gapValue = parseFloat(styles.columnGap || styles.gap || 0);
+        return Number.isNaN(gapValue) ? 0 : gapValue;
+      }
+
+      function getVisibleCount() {
+        const firstCard = cards[0];
+        if (!firstCard) return 1;
+        const cardWidth = firstCard.getBoundingClientRect().width + getGap();
+        if (!cardWidth) return 1;
+        return Math.max(1, Math.round(track.clientWidth / cardWidth));
+      }
+
+      function getMaxIndex() {
+        return Math.max(0, cards.length - getVisibleCount());
+      }
+
+      function updatePagination() {
+        if (!pagination) return;
+        pagination.textContent = formatNumber(Math.min(currentIndex + 1, cards.length)) + ' / ' + formatNumber(cards.length);
+      }
+
+      function updateNavState() {
+        if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+        if (nextBtn) nextBtn.disabled = currentIndex >= getMaxIndex();
+        section.classList.toggle('tps-single-card', cards.length <= getVisibleCount());
+      }
+
+      function scrollToIndex(index, smooth = true) {
+        const targetIndex = Math.max(0, Math.min(index, getMaxIndex()));
+        const card = cards[targetIndex];
+        if (!card) return;
+        const offset = card.offsetLeft - track.offsetLeft;
+        track.scrollTo({
+          left: offset,
+          behavior: !smooth || prefersReducedMotion ? 'auto' : 'smooth'
+        });
+        currentIndex = targetIndex;
+        updatePagination();
+        updateNavState();
+      }
+
+      function handlePrev() {
+        scrollToIndex(currentIndex - 1);
+      }
+
+      function handleNext() {
+        scrollToIndex(currentIndex + 1);
+      }
+
+      function handleKey(trigger) {
+        return function(event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            trigger();
+          }
+        };
+      }
+
+      function handleScroll() {
+        if (scrollAnimationFrame) {
+          window.cancelAnimationFrame(scrollAnimationFrame);
+        }
+        scrollAnimationFrame = window.requestAnimationFrame(() => {
+          const scrollLeft = track.scrollLeft;
+          let closestIndex = 0;
+          let minDistance = Number.POSITIVE_INFINITY;
+
+          cards.forEach((card, index) => {
+            const distance = Math.abs(card.offsetLeft - track.offsetLeft - scrollLeft);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestIndex = index;
+            }
+          });
+
+          closestIndex = Math.max(0, Math.min(closestIndex, getMaxIndex()));
+
+          if (closestIndex !== currentIndex) {
+            currentIndex = closestIndex;
+            updatePagination();
+            updateNavState();
+          }
+        });
+      }
+
+      function handleResize() {
+        scrollToIndex(currentIndex, false);
+      }
+
+      track.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleResize);
+      prevBtn?.addEventListener('click', handlePrev);
+      nextBtn?.addEventListener('click', handleNext);
+
+      const prevKeyHandler = handleKey(handlePrev);
+      const nextKeyHandler = handleKey(handleNext);
+      prevBtn?.addEventListener('keydown', prevKeyHandler);
+      nextBtn?.addEventListener('keydown', nextKeyHandler);
+
+      scrollToIndex(0, false);
+
+      registry[sectionId] = function teardown() {
+        track.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleResize);
+        prevBtn?.removeEventListener('click', handlePrev);
+        nextBtn?.removeEventListener('click', handleNext);
+        prevBtn?.removeEventListener('keydown', prevKeyHandler);
+        nextBtn?.removeEventListener('keydown', nextKeyHandler);
+        if (scrollAnimationFrame) {
+          window.cancelAnimationFrame(scrollAnimationFrame);
+        }
+      };
+    }
+
+    const sectionId = '{{ section.id }}';
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => initTestimonialsProductSlider(sectionId));
+    } else {
+      initTestimonialsProductSlider(sectionId);
+    }
+
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail && event.detail.sectionId === sectionId) {
+        initTestimonialsProductSlider(sectionId);
+      }
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      if (event.detail && event.detail.sectionId === sectionId) {
+        destroyTestimonialsProductSlider(sectionId);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials Slider",
+  "tag": "section",
+  "class": "section-testimonials-product-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kind words from our customers"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow / kicker text",
+      "default": "Customer stories"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Real reviews from people who reach for SougatFoods every single day."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Explore the range"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#ff7a45"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "Amazing quality! The product exceeded my expectations. Will definitely order again."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Sarah Johnson"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_role",
+          "label": "Reviewer role or note",
+          "default": "Verified buyer"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_location",
+          "label": "Reviewer location"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_avatar",
+          "label": "Reviewer avatar",
+          "info": "Recommended size: 120x120"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image",
+          "info": "Recommended size: 200x200"
+        },
+        {
+          "type": "text",
+          "id": "product_tagline",
+          "label": "Product tagline",
+          "default": "Customer favorite"
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product title",
+          "default": "Freeze Dried Strawberry Mix"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product link",
+          "info": "Optional: makes the product chip clickable"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "review_text": "Amazing quality! The freeze dried fruits are so crunchy and flavorful. My kids love them as snacks!",
+            "reviewer_name": "Sarah Johnson",
+            "reviewer_role": "Nutrition coach",
+            "product_tagline": "Bestseller",
+            "product_title": "Freeze Dried Strawberry Mix"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "review_text": "The best healthy snacks I've found. Perfect for work and travel. Highly recommend the mango variety!",
+            "reviewer_name": "Michael Chen",
+            "reviewer_role": "Busy founder",
+            "product_tagline": "Travel essential",
+            "product_title": "Tropical Fruit Assortment"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 4,
+            "review_text": "Great taste and excellent packaging. The fruits stay fresh for a long time. Will buy again!",
+            "reviewer_name": "Priya Patel",
+            "reviewer_role": "Verified buyer",
+            "product_tagline": "Family pack",
+            "product_title": "Mixed Berry Crunch"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "review_text": "Love these snacks! No added sugar, just pure fruit taste. The apple crisps are my favorite.",
+            "reviewer_name": "Emma Wilson",
+            "reviewer_role": "Wellness editor",
+            "product_tagline": "Limited release",
+            "product_title": "Apple Cinnamon Crisps"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

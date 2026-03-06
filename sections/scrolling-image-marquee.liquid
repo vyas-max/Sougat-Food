@@ -1,0 +1,603 @@
+{% liquid
+  assign padding_top = section.settings.padding_top | default: 80
+  assign padding_bottom = section.settings.padding_bottom | default: 80
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign description = section.settings.description
+  assign button_label = section.settings.button_label
+  assign button_link = section.settings.button_link
+  assign hero_badge = section.settings.hero_badge
+  assign sides = 'left,right' | split: ','
+%}
+
+<section
+  class="scrolling-image-marquee scrolling-image-marquee--{{ section.id }}"
+  style="padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; background: {{ section.settings.background | default: '#f9f4ef' }}; color: {{ section.settings.text_color | default: '#1b1b1b' }};"
+>
+  <div class="scrolling-image-marquee__inner">
+    {% for side in sides %}
+      <div class="scrolling-image-marquee__rail scrolling-image-marquee__rail--{{ side }}">
+        {% assign column_numbers = '1,2' | split: ',' %}
+        {% for column in column_numbers %}
+          {% liquid
+            assign direction = 'forward'
+            if side == 'left' and column == '2'
+              assign direction = 'reverse'
+            elsif side == 'right' and column == '1'
+              assign direction = 'reverse'
+            endif
+          %}
+          <div class="scrolling-image-marquee__column scrolling-image-marquee__column--{{ direction }}">
+            <div class="scrolling-image-marquee__track">
+              {% assign has_items = false %}
+              {% for block in section.blocks %}
+                {% if block.type == 'gallery_image' and block.settings.side == side and block.settings.column == column %}
+                  {% assign has_items = true %}
+                  <div class="scrolling-image-marquee__card" {{ block.shopify_attributes }}>
+                    {% if block.settings.image != blank %}
+                      {{ block.settings.image | image_url: width: 600 | image_tag:
+                        widths: '200, 300, 400, 600',
+                        sizes: '(max-width: 1024px) 35vw, 220px',
+                        class: 'scrolling-image-marquee__image',
+                        alt: block.settings.alt_text | default: block.settings.image.alt | default: heading | default: 'Scrolling item'
+                      }}
+                    {% else %}
+                      <div class="scrolling-image-marquee__placeholder">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+              {% unless has_items %}
+                <div class="scrolling-image-marquee__card scrolling-image-marquee__card--empty">
+                  <div class="scrolling-image-marquee__placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+              {% endunless %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if forloop.first %}
+        <div class="scrolling-image-marquee__hero">
+          <div class="scrolling-image-marquee__hero-media">
+            {% if section.settings.center_image != blank %}
+              {{ section.settings.center_image | image_url: width: 1200 | image_tag:
+                widths: '360, 540, 720, 900, 1200',
+                sizes: '(max-width: 1024px) 70vw, 420px',
+                class: 'scrolling-image-marquee__hero-image',
+                alt: section.settings.center_image.alt | default: heading | default: 'Featured collection'
+              }}
+            {% else %}
+              <div class="scrolling-image-marquee__hero-placeholder">
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {% endif %}
+            <div class="scrolling-image-marquee__hero-content">
+              {% if hero_badge != blank %}
+                <p class="scrolling-image-marquee__badge">{{ hero_badge }}</p>
+              {% endif %}
+              {% if heading != blank %}
+                <h2 class="scrolling-image-marquee__heading">{{ heading }}</h2>
+              {% endif %}
+              {% if subheading != blank %}
+                <p class="scrolling-image-marquee__subheading">{{ subheading }}</p>
+              {% endif %}
+              {% if description != blank %}
+                <p class="scrolling-image-marquee__description">{{ description }}</p>
+              {% endif %}
+              {% if button_label != blank %}
+                <a class="scrolling-image-marquee__button" href="{{ button_link | default: '#' }}">{{ button_label }}</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  .scrolling-image-marquee--{{ section.id }} {
+    --scroll-speed: {{ section.settings.scroll_speed | default: 26 }}s;
+    --card-radius: {{ section.settings.card_radius | default: 20 }}px;
+    --card-bg: {{ section.settings.card_background | default: '#ffffff' }};
+    --card-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+  }
+
+  .scrolling-image-marquee__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 560px) minmax(0, 1fr);
+    column-gap: clamp(8px, 4vw, 18px);
+    row-gap: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding-inline: clamp(0px, 1vw, 12px);
+    align-items: start;
+  }
+
+  .scrolling-image-marquee__rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 260px));
+    justify-content: stretch;
+    gap: clamp(8px, 1.5vw, 18px);
+    align-self: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .scrolling-image-marquee__column {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scrolling-image-marquee__track {
+    --scroll-distance: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1vw, 14px);
+    animation: scrolling-marquee var(--scroll-speed) linear infinite;
+    animation-play-state: running;
+  }
+
+  .scrolling-image-marquee__column--reverse .scrolling-image-marquee__track {
+    animation-direction: reverse;
+  }
+
+  @keyframes scrolling-marquee {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(calc(var(--scroll-distance) * -1));
+    }
+  }
+
+  .scrolling-image-marquee__card {
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .scrolling-image-marquee__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 0;
+    object-fit: cover;
+  }
+
+  .scrolling-image-marquee__placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scrolling-image-marquee__hero {
+    display: flex;
+    justify-content: center;
+  }
+
+  .scrolling-image-marquee__hero-media {
+    position: relative;
+    overflow: hidden;
+    width: min(100%, 560px);
+    aspect-ratio: 3 / 4;
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.25);
+    border-radius: 0;
+  }
+
+  .scrolling-image-marquee__hero-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.55) 100%);
+  }
+
+  .scrolling-image-marquee__hero-image,
+  .scrolling-image-marquee__hero-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .scrolling-image-marquee__hero-placeholder {
+    background: #d8d8d8;
+  }
+
+  .scrolling-image-marquee__hero-content {
+    position: absolute;
+    inset: auto 0 0;
+    padding: clamp(20px, 4vw, 40px);
+    color: #fff;
+    z-index: 2;
+    text-align: left;
+  }
+
+  .scrolling-image-marquee__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .scrolling-image-marquee__heading {
+    margin: 0 0 8px;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .scrolling-image-marquee__subheading {
+    margin: 0 0 8px;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .scrolling-image-marquee__description {
+    margin: 0 0 20px;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .scrolling-image-marquee__button {
+    display: inline-flex;
+    padding: 12px 28px;
+    border-radius: 999px;
+    background: #fefefe;
+    color: #1f2937;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 18px 30px rgba(15, 23, 42, 0.25);
+  }
+
+  .scrolling-image-marquee__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 38px rgba(15, 23, 42, 0.3);
+  }
+
+  @media screen and (max-width: 1199px) {
+    .scrolling-image-marquee__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: clamp(24px, 10vw, 56px);
+      justify-items: center;
+    }
+
+    .scrolling-image-marquee__rail {
+      order: 3;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 12px;
+    }
+
+    .scrolling-image-marquee__hero {
+      order: 1;
+      width: min(100%, 540px);
+    }
+
+    .scrolling-image-marquee__rail--left {
+      order: 0;
+    }
+
+    .scrolling-image-marquee__rail--right {
+      order: 2;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .scrolling-image-marquee__rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .scrolling-image-marquee__hero-media {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+    }
+
+    .scrolling-image-marquee__hero-content {
+      padding: 20px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.scrolling-image-marquee');
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+    sections.forEach(function(section) {
+      const hero = section.querySelector('.scrolling-image-marquee__hero-media');
+      const rails = section.querySelectorAll('.scrolling-image-marquee__rail');
+      const tracks = section.querySelectorAll('.scrolling-image-marquee__track');
+      if (!hero || rails.length === 0 || tracks.length === 0) return;
+
+      const resetInlineHeights = function() {
+        rails.forEach(function(rail) {
+          rail.style.height = '';
+          rail.style.maxHeight = '';
+          rail.querySelectorAll('.scrolling-image-marquee__column').forEach(function(col) {
+            col.style.height = '';
+            col.style.maxHeight = '';
+          });
+        });
+      };
+
+      const getMobileHeight = function(track) {
+        if (!track) return null;
+        const sample = track.querySelector('.scrolling-image-marquee__image, .scrolling-image-marquee__placeholder');
+        if (!sample) return null;
+        const cardHeight = sample.offsetHeight;
+        if (!cardHeight) return null;
+        const trackStyles = window.getComputedStyle(track);
+        const rowGap = parseFloat(trackStyles.rowGap || trackStyles.gap || '0') || 0;
+        return cardHeight * 2 + rowGap;
+      };
+
+      const ensureTrackFill = function(target) {
+        tracks.forEach(function(track) {
+          const displayHeight = typeof target === 'function' ? target(track) : target;
+          if (!displayHeight) return;
+
+          const baseHtml = track.dataset.seedHtml || track.innerHTML;
+          track.dataset.seedHtml = baseHtml;
+
+          if (!track.dataset.locked) {
+            track.innerHTML = baseHtml + baseHtml;
+            track.dataset.locked = 'true';
+          }
+
+          let guard = 0;
+          while (track.scrollHeight < displayHeight * 2 && guard < 6) {
+            track.insertAdjacentHTML('beforeend', baseHtml);
+            guard++;
+          }
+
+          track.style.setProperty('--scroll-distance', track.scrollHeight / 2 + 'px');
+        });
+      };
+
+      const setRailHeight = function() {
+        resetInlineHeights();
+
+        const heroHeight = hero.offsetHeight;
+        const useMobileHeight = mobileQuery.matches;
+
+        if (!useMobileHeight) {
+          if (!heroHeight) return;
+          ensureTrackFill(heroHeight);
+
+          rails.forEach(function(rail) {
+            rail.style.height = heroHeight + 'px';
+            rail.style.maxHeight = heroHeight + 'px';
+            rail.querySelectorAll('.scrolling-image-marquee__column').forEach(function(col) {
+              col.style.height = heroHeight + 'px';
+              col.style.maxHeight = heroHeight + 'px';
+            });
+          });
+          return;
+        }
+
+        ensureTrackFill(getMobileHeight);
+
+        rails.forEach(function(rail) {
+          let maxHeight = 0;
+
+          rail.querySelectorAll('.scrolling-image-marquee__column').forEach(function(col) {
+            const track = col.querySelector('.scrolling-image-marquee__track');
+            const mobileHeight = getMobileHeight(track);
+            if (mobileHeight) {
+              col.style.height = mobileHeight + 'px';
+              col.style.maxHeight = mobileHeight + 'px';
+              if (mobileHeight > maxHeight) {
+                maxHeight = mobileHeight;
+              }
+            }
+          });
+
+          if (maxHeight) {
+            rail.style.height = maxHeight + 'px';
+            rail.style.maxHeight = maxHeight + 'px';
+          }
+        });
+      };
+
+      setRailHeight();
+
+      const resizeObserver = new ResizeObserver(setRailHeight);
+      resizeObserver.observe(hero);
+
+      window.addEventListener('resize', setRailHeight);
+      window.addEventListener('load', setRailHeight);
+
+      section.addEventListener('scroll', setRailHeight, { passive: true });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Scrolling image marquee",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Badge text",
+      "default": "Nutty goodness"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Nutty Goodness Daily"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Contact us for health tips & offers."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "center_image",
+      "label": "Center image"
+    },
+    {
+      "type": "range",
+      "id": "hero_radius",
+      "label": "Center image border radius",
+      "min": 12,
+      "max": 60,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color",
+      "default": "#f9f4ef"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Base text color",
+      "default": "#1b1b1b"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Image card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Image card radius",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "default": 26,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 10,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 10,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gallery_image",
+      "name": "Gallery image",
+      "settings": [
+        {
+          "type": "select",
+          "id": "side",
+          "label": "Column group",
+          "default": "left",
+          "options": [
+            { "value": "left", "label": "Left grid" },
+            { "value": "right", "label": "Right grid" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Column",
+          "default": "1",
+          "options": [
+            { "value": "1", "label": "Column 1" },
+            { "value": "2", "label": "Column 2" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 40,
+  "presets": [
+    {
+      "name": "Scrolling image marquee",
+      "category": "Image",
+      "blocks": [
+        { "type": "gallery_image" },
+        { "type": "gallery_image", "settings": { "column": "2" } },
+        { "type": "gallery_image", "settings": { "side": "right" } },
+        { "type": "gallery_image", "settings": { "side": "right", "column": "2" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

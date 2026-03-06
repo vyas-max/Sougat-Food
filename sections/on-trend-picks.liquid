@@ -1,0 +1,608 @@
+{% comment %}
+  On-Trend Picks Carousel Section
+  Safari-compatible and mobile responsive
+{% endcomment %}
+
+<style>
+  .on-trend-picks {
+    padding: 50px 0;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    margin: 0 clamp(12px, 4vw, 48px);
+  }
+
+  .on-trend-picks__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .on-trend-picks__title {
+    margin: 0 0 20px;
+    line-height: 1.2;
+    color: {{ section.settings.title_color | default: '#2b2b2b' }};
+  }
+
+  .on-trend-picks__subtitle {
+    font-size: 1.25rem;
+    color: #666;
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+
+  .on-trend-picks__carousel-wrapper {
+    position: sticky;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    border-radius: 28px;
+    overflow: hidden;
+  }
+
+  .on-trend-picks__carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0;
+    padding: 40px 60px;
+    align-items: center;
+  }
+
+  .on-trend-picks__carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .on-trend-picks__slide {
+    flex: 0 0 33.333%;
+    scroll-snap-align: center;
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #f5f5f5;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                scale 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease,
+                box-shadow 0.4s ease,
+                z-index 0.4s ease,
+                margin 0.4s ease;
+    cursor: pointer;
+    margin: 0 -20px;
+    opacity: 0.6;
+    transform: scale(0.85) translateZ(0);
+    z-index: 1;
+  }
+
+  .on-trend-picks__slide--active {
+    transform: scale(1.1) translateZ(50px);
+    opacity: 1;
+    
+    z-index: 10;
+    margin: 0 10px;
+  }
+
+  .on-trend-picks__slide {
+    cursor: pointer;
+  }
+  
+  .on-trend-picks__slide:not(.on-trend-picks__slide--active):hover {
+    opacity: 0.75;
+  }
+
+  .on-trend-picks__slide--active:hover {
+    transform: scale(1.1) translateZ(50px);
+  }
+
+  .on-trend-picks__slide-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+
+  .on-trend-picks__slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    color: white;
+  }
+
+  .on-trend-picks__slide-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .on-trend-picks__slide-description {
+    font-size: 14px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+  }
+
+  .on-trend-picks__slide-button {
+    display: inline-block;
+    padding: 10px 25px;
+    background: white;
+    color: #333;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  .on-trend-picks__slide-button:hover {
+    background: #333;
+    color: white;
+    transform: scale(1.05);
+  }
+
+  .on-trend-picks__progress {
+    margin-top: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .on-trend-picks__progress-line {
+    position: relative;
+    height: 2px;
+    background: #e0e0e0;
+    overflow: hidden;
+  }
+
+  .on-trend-picks__progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #333;
+    transition: width 0.3s ease;
+    width: 33.333%;
+  }
+
+  /* Tablet styles */
+  @media (max-width: 1024px) {
+    .on-trend-picks__slide {
+      flex: 0 0 45%;
+      margin: 0 -10px;
+    }
+    
+    .on-trend-picks__slide--active {
+      transform: scale(1.05) translateZ(30px);
+      margin: 0 5px;
+    }
+    
+    .on-trend-picks__title {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .on-trend-picks {
+      padding: 30px 0;
+      border-radius: 24px;
+    }
+
+    .on-trend-picks__title {
+      font-size: 2rem;
+    }
+
+    .on-trend-picks__subtitle {
+      font-size: 1.25rem;
+    }
+
+    .on-trend-picks__slide {
+      flex: 0 0 85%;
+      margin: 0 10px;
+      scroll-snap-align: center;
+    }
+
+    .on-trend-picks__carousel {
+      gap: 0;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .on-trend-picks__slide--active {
+      transform: scale(1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin: 0 10px;
+    }
+    
+    .on-trend-picks__slide:not(.on-trend-picks__slide--active) {
+      transform: scale(0.9);
+      opacity: 0.8;
+    }
+
+    .on-trend-picks__slide-title {
+      font-size: 20px;
+    }
+
+    .on-trend-picks__slide-content {
+      padding: 20px 15px;
+    }
+
+    .on-trend-picks__progress {
+      max-width: 400px;
+    }
+  }
+
+  /* Small mobile styles */
+  @media (max-width: 480px) {
+    .on-trend-picks__slide {
+      flex: 0 0 90%;
+      margin: 0 5px;
+      border-radius: 20px;
+    }
+    
+    .on-trend-picks__slide--active {
+      margin: 0 5px;
+    }
+    
+    .on-trend-picks__carousel {
+      padding: 15px;
+    }
+    
+    .on-trend-picks__progress {
+      max-width: 300px;
+      margin-top: 20px;
+    }
+    
+    .on-trend-picks__slide-title {
+      font-size: 18px;
+    }
+    
+    .on-trend-picks__slide-description {
+      font-size: 13px;
+    }
+    
+    .on-trend-picks__slide-button {
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+  }
+</style>
+
+<section class="on-trend-picks" id="on-trend-picks-{{ section.id }}">
+  <div class="on-trend-picks__header">
+    <h2 class="on-trend-picks__title">{{ section.settings.title }}</h2>
+    <p class="on-trend-picks__subtitle">{{ section.settings.subtitle }}</p>
+  </div>
+
+  <div class="on-trend-picks__carousel-wrapper">
+    <div class="on-trend-picks__carousel">
+      {% for block in section.blocks %}
+        <div class="on-trend-picks__slide" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}
+            <img 
+              class="on-trend-picks__slide-image"
+              src="{{ block.settings.image | image_url: width: 600 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 400 }} 400w,
+                {{ block.settings.image | image_url: width: 600 }} 600w,
+                {{ block.settings.image | image_url: width: 800 }} 800w
+              "
+              sizes="(max-width: 768px) 85vw, (max-width: 1024px) 50vw, 33vw"
+              alt="{{ block.settings.title }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="on-trend-picks__slide-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+          {% endif %}
+          
+          <div class="on-trend-picks__slide-content">
+            <h3 class="on-trend-picks__slide-title">{{ block.settings.title }}</h3>
+            <p class="on-trend-picks__slide-description">{{ block.settings.description }}</p>
+            {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+              <a href="{{ block.settings.button_link }}" class="on-trend-picks__slide-button">
+                {{ block.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="on-trend-picks__progress">
+    <div class="on-trend-picks__progress-line">
+      <div class="on-trend-picks__progress-fill"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    const sectionId = 'on-trend-picks-{{ section.id }}';
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const carousel = section.querySelector('.on-trend-picks__carousel');
+    const slides = carousel.querySelectorAll('.on-trend-picks__slide');
+    const progressFill = section.querySelector('.on-trend-picks__progress-fill');
+    
+    let currentIndex = 1; // Start with second slide (will be centered)
+    let isScrolling = false;
+    
+    // Get number of visible slides based on screen width
+    function getVisibleSlides() {
+      if (window.innerWidth <= 480) return 1;
+      if (window.innerWidth <= 768) return 1;
+      if (window.innerWidth <= 1024) return 2;
+      return 3;
+    }
+    
+    // Update active slide styling
+    function updateActiveSlide() {
+      slides.forEach((slide, index) => {
+        if (index === currentIndex) {
+          slide.classList.add('on-trend-picks__slide--active');
+        } else {
+          slide.classList.remove('on-trend-picks__slide--active');
+        }
+      });
+    }
+    
+    // Update progress bar
+    function updateProgress() {
+      const progress = ((currentIndex + 1) / slides.length) * 100;
+      progressFill.style.width = progress + '%';
+    }
+    
+    // Scroll to slide
+    function scrollToSlide(index) {
+      // Allow scrolling to any slide
+      index = Math.max(0, Math.min(index, slides.length - 1));
+      
+      if (isScrolling) return;
+      
+      isScrolling = true;
+      currentIndex = index;
+      
+      const targetSlide = slides[index];
+      const slideRect = targetSlide.getBoundingClientRect();
+      const carouselRect = carousel.getBoundingClientRect();
+      const slideCenter = targetSlide.offsetLeft + (targetSlide.offsetWidth / 2);
+      const carouselCenter = carousel.offsetWidth / 2;
+      
+      // Calculate scroll position to center the slide
+      let scrollPosition = slideCenter - carouselCenter;
+      
+      // Ensure we don't scroll past boundaries
+      const maxScroll = carousel.scrollWidth - carousel.offsetWidth;
+      scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
+      
+      carousel.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+      
+      updateProgress();
+      updateActiveSlide();
+      
+      setTimeout(() => {
+        isScrolling = false;
+      }, 600);
+    }
+    
+    // Handle carousel scroll
+    function handleScroll() {
+      if (isScrolling) return;
+      
+      const scrollLeft = carousel.scrollLeft;
+      const carouselCenter = scrollLeft + (carousel.offsetWidth / 2);
+      
+      // Find which slide is closest to center
+      let centerIndex = 0;
+      let minDistance = Infinity;
+      
+      slides.forEach((slide, index) => {
+        const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+        const distance = Math.abs(slideCenter - carouselCenter);
+        
+        if (distance < minDistance) {
+          minDistance = distance;
+          centerIndex = index;
+        }
+      });
+      
+      if (centerIndex !== currentIndex) {
+        currentIndex = centerIndex;
+        updateProgress();
+        updateActiveSlide();
+      }
+    }
+    
+    // Scroll event with debounce
+    let scrollTimeout;
+    carousel.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScroll, 50);
+    });
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    carousel.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left
+          scrollToSlide(currentIndex + 1);
+        } else {
+          // Swipe right
+          scrollToSlide(currentIndex - 1);
+        }
+      }
+    }
+    
+    // Mouse wheel scrolling
+    carousel.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      
+      // Determine scroll direction
+      const delta = e.deltaY || e.deltaX;
+      
+      if (delta > 0) {
+        // Scroll down/right - next slide
+        scrollToSlide(currentIndex + 1);
+      } else if (delta < 0) {
+        // Scroll up/left - previous slide
+        scrollToSlide(currentIndex - 1);
+      }
+    }, { passive: false });
+    
+    // Click on slides to select them
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', (e) => {
+        // Don't advance if clicking a button
+        if (e.target.closest('.on-trend-picks__slide-button')) {
+          return;
+        }
+        
+        // If clicking on an inactive slide, make it active
+        if (index !== currentIndex) {
+          scrollToSlide(index);
+        }
+      });
+    });
+    
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        scrollToSlide(Math.min(currentIndex, slides.length - getVisibleSlides()));
+      }, 250);
+    });
+    
+    // Initialize
+    updateProgress();
+    
+    // Start with slide 2 centered on page load
+    if (slides.length > 1) {
+      setTimeout(() => {
+        scrollToSlide(1); // Start with second slide (index 1)
+      }, 100);
+    } else {
+      updateActiveSlide();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "On-Trend Picks",
+  "tag": "section",
+  "class": "section-on-trend-picks",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "ON-TREND PICKS"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Explore Our Promising Line-up"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#2b2b2b"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Collection Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Discover our latest collection"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Explore Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "On-Trend Picks",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "BIG TEE ENERGY",
+            "description": "Oversized Fit Done Right",
+            "button_text": "EXPLORE NOW"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "SLEEP DRESS EDIT",
+            "description": "For dreams and downtime",
+            "button_text": "EXPLORE NOW"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "SUMMER SHORTS",
+            "description": "Made for every plan",
+            "button_text": "EXPLORE NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,259 @@
+{% doc %}
+  @prompt
+    create section for single image banner with option width customization 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-image-banner-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-image-banner-container-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-image-banner-container-{{ ai_gen_id }} {
+      width: {{ block.settings.desktop_width_percent }}%;
+    }
+  }
+
+  .ai-image-banner-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-image-banner-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ai-image-banner-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    min-height: {{ block.settings.min_height }}px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-image-banner-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-image-banner-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  {% if block.settings.enable_link %}
+    .ai-image-banner-link-{{ ai_gen_id }} {
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .ai-image-banner-link-{{ ai_gen_id }}:hover .ai-image-banner-image-{{ ai_gen_id }} {
+      opacity: {{ block.settings.hover_opacity | divided_by: 100.0 }};
+      transition: opacity 0.3s ease;
+    }
+  {% endif %}
+{% endstyle %}
+
+<image-banner-{{ ai_gen_id }}
+  class="ai-image-banner-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-image-banner-container-{{ ai_gen_id }}">
+    <div class="ai-image-banner-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.enable_link and block.settings.banner_link %}
+        <a
+          href="{{ block.settings.banner_link }}"
+          class="ai-image-banner-link-{{ ai_gen_id }}"
+          {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+        >
+          {% if block.settings.image %}
+            <img
+              src="{{ block.settings.image | image_url: width: 2000 }}"
+              alt="{{ block.settings.image.alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              class="ai-image-banner-image-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div class="ai-image-banner-placeholder-{{ ai_gen_id }}">
+              {{ 'hero-apparel-1' | placeholder_svg_tag }}
+              <div class="ai-image-banner-empty-state-{{ ai_gen_id }}">
+                Next, add an image
+              </div>
+            </div>
+          {% endif %}
+        </a>
+      {% else %}
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 2000 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-image-banner-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-image-banner-placeholder-{{ ai_gen_id }}">
+            {{ 'hero-apparel-1' | placeholder_svg_tag }}
+            <div class="ai-image-banner-empty-state-{{ ai_gen_id }}">
+              Next, add an image
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</image-banner-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ImageBanner{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('image-banner-{{ ai_gen_id }}', ImageBanner{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_link",
+      "label": "Enable link",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Banner link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "hover_opacity",
+      "label": "Hover opacity",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 90
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image banner"
+    }
+  ]
+}
+{% endschema %}

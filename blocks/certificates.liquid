@@ -1,0 +1,65 @@
+{%- assign product_ref = closest.product | default: product -%}
+{%- assign certificates_value = product_ref.metafields.custom.certifictes.value -%}
+{%- if certificates_value == blank -%}
+  {%- assign certificates_value = product_ref.metafields.custom.certificates.value -%}
+{%- endif -%}
+
+{%- if certificates_value != blank -%}
+  <div class="product-certificates" {{ block.shopify_attributes }}>
+    {%- for certificate in certificates_value -%}
+      <div class="certificate-pill">
+
+        {%- comment -%} Get icon and label from meta object {%- endcomment -%}
+        {%- assign icon_to_render = certificate.icon -%}
+        {%- assign label_text = certificate.icon_lable -%}
+
+        {%- if icon_to_render != blank -%}
+            {{ icon_to_render | image_url: width: 32 | image_tag: class: 'certificate-icon', loading: 'lazy' }}
+        {%- endif -%}
+
+        <span class="certificate-label">{{ label_text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {% style %}
+    .product-certificates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .certificate-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #00a838;
+      border-radius: 50px;
+      padding: 6px 14px;
+      background-color: #fff;
+      color: #00a838;
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+    .certificate-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      display: block;
+    }
+  {% endstyle %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Certificates",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Certificates",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}
