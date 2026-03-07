@@ -147,10 +147,10 @@
           "type": "blog_card",
           "settings": {
             "badge": "Trending",
-            "title": "5 Superfoods You Need in Your Kitchen",
+            "title": "Freeze-Dried Fruit Granola Cup",
             "description": "<p>Boost your health with these nutrient-packed superfoods that are easy to add to your daily meals.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>From chia seeds to turmeric, discover why these ingredients are loved by nutritionists worldwide.</p>",
+            "dropdown_content": "<p>Recipe:</p><p>  1. Mix<br/>granola, honey, and melted butter until combined. </p><p>2. Press mixture into moulds to form cup shapes. </p><p>3. Refrigerate for 30 minutes to set. </p><p>4. Fill cups with yoghurt or cream cheese. </p><p>5. Top with freeze-dried fruits and serve chilled</p>",
             "button_label": "Read Article",
             "button_link": ""
           }
