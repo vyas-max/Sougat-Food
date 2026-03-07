@@ -168,12 +168,26 @@
             "button_label": "Read Article",
             "button_link": ""
           }
+        },
+        "blog_card_Hp6bif": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/dish_4.png",
+            "badge": "Featured",
+            "title": "Pancakes with Freeze-Dried Berries",
+            "description": "<p>Discover the art of combining ingredients to create something truly unforgettable for your table.</p>",
+            "dropdown_label": "Read More",
+            "dropdown_content": "<p>Recipe:</p><p> 1. Mix flour, sugar, and baking powder in a<br/>bowl. </p><p>2. Add milk, egg, and butter to form a smooth batter. </p><p>3. Cook pancakes on a hot non-stick pan until golden. </p><p>4. Stack pancakes, drizzle syrup, and top with freeze-dried fruits</p>",
+            "button_label": "Read Article",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
         "blog_card_VjLNhT",
         "blog_card_Mnz3t3",
-        "blog_card_yAUpJJ"
+        "blog_card_yAUpJJ",
+        "blog_card_Hp6bif"
       ],
       "name": "Blog Cards",
       "settings": {
