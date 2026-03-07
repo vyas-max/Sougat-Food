@@ -605,6 +605,148 @@
       </script>
     {%- endif -%}
   </media-gallery>
+
+  {%- comment -%} Variant Image Switch - Direct DOM approach {%- endcomment -%}
+  {%- unless selected_product == blank -%}
+    <script data-variant-image-switch>
+      (function() {
+        // Build variant ID → featured media ID map from Liquid
+        var variantMediaMap = {};
+        {%- for variant in selected_product.variants -%}
+          {%- if variant.featured_media -%}
+            variantMediaMap["{{ variant.id }}"] = "{{ variant.featured_media.id }}";
+          {%- endif -%}
+        {%- endfor -%}
+
+        // Build media ID → slide index map from the current slides
+        function buildMediaIndexMap(gallery) {
+          var map = {};
+          // For carousel: look inside slideshow slides
+          var slides = gallery.querySelectorAll('slideshow-slide');
+          if (slides.length > 0) {
+            slides.forEach(function(slide, idx) {
+              var mediaEl = slide.querySelector('[data-media-id]');
+              if (mediaEl) {
+                map[mediaEl.getAttribute('data-media-id')] = { type: 'carousel', index: idx, el: slide };
+              }
+            });
+          }
+          // For grid: look inside the grid list items
+          var gridItems = gallery.querySelectorAll('.media-gallery__grid > li');
+          if (gridItems.length > 0) {
+            gridItems.forEach(function(li, idx) {
+              var mediaEl = li.querySelector('[data-media-id]');
+              if (mediaEl) {
+                map[mediaEl.getAttribute('data-media-id')] = { type: 'grid', index: idx, el: li };
+              }
+            });
+          }
+          return map;
+        }
+
+        function navigateToVariantImage(variantId) {
+          if (!variantId || !variantMediaMap[variantId]) return;
+
+          var mediaId = variantMediaMap[variantId];
+          var gallery = document.querySelector('media-gallery');
+          if (!gallery) return;
+
+          var mediaIndexMap = buildMediaIndexMap(gallery);
+          var target = mediaIndexMap[mediaId];
+          if (!target) return;
+
+          if (target.type === 'carousel') {
+            // Try using the slideshow component's select method
+            var slideshow = gallery.querySelector('slideshow-component');
+            if (slideshow && typeof slideshow.select === 'function') {
+              slideshow.select(target.index, undefined, { animate: false });
+              return;
+            }
+
+            // Fallback: scroll the slide into view
+            var scroller = gallery.querySelector('[ref="scroller"]') ||
+                           gallery.querySelector('.slideshow__scroller') ||
+                           gallery.querySelector('slideshow-component > div');
+            if (scroller && target.el) {
+              target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
+            }
+
+            // Update thumbnails if present
+            var thumbs = gallery.querySelectorAll('.slideshow-controls__thumbnail, [ref="thumbnails[]"]');
+            thumbs.forEach(function(thumb, i) {
+              thumb.setAttribute('aria-selected', i === target.index ? 'true' : 'false');
+            });
+          }
+
+          if (target.type === 'grid') {
+            // Scroll the grid item into view
+            target.el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }
+
+        // Listen for variant picker changes (radio buttons & selects)
+        document.addEventListener('change', function(e) {
+          var input = e.target;
+          if (!input) return;
+
+          // Check if it's inside a variant-picker
+          var picker = input.closest('variant-picker');
+          if (!picker) return;
+
+          var variantId = null;
+
+          // For radio buttons
+          if (input.type === 'radio' && input.dataset.variantId) {
+            variantId = input.dataset.variantId;
+          }
+
+          // For select dropdowns
+          if (input.tagName === 'SELECT') {
+            var selectedOption = input.options[input.selectedIndex];
+            if (selectedOption && selectedOption.dataset.variantId) {
+              variantId = selectedOption.dataset.variantId;
+            }
+          }
+
+          // If single-option product, variant ID is directly on the input
+          if (variantId) {
+            navigateToVariantImage(variantId);
+            return;
+          }
+
+          // For multi-option products, we need to find the matching variant
+          // after all options are selected. Listen for the variant:update event instead.
+        });
+
+        // Also listen for the theme's variant:update custom event as a backup
+        var section = document.querySelector('.shopify-section');
+        if (section) {
+          section.addEventListener('variant:update', function(e) {
+            if (e.detail && e.detail.resource && e.detail.resource.featured_media) {
+              var mediaId = String(e.detail.resource.featured_media.id);
+              var gallery = document.querySelector('media-gallery');
+              if (!gallery) return;
+
+              var mediaIndexMap = buildMediaIndexMap(gallery);
+              var target = mediaIndexMap[mediaId];
+              if (!target) return;
+
+              if (target.type === 'carousel') {
+                var slideshow = gallery.querySelector('slideshow-component');
+                if (slideshow && typeof slideshow.select === 'function') {
+                  slideshow.select(target.index, undefined, { animate: false });
+                } else if (target.el) {
+                  target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
+                }
+              } else if (target.type === 'grid' && target.el) {
+                target.el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          });
+        }
+      })();
+    </script>
+  {%- endunless -%}
 {% endif %}
 
 {% stylesheet %}
