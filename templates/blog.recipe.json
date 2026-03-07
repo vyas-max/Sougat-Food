@@ -181,13 +181,28 @@
             "button_label": "Read Article",
             "button_link": ""
           }
+        },
+        "blog_card_aQr8Jh": {
+          "type": "blog_card",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/dish_5.png",
+            "badge": "Featured",
+            "title": "Exploring New Flavors",
+            "description": "<p>Discover the art of combining ingredients to create something truly unforgettable for your table.</p>",
+            "dropdown_label": "Read More",
+            "dropdown_content": "<p>This section reveals additional details about the blog post when the reader clicks the button above.</p>",
+            "button_label": "Read Article",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
         "blog_card_VjLNhT",
         "blog_card_Mnz3t3",
         "blog_card_yAUpJJ",
-        "blog_card_Hp6bif"
+        "blog_card_Hp6bif",
+        "blog_card_aQr8Jh"
       ],
       "name": "Blog Cards",
       "settings": {
