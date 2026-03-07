@@ -606,7 +606,7 @@
     {%- endif -%}
   </media-gallery>
 
-  {%- comment -%} Variant Image Switch - Direct DOM approach {%- endcomment -%}
+  {%- comment -%} Variant Image Switch - Handles gallery replacement lifecycle {%- endcomment -%}
   {%- unless selected_product == blank -%}
     <script data-variant-image-switch>
       (function() {
@@ -618,7 +618,7 @@
           {%- endif -%}
         {%- endfor -%}
 
-        // Build media ID → slide index map from the current slides
+        // Build media ID → slide index map from the current gallery DOM
         function buildMediaIndexMap(gallery) {
           var map = {};
           // For carousel: look inside slideshow slides
@@ -644,58 +644,68 @@
           return map;
         }
 
-        function navigateToVariantImage(variantId) {
-          if (!variantId || !variantMediaMap[variantId]) return;
-
-          var mediaId = variantMediaMap[variantId];
-          var gallery = document.querySelector('media-gallery');
-          if (!gallery) return;
+        // Navigate a gallery to show the media matching the given media ID
+        function navigateGalleryToMedia(gallery, mediaId) {
+          if (!gallery || !mediaId) return;
 
           var mediaIndexMap = buildMediaIndexMap(gallery);
-          var target = mediaIndexMap[mediaId];
+          var target = mediaIndexMap[String(mediaId)];
           if (!target) return;
 
           if (target.type === 'carousel') {
-            // Try using the slideshow component's select method
             var slideshow = gallery.querySelector('slideshow-component');
             if (slideshow && typeof slideshow.select === 'function') {
               slideshow.select(target.index, undefined, { animate: false });
-              return;
-            }
-
-            // Fallback: scroll the slide into view
-            var scroller = gallery.querySelector('[ref="scroller"]') ||
-                           gallery.querySelector('.slideshow__scroller') ||
-                           gallery.querySelector('slideshow-component > div');
-            if (scroller && target.el) {
+            } else if (target.el) {
               target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
             }
-
-            // Update thumbnails if present
+            // Update thumbnails
             var thumbs = gallery.querySelectorAll('.slideshow-controls__thumbnail, [ref="thumbnails[]"]');
             thumbs.forEach(function(thumb, i) {
               thumb.setAttribute('aria-selected', i === target.index ? 'true' : 'false');
             });
-          }
-
-          if (target.type === 'grid') {
-            // Scroll the grid item into view
+          } else if (target.type === 'grid' && target.el) {
             target.el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         }
 
-        // Listen for variant picker changes (radio buttons & selects)
+        // Listen for the theme's variant:update event at the document level.
+        // This event fires from variant-picker.js BEFORE media-gallery.js replaces the gallery,
+        // so we need to wait for the replacement to complete before navigating.
+        document.addEventListener('variant:update', function(e) {
+          if (!e.detail || !e.detail.resource) return;
+
+          var featuredMedia = e.detail.resource.featured_media;
+          if (!featuredMedia || !featuredMedia.id) return;
+
+          var targetMediaId = String(featuredMedia.id);
+
+          // The media-gallery.js #handleVariantUpdate will replace the gallery element
+          // via replaceWith(). We need to wait for that replacement to happen and for the
+          // new slideshow to initialize, then navigate to the correct slide.
+          // Use nested requestAnimationFrame to ensure we run after the replacement + connectedCallback.
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              var gallery = document.querySelector('media-gallery');
+              if (!gallery) return;
+
+              navigateGalleryToMedia(gallery, targetMediaId);
+            });
+          });
+        });
+
+        // Also handle direct variant picker changes for immediate feedback
+        // (useful for single-option products where variant ID is on the radio input)
         document.addEventListener('change', function(e) {
           var input = e.target;
           if (!input) return;
 
-          // Check if it's inside a variant-picker
           var picker = input.closest('variant-picker');
           if (!picker) return;
 
           var variantId = null;
 
-          // For radio buttons
+          // For radio buttons with direct variant ID
           if (input.type === 'radio' && input.dataset.variantId) {
             variantId = input.dataset.variantId;
           }
@@ -708,42 +718,14 @@
             }
           }
 
-          // If single-option product, variant ID is directly on the input
-          if (variantId) {
-            navigateToVariantImage(variantId);
-            return;
-          }
-
-          // For multi-option products, we need to find the matching variant
-          // after all options are selected. Listen for the variant:update event instead.
-        });
-
-        // Also listen for the theme's variant:update custom event as a backup
-        var section = document.querySelector('.shopify-section');
-        if (section) {
-          section.addEventListener('variant:update', function(e) {
-            if (e.detail && e.detail.resource && e.detail.resource.featured_media) {
-              var mediaId = String(e.detail.resource.featured_media.id);
-              var gallery = document.querySelector('media-gallery');
-              if (!gallery) return;
-
-              var mediaIndexMap = buildMediaIndexMap(gallery);
-              var target = mediaIndexMap[mediaId];
-              if (!target) return;
-
-              if (target.type === 'carousel') {
-                var slideshow = gallery.querySelector('slideshow-component');
-                if (slideshow && typeof slideshow.select === 'function') {
-                  slideshow.select(target.index, undefined, { animate: false });
-                } else if (target.el) {
-                  target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
-                }
-              } else if (target.type === 'grid' && target.el) {
-                target.el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-              }
+          if (variantId && variantMediaMap[variantId]) {
+            var mediaId = variantMediaMap[variantId];
+            var gallery = document.querySelector('media-gallery');
+            if (gallery) {
+              navigateGalleryToMedia(gallery, mediaId);
             }
-          });
-        }
+          }
+        });
       })();
     </script>
   {%- endunless -%}
