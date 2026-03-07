@@ -33,11 +33,22 @@ export class MediaGallery extends Component {
   }
 
   /**
-   * Handles a variant update event by replacing the current media gallery with a new one.
+   * Handles a variant update event by navigating to the variant's featured image
+   * or replacing the current media gallery with a new one from the server response.
    *
    * @param {VariantUpdateEvent} event - The variant update event.
    */
   #handleVariantUpdate = (event) => {
+    const variant = event.detail.resource;
+
+    // Try to navigate the slideshow to the variant's featured media directly
+    if (variant?.featured_media) {
+      const mediaId = variant.featured_media.id;
+      const navigated = this.#navigateToMedia(mediaId);
+      if (navigated) return;
+    }
+
+    // Fallback: replace the entire gallery from server-rendered HTML
     const source = event.detail.data.html;
 
     if (!source) return;
@@ -47,6 +58,29 @@ export class MediaGallery extends Component {
 
     this.replaceWith(newMediaGallery);
   };
+
+  /**
+   * Navigates the slideshow to the slide containing the specified media ID.
+   *
+   * @param {number|string} mediaId - The media ID to navigate to.
+   * @returns {boolean} Whether navigation was successful.
+   */
+  #navigateToMedia(mediaId) {
+    const slideshow = this.refs.slideshow;
+    if (!slideshow?.refs?.slides) return false;
+
+    const slides = slideshow.refs.slides;
+
+    for (let i = 0; i < slides.length; i++) {
+      const mediaEl = slides[i].querySelector(`[data-media-id="${mediaId}"]`);
+      if (mediaEl) {
+        slideshow.select(i, undefined, { animate: false });
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   /**
    * Handles the 'zoom-media:selected' event.
