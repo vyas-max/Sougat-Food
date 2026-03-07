@@ -159,11 +159,12 @@
         "blog_card_yAUpJJ": {
           "type": "blog_card",
           "settings": {
+            "image": "shopify://shop_images/dish_3.png",
             "badge": "Tips",
-            "title": "Meal Prep Like a Pro",
+            "title": "Chocolate Bar withFreeze-Dried Fruits",
             "description": "<p>Save time and eat healthier with our complete guide to weekly meal preparation and planning.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>Get shopping list templates, storage tips, and 30-minute recipes perfect for batch cooking.</p>",
+            "dropdown_content": "<p> Recipe: </p><p>1. Melt chocolate using a double boiler.</p><p>2. Pour melted chocolate onto a lined tray. </p><p>3. Sprinkle freeze-dried fruits and nuts evenly. </p><p>4. Press toppings lightly into chocolate. </p><p>5. Refrigerate until set and break into bars.</p>",
             "button_label": "Read Article",
             "button_link": ""
           }
