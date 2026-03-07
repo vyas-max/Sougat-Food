@@ -146,6 +146,7 @@
         "blog_card_Mnz3t3": {
           "type": "blog_card",
           "settings": {
+            "image": "shopify://shop_images/dish_2.png",
             "badge": "Trending",
             "title": "Freeze-Dried Fruit Granola Cup",
             "description": "<p>Boost your health with these nutrient-packed superfoods that are easy to add to your daily meals.</p>",
