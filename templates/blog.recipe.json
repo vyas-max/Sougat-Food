@@ -133,11 +133,12 @@
         "blog_card_VjLNhT": {
           "type": "blog_card",
           "settings": {
+            "image": "shopify://shop_images/recipe1.jpg",
             "badge": "Featured",
-            "title": "The Secret to Perfect Sourdough",
+            "title": "Freeze-Dried Fruit YoghurtBowl",
             "description": "<p>Master the art of sourdough with our step-by-step guide, from building your starter to the perfect bake.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>Learn about fermentation times, hydration levels, and scoring techniques that make your loaf stand out.</p>",
+            "dropdown_content": "<p>1. Add thick<br/>yoghurt to a bowl and lightly sweeten with honey or maple syrup.</p><p> 2. Sprinkle granola or oats evenly over the<br/>yoghurt. </p><p>3. Top<br/>generously with freeze-dried strawberries, blueberries, and raspberries. </p><p>4. Garnish<br/>with nuts or seeds and serve fresh</p>",
             "button_label": "Read Article",
             "button_link": ""
           }
