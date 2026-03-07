@@ -231,46 +231,14 @@
     margin-bottom: 0;
   }
 
-  /* ── Card Footer / CTA ── */
-  .blog-card-footer-{{ section.id }} {
-    padding: 0 24px 22px;
-  }
 
-  .blog-card-cta-{{ section.id }} {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: {{ section.settings.accent_color }};
-    text-decoration: none;
-    transition: gap 0.3s ease, color 0.3s ease;
-    letter-spacing: 0.01em;
-  }
-
-  .blog-card-cta-{{ section.id }}:hover {
-    gap: 10px;
-    color: {{ section.settings.accent_hover }};
-  }
-
-  .blog-card-cta-icon-{{ section.id }} {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
-  }
-
-  .blog-card-cta-{{ section.id }}:hover .blog-card-cta-icon-{{ section.id }} {
-    transform: translateX(2px);
-  }
 
   /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
     .blog-card-body-{{ section.id }} {
       padding: 18px 18px 14px;
     }
-    .blog-card-footer-{{ section.id }} {
-      padding: 0 18px 18px;
-    }
+
     .blog-card-title-{{ section.id }} {
       font-size: 1.15rem;
     }
@@ -377,17 +345,6 @@
 
           </div>
 
-          {%- comment -%} Footer CTA {%- endcomment -%}
-          {%- if block.settings.button_label != blank -%}
-            <div class="blog-card-footer-{{ section.id }}">
-              <a href="{{ block.settings.button_link | default: '#' }}" class="blog-card-cta-{{ section.id }}">
-                {{ block.settings.button_label }}
-                <svg class="blog-card-cta-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
-          {%- endif -%}
 
         </div>
       {%- endfor -%}
@@ -607,21 +564,7 @@
           "label": "Dropdown Content",
           "default": "<p>This section reveals additional details about the blog post when the reader clicks the button above.</p>"
         },
-        {
-          "type": "header",
-          "content": "Call to Action"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button Label",
-          "default": "Read Article"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        }
+
       ]
     }
   ],
@@ -637,8 +580,7 @@
             "title": "The Secret to Perfect Sourdough",
             "description": "<p>Master the art of sourdough with our step-by-step guide, from building your starter to the perfect bake.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>Learn about fermentation times, hydration levels, and scoring techniques that make your loaf stand out.</p>",
-            "button_label": "Read Article"
+            "dropdown_content": "<p>Learn about fermentation times, hydration levels, and scoring techniques that make your loaf stand out.</p>"
           }
         },
         {
@@ -648,8 +590,7 @@
             "title": "5 Superfoods You Need in Your Kitchen",
             "description": "<p>Boost your health with these nutrient-packed superfoods that are easy to add to your daily meals.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>From chia seeds to turmeric, discover why these ingredients are loved by nutritionists worldwide.</p>",
-            "button_label": "Read Article"
+            "dropdown_content": "<p>From chia seeds to turmeric, discover why these ingredients are loved by nutritionists worldwide.</p>"
           }
         },
         {
@@ -659,8 +600,7 @@
             "title": "Meal Prep Like a Pro",
             "description": "<p>Save time and eat healthier with our complete guide to weekly meal preparation and planning.</p>",
             "dropdown_label": "Read More",
-            "dropdown_content": "<p>Get shopping list templates, storage tips, and 30-minute recipes perfect for batch cooking.</p>",
-            "button_label": "Read Article"
+            "dropdown_content": "<p>Get shopping list templates, storage tips, and 30-minute recipes perfect for batch cooking.</p>"
           }
         }
       ]
