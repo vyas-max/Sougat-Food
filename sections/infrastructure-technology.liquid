@@ -1,0 +1,304 @@
+{%- liquid
+  assign text_color = section.settings.text_color
+  assign heading_color = section.settings.heading_color
+  assign accent_color = section.settings.accent_color
+  assign card_bg = section.settings.card_bg
+  assign section_bg = section.settings.bg_color
+-%}
+
+{%- style -%}
+  .infra-tech-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section_bg }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Decorative high-tech soft glow */
+  .infra-tech-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.05 }} 0%, transparent 70%);
+    filter: blur(100px);
+    pointer-events: none;
+  }
+
+  .infra-tech-{{ section.id }} .container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Header Styling ── */
+  .infra-tech-{{ section.id }} .header-content {
+    max-width: 900px;
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  .infra-tech-{{ section.id }} .main-title {
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    color: {{ heading_color }};
+    margin: 0 0 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  .infra-tech-{{ section.id }} .description {
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    color: {{ text_color }};
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.85;
+    font-weight: 450;
+  }
+
+  /* ── Offerings Section ── */
+  .infra-tech-{{ section.id }} .offer-wrap {
+    background: {{ card_bg }};
+    padding: clamp(2.5rem, 5vw, 5rem);
+    border-radius: 40px;
+    border: 1px solid rgba(20, 68, 45, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+  }
+
+  .infra-tech-{{ section.id }} .offer-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: {{ heading_color }};
+    margin-bottom: 2.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .infra-tech-{{ section.id }} .offer-title::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: {{ accent_color | color_modify: 'alpha', 0.2 }};
+  }
+
+  /* ── Offer Grid ── */
+  .infra-tech-{{ section.id }} .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .infra-tech-{{ section.id }} .offer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .infra-tech-{{ section.id }} .offer-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0;
+    transition: transform 0.3s ease;
+  }
+
+  .infra-tech-{{ section.id }} .offer-item:hover {
+    transform: translateX(10px);
+  }
+
+  .infra-tech-{{ section.id }} .icon-box {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    margin-right: 1.25rem;
+    color: {{ accent_color }};
+  }
+
+  .infra-tech-{{ section.id }} .item-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: {{ heading_color }};
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 767px) {
+    .infra-tech-{{ section.id }} .container {
+      padding: 0 1.25rem;
+    }
+    .infra-tech-{{ section.id }} .offer-wrap {
+      padding: 2.5rem 1.5rem;
+      border-radius: 30px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="infra-tech-{{ section.id }}" id="Infrastructure-{{ section.id }}">
+  <div class="container">
+    
+    <div class="header-content">
+      {%- if section.settings.title != blank -%}
+        <h2 class="main-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="description">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="offer-wrap">
+      {%- if section.settings.offer_title != blank -%}
+        <h3 class="offer-title">{{ section.settings.offer_title }}</h3>
+      {%- endif -%}
+
+      <div class="offer-grid">
+        {%- for block in section.blocks -%}
+          <div class="offer-item" {{ block.shopify_attributes }}>
+            <div class="icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <p class="item-text">{{ block.settings.title | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Infrastructure & Tech",
+  "tag": "section",
+  "class": "section-infra-tech",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Description Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Infrastructure & Technology"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description Text",
+      "default": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence."
+    },
+    {
+      "type": "header",
+      "content": "Offerings Content"
+    },
+    {
+      "type": "text",
+      "id": "offer_title",
+      "label": "Offer Heading",
+      "default": "We offer:"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#F8FBFA"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#10A560"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "offering",
+      "name": "Offering Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Offering Name",
+          "default": "Offering Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infrastructure & Tech",
+      "blocks": [
+        { "type": "offering", "settings": { "title": "Private Label Manufacturing" } },
+        { "type": "offering", "settings": { "title": "Contract Manufacturing" } },
+        { "type": "offering", "settings": { "title": "Customized Packaging Solutions" } },
+        { "type": "offering", "settings": { "title": "Bulk & Retail Packing Options" } },
+        { "type": "offering", "settings": { "title": "Complete Export Documentation & Compliance Support" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
