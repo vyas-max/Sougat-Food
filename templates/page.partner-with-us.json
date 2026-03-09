@@ -68,10 +68,75 @@
         "paragraph_2": "Whether you are a distributor, retailer, private label brand, or institutional buyer — we offer flexible and reliable partnership models tailored to your growth.",
         "show_divider": true
       }
+    },
+    "partnership_opportunities_jWfmwV": {
+      "type": "partnership-opportunities",
+      "blocks": {
+        "opportunity_NWhjQj": {
+          "type": "opportunity",
+          "settings": {
+            "title": "Private Label Manufacturing",
+            "top_description": "Launch or expand your own brand with our premium freeze-dried solutions.",
+            "list_heading": "We offer:",
+            "list_style": "checkmark",
+            "list_items": "Customized product formulations\\nRetail & bulk packaging options\\nBranding & labeling support\\nExport-ready documentation\\nStrict quality and compliance standards",
+            "bottom_description": "From concept to finished product, we ensure seamless execution under global food safety certifications."
+          }
+        },
+        "opportunity_im9x3Q": {
+          "type": "opportunity",
+          "settings": {
+            "title": "Distributorship Opportunities",
+            "top_description": "Become an authorized Sougat distributor and grow in your region with a premium, high-demand product range.",
+            "list_heading": "We provide:",
+            "list_style": "checkmark",
+            "list_items": "Attractive margins\\nMarketing & promotional support\\nConsistent product supply\\nDedicated business assistance",
+            "bottom_description": "Ideal for FMCG distributors, modern trade suppliers, and health-focused retail networks."
+          }
+        },
+        "opportunity_qJ6xYp": {
+          "type": "opportunity",
+          "settings": {
+            "title": "Bulk & Institutional Supply",
+            "top_description": "",
+            "list_heading": "We cater to:",
+            "list_style": "bullet",
+            "list_items": "HoReCa (Hotels, Restaurants, Cafes)\\nFood manufacturers\\nExporters & Importers\\nCorporate gifting companies\\nHealth & nutrition brands",
+            "bottom_description": "With scalable production capacity and reliable logistics, we ensure timely and consistent bulk deliveries."
+          }
+        },
+        "opportunity_w7Nm3W": {
+          "type": "opportunity",
+          "settings": {
+            "title": "Export Partnerships",
+            "top_description": "We are actively expanding in international markets and welcome global importers and distributors. Our facility operates under internationally recognized standards, ensuring smooth cross-border trade and compliance.",
+            "list_heading": "",
+            "list_style": "none",
+            "list_items": "",
+            "bottom_description": ""
+          }
+        }
+      },
+      "block_order": [
+        "opportunity_NWhjQj",
+        "opportunity_im9x3Q",
+        "opportunity_qJ6xYp",
+        "opportunity_w7Nm3W"
+      ],
+      "name": "Partnership Opportunities",
+      "settings": {
+        "background_color": "#f9fafb",
+        "background_gradient": "linear-gradient(135deg, rgba(248, 250, 252, 1), rgba(241, 245, 249, 1) 100%)",
+        "section_title": "Partnership Opportunities",
+        "section_subtitle": "Join hands with Sougat Foods for sustainable mutual growth.",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
     "main",
-    "grow_with_sougat_Fdkzjq"
+    "grow_with_sougat_Fdkzjq",
+    "partnership_opportunities_jWfmwV"
   ]
 }
