@@ -55,9 +55,23 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "grow_with_sougat_Fdkzjq": {
+      "type": "grow-with-sougat",
+      "name": "Grow With Sougat",
+      "settings": {
+        "background_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "title": "Grow With Sougat",
+        "paragraph_1": "At Sougat Foods, we believe strong partnerships create sustainable success. With advanced freeze-drying technology, internationally certified manufacturing, and a growing product portfolio, we invite businesses to collaborate and scale with us across domestic and global markets.",
+        "paragraph_2": "Whether you are a distributor, retailer, private label brand, or institutional buyer — we offer flexible and reliable partnership models tailored to your growth.",
+        "show_divider": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "grow_with_sougat_Fdkzjq"
   ]
 }
