@@ -312,13 +312,74 @@
       "settings": {
         "title": "",
         "max_width": 988,
-        "bg_color": "#F8FBFA",
-        "heading_color": "#14442D",
-        "text_color": "#14442D",
-        "accent_color": "#B3B3B3",
-        "divider_color": "#D1D5DB",
+        "bg_color": "#f8fbfa",
+        "heading_color": "#14442d",
+        "text_color": "#14442d",
+        "accent_color": "#b3b3b3",
+        "divider_color": "#d1d5db",
         "padding_top": 80,
         "padding_bottom": 64
+      }
+    },
+    "achievements_message_yPNCgj": {
+      "type": "achievements-message",
+      "blocks": {
+        "stat_VpMJ3t": {
+          "type": "stat",
+          "settings": {
+            "number": "25",
+            "suffix": "K",
+            "label": "Happy Clients",
+            "number_color": "#f59e0b",
+            "suffix_color": "#10b981"
+          }
+        },
+        "stat_HgJFz3": {
+          "type": "stat",
+          "settings": {
+            "number": "15",
+            "suffix": "+",
+            "label": "Export Country",
+            "number_color": "#f59e0b",
+            "suffix_color": "#10b981"
+          }
+        },
+        "stat_TWexwF": {
+          "type": "stat",
+          "settings": {
+            "number": "5",
+            "suffix": "Ton",
+            "label": "Manufacturing",
+            "number_color": "#f59e0b",
+            "suffix_color": "#10b981"
+          }
+        },
+        "stat_wwKxtV": {
+          "type": "stat",
+          "settings": {
+            "number": "50",
+            "suffix": "+",
+            "label": "Products",
+            "number_color": "#f59e0b",
+            "suffix_color": "#10b981"
+          }
+        }
+      },
+      "block_order": [
+        "stat_VpMJ3t",
+        "stat_HgJFz3",
+        "stat_TWexwF",
+        "stat_wwKxtV"
+      ],
+      "name": "Achievements & Message",
+      "settings": {
+        "background_color": "#fcfcfc",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "achievements_title": "Achievements",
+        "chairman_title": "Chairman’s Message",
+        "chairman_message": "At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.",
+        "chairman_sub_message": "Tradition rooted. Future focused."
       }
     },
     "176923639961994b9e": {
@@ -1317,6 +1378,7 @@
     "quality_certifications_KjwKkK",
     "infrastructure_technology_arLyFK",
     "text_with_dividers_mKpVPk",
+    "achievements_message_yPNCgj",
     "176923639961994b9e",
     "scrolling_image_marquee_FpU3wk",
     "section_iQ9V3p",
