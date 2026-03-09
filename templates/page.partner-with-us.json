@@ -189,12 +189,40 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
+    },
+    "build_something_CMfxgk": {
+      "type": "build-something",
+      "name": "Build Something CTA",
+      "settings": {
+        "background_gradient": "linear-gradient(135deg, rgba(240, 253, 244, 1), rgba(220, 252, 231, 1) 100%)",
+        "title": "Let's Build Something Exceptional",
+        "description": "If you are looking for a reliable freeze-dried manufacturing partner or distribution opportunity, we would be delighted to explore collaboration.",
+        "cta_text": "Contact Us Today to Start the Conversation.",
+        "cta_link": "",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "business_inquiry_form_8HBxJD": {
+      "type": "business-inquiry-form",
+      "name": "Business Inquiry Form",
+      "settings": {
+        "background_gradient": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(249, 250, 251, 1) 100%)",
+        "title": "For Business Inquiries",
+        "description": "Please fill out the form below, and one of our sales representatives will reach out to you shortly.",
+        "submit_text": "Submit",
+        "footer_text": "View our privacy policy and terms of service.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
     "main",
     "grow_with_sougat_Fdkzjq",
     "partnership_opportunities_jWfmwV",
-    "why_partner_with_us_xeEmRe"
+    "why_partner_with_us_xeEmRe",
+    "build_something_CMfxgk",
+    "business_inquiry_form_8HBxJD"
   ]
 }
