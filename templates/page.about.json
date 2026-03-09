@@ -263,13 +263,52 @@
         "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
         "offer_title": "We offer:",
         "max_width": 1300,
-        "bg_color": "#FFFFFF",
-        "card_bg": "#F8FBFA",
-        "heading_color": "#14442D",
-        "text_color": "#14442D",
-        "accent_color": "#10A560",
+        "bg_color": "#ffffff",
+        "card_bg": "#f8fbfa",
+        "heading_color": "#14442d",
+        "text_color": "#14442d",
+        "accent_color": "#10a560",
         "padding_top": 100,
         "padding_bottom": 100
+      }
+    },
+    "text_with_dividers_mKpVPk": {
+      "type": "text-with-dividers",
+      "blocks": {
+        "text_block_UaDDcf": {
+          "type": "text_block",
+          "settings": {
+            "show_icon": true,
+            "title": "Global Presence",
+            "text": "<p>With a strong export network, we cater to clients across multiple international markets. Our focus is on building long-term partnerships by offering reliability, competitive pricing, and premium quality products.</p>",
+            "show_divider": true
+          }
+        },
+        "text_block_pCtaHp": {
+          "type": "text_block",
+          "settings": {
+            "show_icon": false,
+            "title": "Our Vision",
+            "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>",
+            "show_divider": true
+          }
+        }
+      },
+      "block_order": [
+        "text_block_UaDDcf",
+        "text_block_pCtaHp"
+      ],
+      "name": "Text with Dividers",
+      "settings": {
+        "title": "",
+        "max_width": 1000,
+        "bg_color": "#F8FBFA",
+        "heading_color": "#14442D",
+        "text_color": "#14442D",
+        "accent_color": "#B3B3B3",
+        "divider_color": "#D1D5DB",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "176923639961994b9e": {
@@ -1267,6 +1306,7 @@
     "our_expertise_cQm4Ni",
     "quality_certifications_KjwKkK",
     "infrastructure_technology_arLyFK",
+    "text_with_dividers_mKpVPk",
     "176923639961994b9e",
     "scrolling_image_marquee_FpU3wk",
     "section_iQ9V3p",
