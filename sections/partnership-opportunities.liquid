@@ -87,7 +87,7 @@
             "top_description": "Launch or expand your own brand with our premium freeze-dried solutions.",
             "list_heading": "We offer:",
             "list_style": "checkmark",
-            "list_items": "Customized product formulations\nRetail & bulk packaging options\nBranding & labeling support\nExport-ready documentation\nStrict quality and compliance standards",
+            "list_items": "Customized product formulations\\nRetail & bulk packaging options\\nBranding & labeling support\\nExport-ready documentation\\nStrict quality and compliance standards",
             "bottom_description": "From concept to finished product, we ensure seamless execution under global food safety certifications."
           }
         },
@@ -98,7 +98,7 @@
             "top_description": "Become an authorized Sougat distributor and grow in your region with a premium, high-demand product range.",
             "list_heading": "We provide:",
             "list_style": "checkmark",
-            "list_items": "Attractive margins\nMarketing & promotional support\nConsistent product supply\nDedicated business assistance",
+            "list_items": "Attractive margins\\nMarketing & promotional support\\nConsistent product supply\\nDedicated business assistance",
             "bottom_description": "Ideal for FMCG distributors, modern trade suppliers, and health-focused retail networks."
           }
         },
@@ -109,7 +109,7 @@
             "top_description": "",
             "list_heading": "We cater to:",
             "list_style": "bullet",
-            "list_items": "HoReCa (Hotels, Restaurants, Cafes)\nFood manufacturers\nExporters & Importers\nCorporate gifting companies\nHealth & nutrition brands",
+            "list_items": "HoReCa (Hotels, Restaurants, Cafes)\\nFood manufacturers\\nExporters & Importers\\nCorporate gifting companies\\nHealth & nutrition brands",
             "bottom_description": "With scalable production capacity and reliable logistics, we ensure timely and consistent bulk deliveries."
           }
         },
@@ -332,8 +332,7 @@
             {% endif %}
 
             {% if block.settings.list_items != blank and block.settings.list_style != 'none' %}
-              {% assign items = block.settings.list_items | split: '
-' %} <!-- Native newline split -->
+              {% assign items = block.settings.list_items | split: '\n' %}
               <ul class="po-list style-{{ block.settings.list_style }}">
                 {% for item in items %}
                   {% assign clean_item = item | strip %}
