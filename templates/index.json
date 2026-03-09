@@ -2067,13 +2067,63 @@
         "why_title": "Why Choose Sougat Foods?",
         "columns": 4,
         "max_width": 1300,
-        "bg_color": "#F8FBFA",
-        "card_bg": "#FFFFFF",
-        "heading_color": "#14442D",
-        "text_color": "#14442D",
-        "accent_color": "#10A560",
+        "bg_color": "#f8fbfa",
+        "card_bg": "#ffffff",
+        "heading_color": "#14442d",
+        "text_color": "#14442d",
+        "accent_color": "#10a560",
         "padding_top": 80,
         "padding_bottom": 80
+      }
+    },
+    "fueling_sports_nutrition_ygqGxw": {
+      "type": "fueling-sports-nutrition",
+      "blocks": {
+        "video_card_nwdXVw": {
+          "type": "video_card",
+          "settings": {
+            "product": ""
+          }
+        },
+        "video_card_xiGih4": {
+          "type": "video_card",
+          "settings": {
+            "product": ""
+          }
+        },
+        "video_card_X3yFk3": {
+          "type": "video_card",
+          "settings": {
+            "product": ""
+          }
+        },
+        "video_card_xrgtqH": {
+          "type": "video_card",
+          "settings": {
+            "product": ""
+          }
+        },
+        "video_card_9YA9AH": {
+          "type": "video_card",
+          "settings": {
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_card_nwdXVw",
+        "video_card_xiGih4",
+        "video_card_X3yFk3",
+        "video_card_xrgtqH",
+        "video_card_9YA9AH"
+      ],
+      "name": "Fueling Sports Nutrition",
+      "settings": {
+        "title": "Fueling Sports Nutrition",
+        "subtitle": "Discover our most potent and clean formulas for pure performance.",
+        "bg_color": "#fcfcfc",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     }
   },
@@ -2098,6 +2148,7 @@
     "collection_list_jRT9da",
     "product_list_fa6P9H",
     "testimonials_TGUfQx",
-    "about_freeze_dried_AcHcVh"
+    "about_freeze_dried_AcHcVh",
+    "fueling_sports_nutrition_ygqGxw"
   ]
 }
