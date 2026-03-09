@@ -151,6 +151,14 @@
     overflow: hidden;
   }
   
+  {% if request.design_mode %}
+  /* Force items to be visible in Shopify Editor */
+  .section-{{ section.id }} .am-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  {% endif %}
+
   .am-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -360,7 +368,7 @@
       {% for block in section.blocks %}
         <div class="am-stat-card am-fade-up" style="transition-delay: {{ forloop.index | times: 100 }}ms;" {{ block.shopify_attributes }}>
           <div class="am-stat-value-container">
-            <span class="am-stat-number" style="color: {{ block.settings.number_color }};">
+            <span class="am-stat-number am-number-{{ section.id }}" style="color: {{ block.settings.number_color }};">
               {{ block.settings.number }}
             </span>
             <span class="am-stat-suffix" style="color: {{ block.settings.suffix_color }};">
@@ -391,51 +399,63 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Intersection Observer for fade up animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+  (function() {
+    function initAchievements() {
+      // Intersection Observer for fade up animations
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('am-visible');
-                // Optional: Counter animation
-                const numberElement = entry.target.querySelector('.am-stat-number');
-                if (numberElement && !numberElement.dataset.animated) {
-                   const finalValue = parseInt(numberElement.textContent, 10);
-                   if (!isNaN(finalValue)) {
-                       animateValue(numberElement, 0, finalValue, 1500);
-                       numberElement.dataset.animated = "true";
-                   }
-                }
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('am-visible');
+                  // Optional: Counter animation
+                  const numberElement = entry.target.querySelector('.am-stat-number');
+                  if (numberElement && !numberElement.dataset.animated) {
+                     const finalValue = parseInt(numberElement.textContent, 10);
+                     if (!isNaN(finalValue)) {
+                         animateValue(numberElement, 0, finalValue, 1500);
+                         numberElement.dataset.animated = "true";
+                     }
+                  }
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, observerOptions);
 
-    const fadeElements = document.querySelectorAll('.am-fade-up');
-    fadeElements.forEach(el => observer.observe(el));
-    
-    // Counter animation function
-    function animateValue(obj, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            // easeOutQuart
-            const easeProgress = 1 - Math.pow(1 - progress, 4);
-            obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            } else {
-                obj.innerHTML = end;
-            }
-        };
-        window.requestAnimationFrame(step);
+      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .am-fade-up');
+      fadeElements.forEach(el => observer.observe(el));
+      
+      // Counter animation function
+      function animateValue(obj, start, end, duration) {
+          let startTimestamp = null;
+          const step = (timestamp) => {
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+              // easeOutQuart
+              const easeProgress = 1 - Math.pow(1 - progress, 4);
+              obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
+              if (progress < 1) {
+                  window.requestAnimationFrame(step);
+              } else {
+                  obj.innerHTML = end;
+              }
+          };
+          window.requestAnimationFrame(step);
+      }
     }
-  });
+
+    // Run immediately
+    initAchievements();
+
+    // Re-run when section is loaded in Shopify theme editor
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initAchievements();
+      }
+    });
+  })();
 </script>
