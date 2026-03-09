@@ -623,7 +623,7 @@
           var map = {};
           // For carousel: look inside slideshow slides
           var slides = gallery.querySelectorAll('slideshow-slide');
-          if (slides.length > 0) {
+          if (slides.length > 1) {
             slides.forEach(function(slide, idx) {
               var mediaEl = slide.querySelector('[data-media-id]');
               if (mediaEl) {
@@ -654,11 +654,17 @@
 
           if (target.type === 'carousel') {
             var slideshow = gallery.querySelector('slideshow-component');
-            if (slideshow && typeof slideshow.select === 'function') {
-              slideshow.select(target.index, undefined, { animate: false });
-            } else if (target.el) {
-              target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
+            // Wait for slideshow component to be initialized if needed
+            function trySelect() {
+              if (slideshow && typeof slideshow.select === 'function') {
+                slideshow.select(target.index, undefined, { animate: false });
+              } else if (target.el) {
+                 // Fallback scroll
+                target.el.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'start' });
+              }
             }
+            trySelect();
+            
             // Update thumbnails
             var thumbs = gallery.querySelectorAll('.slideshow-controls__thumbnail, [ref="thumbnails[]"]');
             thumbs.forEach(function(thumb, i) {
@@ -669,49 +675,46 @@
           }
         }
 
-        // Listen for the theme's variant:update event at the document level.
-        // This event fires from variant-picker.js BEFORE media-gallery.js replaces the gallery,
-        // so we need to wait for the replacement to complete before navigating.
-        document.addEventListener('variant:update', function(e) {
-          if (!e.detail || !e.detail.resource) return;
-
-          var featuredMedia = e.detail.resource.featured_media;
+        // Dedicated handler for the variant update
+        function handleVariantUpdate(featuredMedia) {
           if (!featuredMedia || !featuredMedia.id) return;
-
           var targetMediaId = String(featuredMedia.id);
 
-          // The media-gallery.js #handleVariantUpdate will replace the gallery element
-          // via replaceWith(). We need to wait for that replacement to happen and for the
-          // new slideshow to initialize, then navigate to the correct slide.
-          // Use nested requestAnimationFrame to ensure we run after the replacement + connectedCallback.
-          requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-              var gallery = document.querySelector('media-gallery');
-              if (!gallery) return;
+          // The variant update event typically triggers a DOM replacement of media-gallery.
+          // We must wait for the replacement to be finished.
+          var attempts = 0;
+          function checkGallery() {
+            var gallery = document.querySelector('media-gallery');
+            if (gallery) {
+              // Even if the element exists, the inner slideshow might be re-initializing.
+              requestAnimationFrame(function() {
+                navigateGalleryToMedia(gallery, targetMediaId);
+              });
+            } else if (attempts < 10) {
+              attempts++;
+              setTimeout(checkGallery, 100);
+            }
+          }
+          checkGallery();
+        }
 
-              navigateGalleryToMedia(gallery, targetMediaId);
-            });
-          });
+        // Listen for the theme's variant:update event at the document level.
+        document.addEventListener('variant:update', function(e) {
+          if (!e.detail || !e.detail.resource) return;
+          handleVariantUpdate(e.detail.resource.featured_media);
         });
 
-        // Also handle direct variant picker changes for immediate feedback
-        // (useful for single-option products where variant ID is on the radio input)
+        // Use 'change' as a secondary trigger for immediate response where possible
         document.addEventListener('change', function(e) {
           var input = e.target;
-          if (!input) return;
-
+          if (!input || !input.closest) return;
           var picker = input.closest('variant-picker');
           if (!picker) return;
 
           var variantId = null;
-
-          // For radio buttons with direct variant ID
-          if (input.type === 'radio' && input.dataset.variantId) {
+          if (input.dataset && input.dataset.variantId) {
             variantId = input.dataset.variantId;
-          }
-
-          // For select dropdowns
-          if (input.tagName === 'SELECT') {
+          } else if (input.tagName === 'SELECT') {
             var selectedOption = input.options[input.selectedIndex];
             if (selectedOption && selectedOption.dataset.variantId) {
               variantId = selectedOption.dataset.variantId;
@@ -719,11 +722,7 @@
           }
 
           if (variantId && variantMediaMap[variantId]) {
-            var mediaId = variantMediaMap[variantId];
-            var gallery = document.querySelector('media-gallery');
-            if (gallery) {
-              navigateGalleryToMedia(gallery, mediaId);
-            }
+             handleVariantUpdate({ id: variantMediaMap[variantId] });
           }
         });
       })();
