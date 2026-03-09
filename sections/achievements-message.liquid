@@ -59,6 +59,34 @@
       "id": "chairman_sub_message",
       "label": "Sub Message (Bold)",
       "default": "Tradition rooted. Future focused."
+    },
+    {
+      "type": "header",
+      "content": "Director's Message Section"
+    },
+    {
+      "type": "text",
+      "id": "director_title",
+      "label": "Director's Title",
+      "default": "Director’s Message"
+    },
+    {
+      "type": "textarea",
+      "id": "director_message_1",
+      "label": "Message Paragraph 1",
+      "default": "At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives."
+    },
+    {
+      "type": "textarea",
+      "id": "director_message_2",
+      "label": "Message Paragraph 2",
+      "default": "Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles."
+    },
+    {
+      "type": "text",
+      "id": "director_sub_message",
+      "label": "Sub Message (Bold)",
+      "default": "With honesty in our process and care in every pack, we serve with purpose."
     }
   ],
   "blocks": [
@@ -355,6 +383,20 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .am-full-divider {
+    border: none; 
+    border-top: 1px solid #e5e7eb; 
+    margin: 2.5rem -4rem; 
+    width: calc(100% + 8rem);
+  }
+
+  @media (max-width: 768px) {
+    .am-full-divider {
+      margin: 2rem -1.5rem;
+      width: calc(100% + 3rem);
+    }
+  }
 </style>
 
 <div class="section-{{ section.id }}">
@@ -392,6 +434,25 @@
       
       {% if section.settings.chairman_sub_message != blank %}
         <p class="am-chairman-sub">{{ section.settings.chairman_sub_message }}</p>
+      {% endif %}
+    </div>
+
+    <div class="am-chairman-section am-fade-up" style="transition-delay: 500ms; margin-top: 3rem;">
+      {% if section.settings.director_title != blank %}
+        <h2 class="am-chairman-title">{{ section.settings.director_title }}</h2>
+      {% endif %}
+      
+      {% if section.settings.director_message_1 != blank %}
+        <p class="am-chairman-text">{{ section.settings.director_message_1 }}</p>
+      {% endif %}
+      
+      {% if section.settings.director_message_2 != blank %}
+        <hr class="am-full-divider">
+        <p class="am-chairman-text">{{ section.settings.director_message_2 }}</p>
+      {% endif %}
+      
+      {% if section.settings.director_sub_message != blank %}
+        <p class="am-chairman-sub">{{ section.settings.director_sub_message }}</p>
       {% endif %}
     </div>
   </div>
