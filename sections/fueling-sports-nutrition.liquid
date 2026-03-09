@@ -1,0 +1,587 @@
+{% schema %}
+{
+  "name": "Fueling Sports Nutrition",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Headline",
+      "default": "Fueling Sports Nutrition"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover our most potent and clean formulas for pure performance."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fcfcfc"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify Video"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Linked Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fueling Sports Nutrition",
+      "blocks": [
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    overflow: hidden;
+  }
+
+  .fsn-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .fsn-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111827;
+    letter-spacing: -0.025em;
+  }
+
+  .fsn-subtitle {
+    font-size: 1.125rem;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .fsn-header {
+      padding: 0 16px;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .fsn-title {
+      font-size: 2rem;
+      word-break: break-word;
+    }
+    .fsn-subtitle {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+  }
+
+  /* Slider Layout */
+  .fsn-slider-container {
+    position: relative;
+    /* Edge-to-edge on desktop */
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  @media (max-width: 768px) {
+    .fsn-slider-container {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .fsn-slider-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    box-sizing: border-box;
+    cursor: grab;
+    scrollbar-width: none; /* Firefox */
+    padding: 20px 5vw; /* Start with an offset so the first video isn't touching edge */
+  }
+
+  /* Reset padding for mobile so swipe feels right */
+  @media (max-width: 768px) {
+    .fsn-slider-track {
+      padding: 20px 15px; 
+      gap: 15px;
+    }
+  }
+
+  .fsn-slider-track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .fsn-slider-track.active {
+    cursor: grabbing;
+  }
+
+  .fsn-slide {
+    flex: 0 0 85vw;
+    scroll-snap-align: center;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    /* Un-draggable properties to prevent image drag interference */
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  @media (min-width: 640px) {
+    .fsn-slide {
+      flex: 0 0 40vw;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .fsn-slide {
+      flex: 0 0 280px; /* Fixed nice width for larger screens */
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .fsn-slide {
+      flex: 0 0 320px;
+    }
+  }
+
+  /* Video Layout 9:16 */
+  .fsn-video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 177.77%; /* 16/9 = 1.7777 -> 177.77% */
+    background: #000;
+    overflow: hidden;
+  }
+
+  .fsn-video-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    pointer-events: none; /* helps passing clicks to parent */
+  }
+
+  /* Clear strike-through mute button */
+  .fsn-mute-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
+  }
+
+  .fsn-mute-btn:hover {
+    background: rgba(0,0,0,0.8);
+  }
+
+  .fsn-mute-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+  }
+
+  .fsn-mute-btn::after {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 3px;
+    top: 50%;
+    left: 50%;
+    background-color: #ff3b30; /* Bright Red */
+    border-radius: 2px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none; /* Prevents blocking clicks */
+  }
+
+  .fsn-mute-btn[data-muted="true"]::after {
+    opacity: 1; /* Shows the strike-through completely */
+  }
+
+  /* Product Tag Bottom */
+  .fsn-product-card {
+    display: flex;
+    padding: 16px;
+    gap: 16px;
+    align-items: center;
+    background: #ffffff;
+  }
+
+  /* Mobile scaling 25-30% left width */
+  .fsn-product-image {
+    flex: 0 0 28%;
+    max-width: 28%;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #f3f4f6;
+  }
+
+  .fsn-product-image::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%; /* forces 1:1 square ratio */
+  }
+
+  .fsn-product-image img, 
+  .fsn-product-image svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-user-drag: none;
+  }
+
+  .fsn-product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0; /* Important for word wrapping limits */
+  }
+
+  .fsn-product-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* limits to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  .fsn-product-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 10px;
+  }
+
+  .fsn-btn-view {
+    display: inline-block;
+    background-color: #f97316; /* Orange button */
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+    user-select: none;
+    align-self: flex-start; /* Keeps button compact */
+  }
+
+  .fsn-btn-view:hover {
+    background-color: #ea580c;
+  }
+  
+  .fsn-btn-view:active {
+    transform: scale(0.96);
+  }
+
+  /* Navigation Arrows Desktop */
+  .fsn-nav-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #111827;
+    border: none;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.2s;
+  }
+
+  .fsn-nav-btn:hover {
+    background: #f9fafb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .fsn-nav-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .fsn-nav-btn.prev {
+    left: 2vw;
+  }
+
+  .fsn-nav-btn.next {
+    right: 2vw;
+  }
+
+  @media (max-width: 768px) {
+    .fsn-nav-btn {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="section-{{ section.id }}" id="fsn-container-{{ section.id }}">
+  <div class="fsn-header">
+    {% if section.settings.title != blank %}
+      <h2 class="fsn-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p class="fsn-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="fsn-slider-container">
+    <button class="fsn-nav-btn prev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+
+    <div class="fsn-slider-track">
+      {% for block in section.blocks %}
+        <div class="fsn-slide" {{ block.shopify_attributes }}>
+          
+          <!-- Video Container -->
+          <div class="fsn-video-wrapper">
+            {% if block.settings.video != blank %}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fsn-video-tag' }}
+            {% else %}
+              <div style="width: 100%; height: 100%; background: #374151; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;">
+                <span style="color: #9ca3af; font-size:14px;">Select Video in Settings</span>
+              </div>
+            {% endif %}
+            
+            <button class="fsn-mute-btn" data-muted="true" aria-label="Toggle Mute">
+              <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </button>
+          </div>
+
+          <!-- Product Details -->
+          {% assign product = block.settings.product %}
+          <div class="fsn-product-card">
+            <div class="fsn-product-image">
+              {% if product != blank and product.featured_image != blank %}
+                <img src="{{ product.featured_image | image_url: width: 300, height: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            
+            <div class="fsn-product-details">
+              {% if product != blank %}
+                <div class="fsn-product-title">{{ product.title }}</div>
+                <div class="fsn-product-price">{{ product.price | money }}</div>
+                <a href="{{ product.url }}" class="fsn-btn-view" draggable="false">View</a>
+              {% else %}
+                <div class="fsn-product-title">Sample Sports Product Focus</div>
+                <div class="fsn-product-price">$49.99</div>
+                <button class="fsn-btn-view" disabled style="opacity:0.6; cursor:not-allowed;">View</button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="fsn-nav-btn next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initFSNSlider(containerId) {
+      const sectionContainer = document.getElementById(containerId);
+      if (!sectionContainer) return;
+
+      const track = sectionContainer.querySelector('.fsn-slider-track');
+      const prevBtn = sectionContainer.querySelector('.fsn-nav-btn.prev');
+      const nextBtn = sectionContainer.querySelector('.fsn-nav-btn.next');
+      const muteBtns = sectionContainer.querySelectorAll('.fsn-mute-btn');
+
+      // Desktop Navigation Arrows
+      if (prevBtn && nextBtn && track && !track.dataset.initArrows) {
+        track.dataset.initArrows = "true";
+        const getScrollStep = () => track.clientWidth / 1.5; 
+        
+        prevBtn.addEventListener('click', () => {
+          track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+          track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+        });
+      }
+
+      // Audio ON/OFF Toggle
+      muteBtns.forEach(btn => {
+        if(btn.dataset.initMute) return;
+        btn.dataset.initMute = "true";
+        
+        btn.addEventListener('mousedown', (e) => e.stopPropagation());
+        btn.addEventListener('touchstart', (e) => e.stopPropagation());
+
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const videoWrapper = this.closest('.fsn-video-wrapper');
+          const video = videoWrapper.querySelector('video');
+          
+          if (video) {
+            if (video.muted) {
+              video.muted = false;
+              this.setAttribute('data-muted', 'false');
+            } else {
+              video.muted = true;
+              this.setAttribute('data-muted', 'true');
+            }
+          }
+        });
+      });
+
+      // Mouse Drag Scrolling
+      if (track && !track.dataset.initDrag) {
+        track.dataset.initDrag = "true";
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let isDraggingAction = false;
+
+        track.addEventListener('mousedown', (e) => {
+          isDown = true;
+          isDraggingAction = false;
+          track.classList.add('active');
+          startX = e.pageX - track.offsetLeft;
+          scrollLeft = track.scrollLeft;
+        });
+
+        track.addEventListener('mouseleave', () => {
+          isDown = false;
+          track.classList.remove('active');
+        });
+
+        track.addEventListener('mouseup', () => {
+          isDown = false;
+          track.classList.remove('active');
+        });
+
+        track.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          isDraggingAction = true;
+          e.preventDefault();
+          const x = e.pageX - track.offsetLeft;
+          const walk = (x - startX) * 2; 
+          track.scrollLeft = scrollLeft - walk;
+        });
+
+        const links = track.querySelectorAll('a');
+        links.forEach(link => {
+          link.addEventListener('click', (e) => {
+            if (isDraggingAction) {
+              e.preventDefault();
+            }
+          });
+        });
+      }
+    }
+
+    // Initialize immediately
+    initFSNSlider(`fsn-container-{{ section.id }}`);
+
+    // Re-initialize when loaded in Shopify Editor
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initFSNSlider(`fsn-container-{{ section.id }}`);
+      }
+    });
+
+  })();
+</script>
