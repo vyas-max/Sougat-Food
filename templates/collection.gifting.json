@@ -59,7 +59,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p>Celebrate health and<br/>taste with Sougat’s premium gifting collections. Beautifully packed and<br/>thoughtfully designed, our freeze-dried hampers are perfect for festive<br/>occasions, corporate gifting, and special celebrations — combining elegance<br/>with nutrition.</p>",
+            "text": "<p>Celebrate health and taste with Sougat’s premium<br/>gifting collections. Beautifully packed and thoughtfully designed, our<br/>freeze-dried hampers are perfect for festive occasions, corporate gifting, and<br/>special celebrations — combining elegance with nutrition<br/><br/><br/><br/></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -85,7 +85,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p></p><p></p><p></p><p></p><p></p><p></p><p>Healthy Premium Hampers<br/><br/><br/><br/></p>",
+            "text": "<p></p><p></p><p></p><p></p><p></p><p></p><ul><li>Healthy Premium Hampers<br/><br/><br/><br/></li></ul>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
