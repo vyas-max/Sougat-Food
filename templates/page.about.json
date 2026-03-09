@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -7,9 +16,9 @@
           "type": "text",
           "name": "t:names.title",
           "settings": {
-            "text": "<h1>Welcome To Sougat</h1>",
+            "text": "<p><strong>Welcome to Shubhalaxmi Food Industry</strong></p>",
             "width": "100%",
-            "max_width": "normal",
+            "max_width": "none",
             "alignment": "center",
             "type_preset": "h1",
             "font": "var(--font-primary--family)",
@@ -33,11 +42,11 @@
           "type": "text",
           "name": "t:names.content",
           "settings": {
-            "text": "<p>Experience real fruits in their purest form — carefully freeze-dried to preserve natural taste, texture, and nutrition, without adding anything unnecessary.</p>",
+            "text": "<p>Established in 1962, Shubhalaxmi Food Industry has grown into a trusted<br/>name in the Indian food manufacturing sector, built on a strong foundation of<br/>quality, integrity, and innovation. With decades of expertise and a<br/>future-focused vision, we specialize in delivering safe, hygienic, and globally<br/>compliant food products to domestic and international markets.</p>",
             "width": "100%",
-            "max_width": "none",
+            "max_width": "narrow",
             "alignment": "center",
-            "type_preset": "custom",
+            "type_preset": "paragraph",
             "font": "var(--font-primary--family)",
             "font_size": "1.25rem",
             "line_height": "normal",
@@ -420,8 +429,8 @@
         "heading": "Meet the team",
         "subheading": "Sharp minds behind our campaigns",
         "card_background": "#132019",
-        "text_color": "#F5F1EB",
-        "accent_color": "#F0C27B",
+        "text_color": "#f5f1eb",
+        "accent_color": "#f0c27b",
         "color_scheme": "scheme-about-deep",
         "padding_top": 64,
         "padding_bottom": 64
