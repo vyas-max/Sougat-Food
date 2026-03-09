@@ -45,7 +45,7 @@
             "text": "<p>Established in 1962, Shubhalaxmi Food Industry has grown into a trusted<br/>name in the Indian food manufacturing sector, built on a strong foundation of<br/>quality, integrity, and innovation. With decades of expertise and a<br/>future-focused vision, we specialize in delivering safe, hygienic, and globally<br/>compliant food products to domestic and international markets.</p>",
             "width": "100%",
             "max_width": "none",
-            "alignment": "left",
+            "alignment": "center",
             "type_preset": "rte",
             "font": "var(--font-primary--family)",
             "font_size": "1.25rem",
