@@ -1,0 +1,388 @@
+{% schema %}
+{
+  "name": "Partnership Opportunities",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f9fafb"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "opportunity",
+      "name": "Opportunity Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Partnership Category"
+        },
+        {
+          "type": "textarea",
+          "id": "top_description",
+          "label": "Top Description"
+        },
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List Heading",
+          "info": "E.g., 'We offer:' or 'We cater to:'"
+        },
+        {
+          "type": "select",
+          "id": "list_style",
+          "label": "List Style",
+          "options": [
+            { "value": "checkmark", "label": "Checkmarks (✓)" },
+            { "value": "bullet", "label": "Bullets (•)" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "checkmark"
+        },
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List Items",
+          "info": "Enter one item per line."
+        },
+        {
+          "type": "textarea",
+          "id": "bottom_description",
+          "label": "Bottom Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partnership Opportunities",
+      "blocks": [
+        {
+          "type": "opportunity",
+          "settings": {
+            "title": "Private Label Manufacturing",
+            "top_description": "Launch or expand your own brand with our premium freeze-dried solutions.",
+            "list_heading": "We offer:",
+            "list_style": "checkmark",
+            "list_items": "Customized product formulations\nRetail & bulk packaging options\nBranding & labeling support\nExport-ready documentation\nStrict quality and compliance standards",
+            "bottom_description": "From concept to finished product, we ensure seamless execution under global food safety certifications."
+          }
+        },
+        {
+          "type": "opportunity",
+          "settings": {
+            "title": "Distributorship Opportunities",
+            "top_description": "Become an authorized Sougat distributor and grow in your region with a premium, high-demand product range.",
+            "list_heading": "We provide:",
+            "list_style": "checkmark",
+            "list_items": "Attractive margins\nMarketing & promotional support\nConsistent product supply\nDedicated business assistance",
+            "bottom_description": "Ideal for FMCG distributors, modern trade suppliers, and health-focused retail networks."
+          }
+        },
+        {
+          "type": "opportunity",
+          "settings": {
+            "title": "Bulk & Institutional Supply",
+            "top_description": "",
+            "list_heading": "We cater to:",
+            "list_style": "bullet",
+            "list_items": "HoReCa (Hotels, Restaurants, Cafes)\nFood manufacturers\nExporters & Importers\nCorporate gifting companies\nHealth & nutrition brands",
+            "bottom_description": "With scalable production capacity and reliable logistics, we ensure timely and consistent bulk deliveries."
+          }
+        },
+        {
+          "type": "opportunity",
+          "settings": {
+            "title": "Export Partnerships",
+            "top_description": "We are actively expanding in international markets and welcome global importers and distributors. Our facility operates under internationally recognized standards, ensuring smooth cross-border trade and compliance.",
+            "list_heading": "",
+            "list_style": "none",
+            "list_items": "",
+            "bottom_description": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    overflow: hidden;
+  }
+
+  {% if request.design_mode %}
+  .section-{{ section.id }} .po-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  {% endif %}
+
+  .po-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .po-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05); /* Premium shadow */
+    border: 1px solid rgba(0,0,0,0.03);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .po-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px -15px rgba(0,0,0,0.1);
+  }
+
+  /* Decorative diamond background element on hover */
+  .po-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 2.5rem;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(14,165,233,0.1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .po-card:hover::before {
+    opacity: 1;
+  }
+
+  .po-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .po-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 4px 6px rgba(14, 165, 233, 0.25));
+  }
+
+  .po-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .po-desc-top, .po-desc-bottom {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .po-desc-bottom {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .po-list-heading {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .po-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .po-list li {
+    font-size: 1.125rem;
+    color: #374151;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  /* List Styles */
+  .po-list.style-checkmark li::before {
+    content: '✓';
+    color: #10b981; /* Green checkmark */
+    font-weight: 800;
+    margin-right: 12px;
+    font-size: 1.2rem;
+    margin-top: -2px;
+  }
+
+  .po-list.style-bullet li::before {
+    content: '•';
+    color: #0ea5e9; /* Blue bullet */
+    font-weight: 800;
+    margin-right: 12px;
+    font-size: 1.5rem;
+    margin-top: -4px;
+  }
+
+  @media (max-width: 768px) {
+    .po-card {
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+    }
+    
+    .po-title {
+      font-size: 1.5rem;
+    }
+    
+    .po-desc-top, .po-desc-bottom, .po-list li, .po-list-heading {
+      font-size: 1rem;
+    }
+    
+    .po-card::before {
+      left: 1.5rem;
+    }
+  }
+
+  /* Reveal Animations */
+  .po-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  .po-fade-up.po-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="section-{{ section.id }}">
+  <div class="po-container">
+    {% for block in section.blocks %}
+      <div class="po-card po-fade-up" style="transition-delay: {{ forloop.index | times: 150 }}ms;" {{ block.shopify_attributes }}>
+        
+        <div class="po-header">
+          <!-- Diamond Icon -->
+          <div class="po-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="#0ea5e9" stroke="#0284c7" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="po-title">{{ block.settings.title }}</h3>
+        </div>
+
+        {% if block.settings.top_description != blank %}
+          <p class="po-desc-top">{{ block.settings.top_description }}</p>
+        {% endif %}
+
+        {% if block.settings.list_heading != blank or block.settings.list_items != blank %}
+          <div class="po-list-container">
+            {% if block.settings.list_heading != blank %}
+              <div class="po-list-heading">{{ block.settings.list_heading }}</div>
+            {% endif %}
+
+            {% if block.settings.list_items != blank and block.settings.list_style != 'none' %}
+              {% assign items = block.settings.list_items | split: '
+' %} <!-- Native newline split -->
+              <ul class="po-list style-{{ block.settings.list_style }}">
+                {% for item in items %}
+                  {% assign clean_item = item | strip %}
+                  {% if clean_item != blank %}
+                    <li>{{ clean_item }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.bottom_description != blank %}
+          <p class="po-desc-bottom">{{ block.settings.bottom_description }}</p>
+        {% endif %}
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initPO() {
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('po-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, observerOptions);
+
+      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .po-fade-up');
+      fadeElements.forEach(el => observer.observe(el));
+    }
+
+    initPO();
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initPO();
+      }
+    });
+  })();
+</script>
