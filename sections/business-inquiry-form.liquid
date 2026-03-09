@@ -1,0 +1,402 @@
+{% schema %}
+{
+  "name": "Business Inquiry Form",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Form Title",
+      "default": "For Business Inquiries"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Form Description",
+      "default": "Please fill out the form below, and one of our sales representatives will reach out to you shortly."
+    },
+    {
+      "type": "text",
+      "id": "submit_text",
+      "label": "Submit Button Text",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Legal Text",
+      "default": "View our privacy policy and terms of service."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Business Inquiry Form"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.background_gradient }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    overflow: hidden;
+  }
+
+  {% if request.design_mode %}
+  .section-{{ section.id }} .bif-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  {% endif %}
+
+  .bif-container {
+    max-width: 700px; /* Slimmer max-width keeps inputs from being too wide/ugly on desktop */
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Form Header styling */
+  .bif-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .bif-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Same beautiful dark underline shown in Image but slightly elevated */
+  .bif-title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    bottom: -6px;
+    left: 0;
+    background: #111827; /* Solid black underline as requested in image, but clean */
+    border-radius: 2px;
+  }
+
+  .bif-description {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #4b5563;
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+  }
+
+  /* Main form card body */
+  .bif-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 3.5rem;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+
+  /* Form Message Output container (Success/Error) */
+  .bif-form-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .bif-form-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .bif-form-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #ef4444;
+  }
+
+  /* Form Fields */
+  .bif-field-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .bif-input {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    color: #111827;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  .bif-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .bif-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  }
+
+  textarea.bif-input {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  /* The "Email me news" checkbox logic */
+  .bif-checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .bif-checkbox-input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+  }
+
+  .bif-checkbox-input:checked {
+    background-color: #2563eb; /* Active blue */
+    border-color: #2563eb;
+  }
+
+  .bif-checkbox-input:checked::after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    top: 2px;
+  }
+
+  .bif-checkbox-label {
+    font-size: 1rem;
+    color: #374151;
+    cursor: pointer;
+  }
+
+  /* Submit Button styling */
+  .bif-submit {
+    width: 100%;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .bif-submit:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  }
+
+  .bif-submit:active {
+    transform: scale(0.98);
+  }
+
+  .bif-footer-text {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-{{ section.id }} {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    
+    .bif-card {
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+    }
+
+    .bif-title {
+      font-size: 1.8rem;
+    }
+
+    .bif-description {
+      font-size: 1.05rem;
+    }
+  }
+
+  /* Reveal Animations */
+  .bif-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  .bif-fade-up.bif-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="section-{{ section.id }}">
+  <div class="bif-container">
+    
+    <div class="bif-header bif-fade-up">
+      {% if section.settings.title != blank %}
+        <h2 class="bif-title">{{ section.settings.title }}</h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="bif-description">
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- The exact native Shopify Contact form wrapper -->
+    <div class="bif-card bif-fade-up" style="transition-delay: 150ms;">
+      {%- form 'contact', id: 'BusinessInquiryForm' -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="bif-form-message bif-form-success" tabindex="-1" autofocus>
+            Thanks for contacting us. We'll get back to you as soon as possible.
+          </div>
+        {%- elsif form.errors -%}
+          <div class="bif-form-message bif-form-error">
+            The form could not be submitted. Please check the required fields.
+          </div>
+        {%- endif -%}
+
+        <div class="bif-field-group">
+          <input class="bif-input" type="text" id="ContactForm-FirstName" name="contact[First name]" value="{% if form.first_name %}{{ form.first_name }}{% elsif customer %}{{ customer.first_name }}{% endif %}" placeholder="First name" required>
+        </div>
+
+        <div class="bif-field-group">
+          <input class="bif-input" type="text" id="ContactForm-LastName" name="contact[Last name]" value="{% if form.last_name %}{{ form.last_name }}{% elsif customer %}{{ customer.last_name }}{% endif %}" placeholder="Last name" required>
+        </div>
+
+        <div class="bif-field-group">
+          <input class="bif-input" type="text" id="ContactForm-Company" name="contact[Company]" value="{% if form.company %}{{ form.company }}{% endif %}" placeholder="Company" required>
+        </div>
+
+        <div class="bif-field-group">
+          <input class="bif-input" autocomplete="email" type="email" id="ContactForm-email" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" aria-required="true" placeholder="Email" required>
+        </div>
+
+        <!-- Checkbox Wrapper mapping to a contact tag or note -->
+        <label class="bif-checkbox-group" for="ContactForm-marketing">
+          <input type="checkbox" class="bif-checkbox-input" id="ContactForm-marketing" name="contact[Accepts Marketing]" value="Yes" checked>
+          <span class="bif-checkbox-label">Email me news and offers</span>
+        </label>
+
+        <div class="bif-field-group">
+          <textarea class="bif-input" rows="5" id="ContactForm-body" name="contact[body]" placeholder="Please mention your requirement (in brief)" required>{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+        </div>
+
+        <div class="bif-field-group">
+          <button type="submit" class="bif-submit">
+            {{ section.settings.submit_text }}
+          </button>
+        </div>
+
+        {% if section.settings.footer_text != blank %}
+          <div class="bif-footer-text">
+            {{ section.settings.footer_text }}
+          </div>
+        {% endif %}
+
+      {%- endform -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initBIF() {
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('bif-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, observerOptions);
+
+      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .bif-fade-up');
+      fadeElements.forEach(el => observer.observe(el));
+    }
+
+    initBIF();
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initBIF();
+      }
+    });
+  })();
+</script>
