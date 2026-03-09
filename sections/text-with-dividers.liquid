@@ -1,0 +1,313 @@
+{%- liquid
+  assign text_color = section.settings.text_color
+  assign heading_color = section.settings.heading_color
+  assign accent_color = section.settings.accent_color
+  assign section_bg = section.settings.bg_color
+  assign divider_color = section.settings.divider_color
+-%}
+
+{%- style -%}
+  .text-dividers-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section_bg }};
+    position: relative;
+    overflow: hidden;
+    font-display: swap;
+  }
+
+  .text-dividers-{{ section.id }} .container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUpAnim {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .text-dividers-{{ section.id }} .anim-fade {
+    animation: fadeUpAnim 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+  }
+
+  /* ── Section Header (Optional) ── */
+  .text-dividers-{{ section.id }} .section-header {
+    text-align: center;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .text-dividers-{{ section.id }} .section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: {{ heading_color }};
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  /* ── Text Blocks ── */
+  .text-dividers-{{ section.id }} .blocks-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .text-dividers-{{ section.id }} .text-block {
+    padding: clamp(2.5rem, 5vw, 4rem) 0;
+    transition: background-color 0.4s ease;
+    border-radius: 20px;
+    position: relative;
+  }
+
+  /* Subtle hover state for block (optional polish) */
+  .text-dividers-{{ section.id }} .text-block:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .text-dividers-{{ section.id }} .block-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+  }
+
+  .text-dividers-{{ section.id }} .block-icon {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid {{ accent_color }};
+    opacity: 0.8;
+  }
+
+  .text-dividers-{{ section.id }} .block-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: {{ heading_color }};
+    margin: 0;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .text-dividers-{{ section.id }} .block-content {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    color: {{ text_color }};
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 400;
+    opacity: 0.9;
+    max-width: 95%;
+  }
+
+  .text-dividers-{{ section.id }} .block-content p {
+    margin-bottom: 1.25rem;
+  }
+  .text-dividers-{{ section.id }} .block-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Premium Divider ── */
+  .text-dividers-{{ section.id }} .divider {
+    height: 1px;
+    width: 100%;
+    background: {{ divider_color }};
+    opacity: 0.6;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    .text-dividers-{{ section.id }} .container {
+      padding: 0 1.25rem;
+    }
+  }
+{%- endstyle -%}
+
+<section class="text-dividers-{{ section.id }}" id="TextDividers-{{ section.id }}">
+  <div class="container">
+    
+    {%- if section.settings.title != blank -%}
+      <div class="section-header anim-fade">
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="blocks-wrap">
+      {%- for block in section.blocks -%}
+        {%- assign delay_factor = forloop.index | times: 0.1 -%}
+        <div class="text-block anim-fade" style="animation-delay: {{ delay_factor }}s;" {{ block.shopify_attributes }}>
+          
+          {%- if block.settings.title != blank -%}
+            <div class="block-header">
+              {%- if block.settings.show_icon -%}
+                <div class="block-icon"></div>
+              {%- endif -%}
+              <h3 class="block-title">{{ block.settings.title }}</h3>
+            </div>
+          {%- endif -%}
+          
+          {%- if block.settings.text != blank -%}
+            <div class="block-content">
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.show_divider and forloop.last == false -%}
+            <div class="divider"></div>
+          {%- elsif block.settings.show_divider and forloop.last -%}
+            <div class="divider"></div>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Text with Dividers",
+  "tag": "section",
+  "class": "section-text-dividers",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Optional Section Heading"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Content Max Width (px)",
+      "default": 1000
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F8FBFA"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / Icon Color",
+      "default": "#B3B3B3"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Line Color",
+      "default": "#D1D5DB"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Triangle Icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Content Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description text",
+          "default": "<p>Add your detailed description here. This block is perfect for conveying long-form information elegantly.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_divider",
+          "label": "Show Line Below Block",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text with Dividers",
+      "blocks": [
+        {
+          "type": "text_block",
+          "settings": {
+            "title": "Global Presence",
+            "show_icon": true,
+            "text": "<p>With a strong export network, we cater to clients across multiple international markets. Our focus is on building long-term partnerships by offering reliability, competitive pricing, and premium quality products.</p>",
+            "show_divider": true
+          }
+        },
+        {
+          "type": "text_block",
+          "settings": {
+            "title": "Our Vision",
+            "show_icon": false,
+            "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>",
+            "show_divider": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
