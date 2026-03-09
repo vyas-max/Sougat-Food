@@ -292,11 +292,21 @@
             "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>",
             "show_divider": true
           }
+        },
+        "text_block_r4FFhj": {
+          "type": "text_block",
+          "settings": {
+            "show_icon": true,
+            "title": "Our Mission",
+            "text": "<p>To provide safe, high-quality freeze-dried fruits and vegetables that<br/>help families choose better snacking options. At a time when childhood obesity<br/>is rising due to junk food consumption, we want to offer natural,<br/>preservative-free alternatives that are light, nutritious, and convenient. We<br/>are committed to ethical practices, food safety, and creating products that<br/>truly support children’s health and overall well-being.</p>",
+            "show_divider": true
+          }
         }
       },
       "block_order": [
         "text_block_UaDDcf",
-        "text_block_pCtaHp"
+        "text_block_pCtaHp",
+        "text_block_r4FFhj"
       ],
       "name": "Text with Dividers",
       "settings": {
