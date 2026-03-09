@@ -1,171 +1,241 @@
 {%- style -%}
+{%- liquid
+  assign text_color = section.settings.text_color
+  assign heading_color = section.settings.heading_color
+  assign accent_color = section.settings.accent_color
+  assign card_bg = section.settings.card_bg
+  assign section_bg = section.settings.bg_color
+-%}
+
+{%- style -%}
   .about-freeze-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    background-color: {{ section.settings.bg_color }};
+    background: {{ section_bg }};
     overflow: hidden;
+    position: relative;
+    font-display: swap;
+  }
+
+  /* Decorative Background Element */
+  .about-freeze-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.08 }} 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
   }
 
   .about-freeze-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ── Header ── */
-  .about-freeze-{{ section.id }} .header {
+  /* ── Header Styling ── */
+  .about-freeze-{{ section.id }} .header-group {
     text-align: center;
-    margin-bottom: clamp(3rem, 7vw, 5rem);
+    margin-bottom: clamp(3.5rem, 8vw, 5.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-freeze-{{ section.id }} .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: {{ accent_color | color_modify: 'alpha', 0.1 }};
+    color: {{ accent_color }};
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
   }
 
   .about-freeze-{{ section.id }} .main-title {
-    font-size: clamp(2.25rem, 5vw, 4rem);
-    color: {{ section.settings.heading_color }};
-    margin-bottom: 1.25rem;
-    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    color: {{ heading_color }};
+    margin: 0 0 1.5rem;
+    font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1.05;
+    max-width: 900px;
   }
 
   .about-freeze-{{ section.id }} .subheading {
-    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-    color: {{ section.settings.text_color }};
-    max-width: 800px;
-    margin: 0 auto;
-    opacity: 0.8;
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    color: {{ text_color }};
+    max-width: 750px;
+    margin: 0;
+    opacity: 0.85;
     line-height: 1.5;
     font-weight: 400;
   }
 
   /* ── Why Choose Header ── */
-  .about-freeze-{{ section.id }} .why-choose-header {
-    margin-top: clamp(4rem, 8vw, 6rem);
-    margin-bottom: 3rem;
+  .about-freeze-{{ section.id }} .why-choose-wrap {
+    margin-top: clamp(4rem, 10vw, 7rem);
     text-align: center;
+    margin-bottom: 4rem;
   }
 
   .about-freeze-{{ section.id }} .why-choose-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    color: {{ section.settings.heading_color }};
-    font-weight: 800;
+    font-size: clamp(2.2rem, 4.5vw, 3.25rem);
+    color: {{ heading_color }};
+    font-weight: 850;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: inline-block;
+    margin-bottom: 1rem;
+    line-height: 1.1;
   }
 
-  .about-freeze-{{ section.id }} .why-choose-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background: {{ section.settings.accent_color }};
-    border-radius: 2px;
+  .about-freeze-{{ section.id }} .why-choose-line {
+    width: 80px;
+    height: 5px;
+    background: {{ accent_color }};
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px {{ accent_color | color_modify: 'alpha', 0.2 }};
   }
 
-  /* ── Grid ── */
+  /* ── Robust Grid System ── */
   .about-freeze-{{ section.id }} .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2.5rem;
-    width: 100%;
+    gap: 2rem;
+    align-items: stretch;
   }
 
   @media screen and (min-width: 768px) {
     .about-freeze-{{ section.id }} .grid {
-      /* Use minmax to prevent cards from squishing too much */
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1100px) {
     .about-freeze-{{ section.id }} .grid {
-      /* Dynamic column count but never smaller than 280px */
-      grid-template-columns: repeat({{ section.settings.columns }}, minmax(280px, 1fr));
+      /* Prevents cards from getting too narrow by balancing columns vs min-width */
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
     }
   }
 
-  /* ── Card ── */
+  /* ── Premium Card Design ── */
   .about-freeze-{{ section.id }} .card {
-    background: {{ section.settings.card_bg }};
-    padding: clamp(2rem, 3vw, 3rem);
-    border-radius: 32px;
-    border: 1px solid rgba(20, 68, 45, 0.06);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02),
-                0 20px 50px rgba(20, 68, 45, 0.05);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    background: {{ card_bg }};
+    padding: clamp(2rem, 3.5vw, 3.5rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     flex-direction: column;
     height: 100%;
-    text-align: center;
     position: relative;
-    z-index: 1;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  .about-freeze-{{ section.id }} .card::before {
+  .about-freeze-{{ section.id }} .card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-    z-index: -1;
-    opacity: 0.5;
+    background: radial-gradient(circle at top right, {{ accent_color | color_modify: 'alpha', 0.05 }}, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
   }
 
   .about-freeze-{{ section.id }} .card:hover {
-    transform: translateY(-12px);
-    border-color: {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
-    box-shadow: 0 30px 60px rgba(20, 68, 45, 0.12);
+    transform: translateY(-15px) scale(1.01);
+    border-color: {{ accent_color | color_modify: 'alpha', 0.15 }};
+    box-shadow: 0 40px 80px rgba(20, 68, 45, 0.08),
+                0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.05 }};
   }
 
-  .about-freeze-{{ section.id }} .card-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 1.75rem;
-    background: {{ section.settings.bg_color }};
-    border-radius: 18px;
+  .about-freeze-{{ section.id }} .card:hover::after {
+    opacity: 1;
+  }
+
+  .about-freeze-{{ section.id }} .card-icon-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2.5rem;
+    background: {{ section_bg }};
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    padding: 18px;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.04);
   }
   
-  .about-freeze-{{ section.id }} .card-icon img {
+  .about-freeze-{{ section.id }} .card-icon-wrap img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+  }
+
+  .about-freeze-{{ section.id }} .card-content {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .about-freeze-{{ section.id }} .card-title {
-    font-size: 1.5rem;
+    font-size: clamp(1.4rem, 2vw, 1.75rem);
     font-weight: 800;
-    color: {{ section.settings.heading_color }};
-    margin-bottom: 1.15rem;
-    line-height: 1.2;
+    color: {{ heading_color }};
+    margin: 0 0 1.25rem;
+    line-height: 1.15;
     letter-spacing: -0.02em;
   }
 
   .about-freeze-{{ section.id }} .card-text {
-    font-size: 1.05rem;
-    color: {{ section.settings.text_color }};
+    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    color: {{ text_color }};
     line-height: 1.7;
     margin: 0;
-    opacity: 0.85;
-    font-weight: 400;
+    opacity: 0.8;
+    font-weight: 450;
+  }
+
+  /* ── Responsive Mobile Fixes ── */
+  @media screen and (max-width: 767px) {
+    .about-freeze-{{ section.id }} .container {
+      padding: 0 1.25rem;
+    }
+    .about-freeze-{{ section.id }} .header-group {
+      margin-bottom: 3rem;
+    }
+    .about-freeze-{{ section.id }} .card {
+      padding: 2.5rem 1.5rem;
+    }
+    .about-freeze-{{ section.id }} .main-title {
+      font-size: 2.2rem;
+    }
   }
 {%- endstyle -%}
 
-<section class="about-freeze-{{ section.id }}" data-testid="about-freeze-section">
+<section class="about-freeze-{{ section.id }}" id="AboutFreeze-{{ section.id }}">
   <div class="container">
-    {%- if section.settings.title != blank or section.settings.subheading != blank -%}
-      <div class="header">
-        {%- if section.settings.title != blank -%}
-          <h2 class="main-title">{{ section.settings.title }}</h2>
-        {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <div class="header-group">
+        <span class="badge">Innovation</span>
+        <h2 class="main-title">{{ section.settings.title }}</h2>
         {%- if section.settings.subheading != blank -%}
           <p class="subheading">{{ section.settings.subheading }}</p>
         {%- endif -%}
@@ -173,8 +243,9 @@
     {%- endif -%}
 
     {%- if section.settings.why_title != blank -%}
-      <div class="why-choose-header">
+      <div class="why-choose-wrap">
         <h3 class="why-choose-title">{{ section.settings.why_title }}</h3>
+        <div class="why-choose-line"></div>
       </div>
     {%- endif -%}
 
@@ -182,20 +253,26 @@
       {%- for block in section.blocks -%}
         <div class="card" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
-            <div class="card-icon">
-              <img src="{{ block.settings.image | image_url: width: 100 }}" alt="{{ block.settings.title }}" loading="lazy" width="48" height="48">
+            <div class="card-icon-wrap">
+              <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="80" height="80">
             </div>
+          {%- else -%}
+             <div class="card-icon-wrap" style="background: {{ accent_color | color_modify: 'alpha', 0.05 }}">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{ accent_color }}" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
+             </div>
           {%- endif -%}
           
-          {%- if block.settings.title != blank -%}
-            <h4 class="card-title">{{ block.settings.title }}</h4>
-          {%- endif -%}
-          
-          {%- if block.settings.text != blank -%}
-            <div class="card-text">
-              {{ block.settings.text }}
-            </div>
-          {%- endif -%}
+          <div class="card-content">
+            {%- if block.settings.title != blank -%}
+              <h4 class="card-title">{{ block.settings.title }}</h4>
+            {%- endif -%}
+            
+            {%- if block.settings.text != blank -%}
+              <div class="card-text">
+                {{ block.settings.text }}
+              </div>
+            {%- endif -%}
+          </div>
         </div>
       {%- endfor -%}
     </div>
