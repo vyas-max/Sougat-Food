@@ -1,0 +1,441 @@
+{% schema %}
+{
+  "name": "Achievements & Message",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fcfcfc"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Achievements Section"
+    },
+    {
+      "type": "text",
+      "id": "achievements_title",
+      "label": "Achievements Title",
+      "default": "Achievements"
+    },
+    {
+      "type": "header",
+      "content": "Chairman's Message Section"
+    },
+    {
+      "type": "text",
+      "id": "chairman_title",
+      "label": "Chairman's Title",
+      "default": "Chairman’s Message"
+    },
+    {
+      "type": "textarea",
+      "id": "chairman_message",
+      "label": "Message Content",
+      "default": "At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering."
+    },
+    {
+      "type": "text",
+      "id": "chairman_sub_message",
+      "label": "Sub Message (Bold)",
+      "default": "Tradition rooted. Future focused."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "25"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix (e.g. K, +, Ton)",
+          "default": "K"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Happy Clients"
+        },
+        {
+          "type": "color",
+          "id": "number_color",
+          "label": "Number Color",
+          "default": "#f59e0b"
+        },
+        {
+          "type": "color",
+          "id": "suffix_color",
+          "label": "Suffix Color",
+          "default": "#10b981"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Achievements & Message",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "25",
+            "suffix": "K",
+            "label": "Happy Clients"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "15",
+            "suffix": "+",
+            "label": "Export Country"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "5",
+            "suffix": "Ton",
+            "label": "Manufacturing"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "50",
+            "suffix": "+",
+            "label": "Products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    overflow: hidden;
+  }
+  
+  .am-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .am-achievements-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    color: var(--color-foreground, #1f2937);
+    letter-spacing: -0.025em;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Decorative underline for title */
+  .am-achievements-title::after {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 3px;
+    bottom: -10px;
+    left: 30%;
+    background: linear-gradient(90deg, #f59e0b, #10b981);
+    border-radius: 2px;
+  }
+
+  .am-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  @media (min-width: 640px) {
+    .am-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .am-stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .am-stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Subtle glass shimmer effect on hover */
+  .am-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    transition: all 0.7s ease;
+    z-index: 1;
+  }
+
+  .am-stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+    border-color: rgba(245, 158, 11, 0.2);
+  }
+  
+  .am-stat-card:hover::before {
+    left: 200%;
+  }
+
+  .am-stat-value-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .am-stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .am-stat-suffix {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+
+  .am-stat-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #4b5563;
+    z-index: 2;
+    position: relative;
+  }
+
+  .am-chairman-section {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 4rem;
+    border-radius: 24px;
+    box-shadow: 0 15px 50px -15px rgba(0,0,0,0.06);
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+
+  .am-chairman-section::before {
+    content: '“';
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-size: 8rem;
+    line-height: 1;
+    color: rgba(245, 158, 11, 0.1);
+    font-family: serif;
+  }
+
+  .am-chairman-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #111827;
+    position: relative;
+    z-index: 2;
+  }
+
+  .am-chairman-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #4b5563;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .am-chairman-sub {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    position: relative;
+    z-index: 2;
+  }
+  
+  @media (max-width: 768px) {
+    .am-chairman-section {
+      padding: 2.5rem 1.5rem;
+    }
+    
+    .am-chairman-title {
+      font-size: 1.75rem;
+    }
+    
+    .am-chairman-text, .am-chairman-sub {
+      font-size: 1.1rem;
+    }
+    
+    .am-achievements-title {
+      font-size: 2rem;
+    }
+  }
+
+  /* Reveal Animations */
+  .am-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  
+  .am-fade-up.am-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="section-{{ section.id }}">
+  <div class="am-container">
+    {% if section.settings.achievements_title != blank %}
+      <h2 class="am-achievements-title am-fade-up">{{ section.settings.achievements_title }}</h2>
+    {% endif %}
+
+    <div class="am-stats-grid">
+      {% for block in section.blocks %}
+        <div class="am-stat-card am-fade-up" style="transition-delay: {{ forloop.index | times: 100 }}ms;" {{ block.shopify_attributes }}>
+          <div class="am-stat-value-container">
+            <span class="am-stat-number" style="color: {{ block.settings.number_color }};">
+              {{ block.settings.number }}
+            </span>
+            <span class="am-stat-suffix" style="color: {{ block.settings.suffix_color }};">
+              {{ block.settings.suffix }}
+            </span>
+          </div>
+          <div class="am-stat-label">
+            {{ block.settings.label }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="am-chairman-section am-fade-up" style="transition-delay: 400ms;">
+      {% if section.settings.chairman_title != blank %}
+        <h2 class="am-chairman-title">{{ section.settings.chairman_title }}</h2>
+      {% endif %}
+      
+      {% if section.settings.chairman_message != blank %}
+        <p class="am-chairman-text">{{ section.settings.chairman_message }}</p>
+      {% endif %}
+      
+      {% if section.settings.chairman_sub_message != blank %}
+        <p class="am-chairman-sub">{{ section.settings.chairman_sub_message }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Intersection Observer for fade up animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('am-visible');
+                // Optional: Counter animation
+                const numberElement = entry.target.querySelector('.am-stat-number');
+                if (numberElement && !numberElement.dataset.animated) {
+                   const finalValue = parseInt(numberElement.textContent, 10);
+                   if (!isNaN(finalValue)) {
+                       animateValue(numberElement, 0, finalValue, 1500);
+                       numberElement.dataset.animated = "true";
+                   }
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const fadeElements = document.querySelectorAll('.am-fade-up');
+    fadeElements.forEach(el => observer.observe(el));
+    
+    // Counter animation function
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            // easeOutQuart
+            const easeProgress = 1 - Math.pow(1 - progress, 4);
+            obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                obj.innerHTML = end;
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+  });
+</script>
