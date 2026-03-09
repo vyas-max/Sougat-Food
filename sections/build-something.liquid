@@ -1,0 +1,294 @@
+{% schema %}
+{
+  "name": "Build Something",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Headline",
+      "default": "Let's Build Something Exceptional"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "If you are looking for a reliable freeze-dried manufacturing partner or distribution opportunity, we would be delighted to explore collaboration."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Contact Us Today to Start the Conversation."
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Build Something CTA"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.background_gradient }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  {% if request.design_mode %}
+  .section-{{ section.id }} .bse-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  {% endif %}
+
+  /* Background decorative shapes for advanced UI feel */
+  .section-{{ section.id }}::before,
+  .section-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .section-{{ section.id }}::before {
+    top: -100px;
+    left: -100px;
+    background: rgba(16, 185, 129, 0.3); /* Green glow */
+  }
+
+  .section-{{ section.id }}::after {
+    bottom: -100px;
+    right: -100px;
+    background: rgba(14, 165, 233, 0.2); /* Blue glow */
+  }
+
+  .bse-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1; /* Keep content above decorative backgrounds */
+  }
+
+  .bse-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+    border-radius: 32px;
+    padding: 4rem 3rem;
+  }
+
+  .bse-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  .bse-title span {
+    background: linear-gradient(90deg, #10b981, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .bse-description {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #4b5563;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bse-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: none;
+    cursor: pointer;
+  }
+
+  .bse-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -5px rgba(16, 185, 129, 0.5);
+    color: #ffffff;
+  }
+
+  .bse-cta-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Button Icon Arrow */
+  .bse-cta-icon {
+    margin-left: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  .bse-cta-btn:hover .bse-cta-icon {
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 768px) {
+    .section-{{ section.id }} {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+    
+    .bse-card {
+      padding: 3rem 1.5rem;
+      border-radius: 24px;
+    }
+
+    .bse-title {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .bse-description {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .bse-cta-btn {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      font-size: 1.05rem;
+    }
+  }
+
+  /* Reveal Animations */
+  .bse-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  .bse-fade-up.bse-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="section-{{ section.id }}">
+  <div class="bse-container">
+    
+    <div class="bse-card bse-fade-up">
+      {% if section.settings.title != blank %}
+        <h2 class="bse-title">
+          {% assign title_words = section.settings.title | split: ' ' %}
+          {% for word in title_words %}
+            {% if word == 'Exceptional' %}
+              <span>{{ word }}</span>
+            {% else %}
+              {{ word }}
+            {% endif %}
+          {% endfor %}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="bse-description bse-fade-up" style="transition-delay: 150ms;">
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.cta_text != blank %}
+        <a href="{{ section.settings.cta_link | default: '#' }}" class="bse-cta-btn bse-fade-up" style="transition-delay: 300ms;">
+          {{ section.settings.cta_text }}
+          <svg class="bse-cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initBSE() {
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('bse-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, observerOptions);
+
+      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .bse-fade-up');
+      fadeElements.forEach(el => observer.observe(el));
+    }
+
+    initBSE();
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initBSE();
+      }
+    });
+  })();
+</script>
