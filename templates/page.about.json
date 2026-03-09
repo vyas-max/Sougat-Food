@@ -301,14 +301,14 @@
       "name": "Text with Dividers",
       "settings": {
         "title": "",
-        "max_width": 1000,
+        "max_width": 988,
         "bg_color": "#F8FBFA",
         "heading_color": "#14442D",
         "text_color": "#14442D",
         "accent_color": "#B3B3B3",
         "divider_color": "#D1D5DB",
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 64
       }
     },
     "176923639961994b9e": {
