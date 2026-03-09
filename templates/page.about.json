@@ -102,6 +102,70 @@
         "padding-block-end": 40
       }
     },
+    "our_expertise_cQm4Ni": {
+      "type": "our-expertise",
+      "blocks": {
+        "expertise_item_F9LFqU": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Freeze-Dried Fruits & Vegetables"
+          }
+        },
+        "expertise_item_Yebjgt": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Pulses & Lentils"
+          }
+        },
+        "expertise_item_b3HQA9": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Spices & Whole Spices"
+          }
+        },
+        "expertise_item_z9kTqz": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Herbs & Dehydrated Products"
+          }
+        },
+        "expertise_item_TqmCCR": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Millets & Traditional Indian Grains"
+          }
+        },
+        "expertise_item_P9KREj": {
+          "type": "expertise_item",
+          "settings": {
+            "title": "Jaggery & Natural Sweeteners"
+          }
+        }
+      },
+      "block_order": [
+        "expertise_item_F9LFqU",
+        "expertise_item_Yebjgt",
+        "expertise_item_b3HQA9",
+        "expertise_item_z9kTqz",
+        "expertise_item_TqmCCR",
+        "expertise_item_P9KREj"
+      ],
+      "name": "Our Expertise",
+      "settings": {
+        "title": "Our Expertises",
+        "subheading": "We manufacture and export a wide range of high-quality food products, including:",
+        "footer_text": "<p>Our advanced processing technology ensures superior taste retention, nutritional value preservation, and extended shelf life — especially in our freeze-drying segment, where we focus on premium quality and global export standards.</p>",
+        "columns": 3,
+        "max_width": 1300,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#F8FBFA",
+        "heading_color": "#14442D",
+        "text_color": "#14442D",
+        "accent_color": "#10A560",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
     "176923639961994b9e": {
       "type": "_blocks",
       "blocks": {
@@ -1094,6 +1158,7 @@
   },
   "order": [
     "main",
+    "our_expertise_cQm4Ni",
     "176923639961994b9e",
     "scrolling_image_marquee_FpU3wk",
     "section_iQ9V3p",
