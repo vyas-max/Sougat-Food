@@ -1,0 +1,324 @@
+{%- style -%}
+  .about-freeze-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  .about-freeze-{{ section.id }} .container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ── Header ── */
+  .about-freeze-{{ section.id }} .header {
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .about-freeze-{{ section.id }} .main-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: {{ section.settings.heading_color }};
+    margin-bottom: 0.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .about-freeze-{{ section.id }} .subheading {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: {{ section.settings.text_color }};
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  /* ── Why Choose Header ── */
+  .about-freeze-{{ section.id }} .why-choose-header {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .about-freeze-{{ section.id }} .why-choose-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: {{ section.settings.heading_color }};
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Grid ── */
+  .about-freeze-{{ section.id }} .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .about-freeze-{{ section.id }} .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .about-freeze-{{ section.id }} .grid {
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    }
+  }
+
+  /* ── Card ── */
+  .about-freeze-{{ section.id }} .card {
+    background: {{ section.settings.card_bg }};
+    padding: 2.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .about-freeze-{{ section.id }} .card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .about-freeze-{{ section.id }} .card-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.5rem;
+    color: {{ section.settings.accent_color }};
+  }
+
+  .about-freeze-{{ section.id }} .card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .about-freeze-{{ section.id }} .card-text {
+    font-size: 1rem;
+    color: {{ section.settings.text_color }};
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.9;
+  }
+{%- endstyle -%}
+
+<section class="about-freeze-{{ section.id }}" data-testid="about-freeze-section">
+  <div class="container">
+    {%- if section.settings.title != blank or section.settings.subheading != blank -%}
+      <div class="header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="main-title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.why_title != blank -%}
+      <div class="why-choose-header">
+        <h3 class="why-choose-title">{{ section.settings.why_title }}</h3>
+      </div>
+    {%- endif -%}
+
+    <div class="grid">
+      {%- for block in section.blocks -%}
+        <div class="card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="card-icon">
+              <img src="{{ block.settings.image | image_url: width: 100 }}" alt="{{ block.settings.title }}" loading="lazy" width="48" height="48">
+            </div>
+          {%- endif -%}
+          
+          {%- if block.settings.title != blank -%}
+            <h4 class="card-title">{{ block.settings.title }}</h4>
+          {%- endif -%}
+          
+          {%- if block.settings.text != blank -%}
+            <div class="card-text">
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Freeze Dried",
+  "tag": "section",
+  "class": "section-about-freeze",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Heading",
+      "default": "About Freeze Dried Fruits & Vegetables"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Creative designed by Sougat maam, can be use in home page."
+    },
+    {
+      "type": "text",
+      "id": "why_title",
+      "label": "Why Choose Heading",
+      "default": "Why Choose Sougat Foods?"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on Desktop",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F8FBFA"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#10A560"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Point",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon/Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Describe the benefits of your product here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Freeze Dried",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Built on Experience",
+            "text": "<p>Sougat Foods has been in the food industry since 1962, known for quality and trust.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "A New Step Forward",
+            "text": "<p>Our freeze-dried range is a new addition — combining modern technology with our long-standing food expertise.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Naturally Preserved",
+            "text": "<p>Freeze-drying gently removes moisture while keeping the natural taste, color, and nutrients intact — without added preservatives or artificial ingredients.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Made for Better Choices",
+            "text": "<p>Lightweight, convenient, and made from real ingredients, our products offer a cleaner alternative to heavily processed snacks.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
