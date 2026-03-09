@@ -56,9 +56,23 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "business_inquiry_form_dzBfBU": {
+      "type": "business-inquiry-form",
+      "name": "Business Inquiry Form",
+      "settings": {
+        "background_gradient": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(249, 250, 251, 1) 100%)",
+        "title": "For Corporate Gifting Inquiries",
+        "description": "Please fill out the form below, and one of our sales representatives will reach out to you shortly.",
+        "submit_text": "Submit",
+        "footer_text": "View our privacy policy and terms of service.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "business_inquiry_form_dzBfBU"
   ]
 }
