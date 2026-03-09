@@ -166,6 +166,56 @@
         "padding_bottom": 100
       }
     },
+    "quality_certifications_KjwKkK": {
+      "type": "quality-certifications",
+      "blocks": {
+        "certification_EWPKnP": {
+          "type": "certification",
+          "settings": {
+            "title": "BRC"
+          }
+        },
+        "certification_NTpQXh": {
+          "type": "certification",
+          "settings": {
+            "title": "FSSC 22000"
+          }
+        },
+        "certification_9FrgFa": {
+          "type": "certification",
+          "settings": {
+            "title": "HACCP"
+          }
+        },
+        "certification_GdFCef": {
+          "type": "certification",
+          "settings": {
+            "title": "SEDEX"
+          }
+        }
+      },
+      "block_order": [
+        "certification_EWPKnP",
+        "certification_NTpQXh",
+        "certification_9FrgFa",
+        "certification_GdFCef"
+      ],
+      "name": "Quality & Certifications",
+      "settings": {
+        "title": "Quality & Certifications",
+        "subheading": "Quality is at the heart of everything we do. Our manufacturing processes strictly follow international food safety standards. We are proud to be certified with:",
+        "footer_text": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>",
+        "columns": 4,
+        "max_width": 1300,
+        "bg_color": "#F8FBFA",
+        "card_bg": "#FFFFFF",
+        "heading_color": "#14442D",
+        "text_color": "#14442D",
+        "accent_color": "#10A560",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
     "176923639961994b9e": {
       "type": "_blocks",
       "blocks": {
@@ -1159,6 +1209,7 @@
   "order": [
     "main",
     "our_expertise_cQm4Ni",
+    "quality_certifications_KjwKkK",
     "176923639961994b9e",
     "scrolling_image_marquee_FpU3wk",
     "section_iQ9V3p",
