@@ -127,17 +127,15 @@
   /* Slider Layout */
   .fsn-slider-container {
     position: relative;
-    /* Edge-to-edge on desktop */
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1600px;
+    padding: 0 5vw; /* Container padding to allow room for navigation arrows */
   }
 
   @media (max-width: 768px) {
     .fsn-slider-container {
-      width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+      padding: 0;
     }
   }
 
@@ -146,23 +144,27 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    gap: 20px;
+    gap: 24px;
     box-sizing: border-box;
     cursor: grab;
-    scrollbar-width: none; /* Firefox */
-    padding: 20px 5vw; /* Start with an offset so the first video isn't touching edge */
+    scrollbar-width: none;
+    padding: 20px 10px;
+    margin: 0 auto;
+    width: max-content; /* This allows it to shrink to its children perfectly */
+    max-width: 100%; /* If tracks too many children, it caps at 100% and begins scrolling */
   }
 
-  /* Reset padding for mobile so swipe feels right */
   @media (max-width: 768px) {
     .fsn-slider-track {
-      padding: 20px 15px; 
-      gap: 15px;
+      padding: 20px 16px; 
+      gap: 16px;
+      width: 100%;
+      scroll-padding-left: 16px;
     }
   }
 
   .fsn-slider-track::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
   }
 
   .fsn-slider-track.active {
@@ -178,26 +180,20 @@
     box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    /* Un-draggable properties to prevent image drag interference */
     user-select: none;
     -webkit-user-drag: none;
+    border: 1px solid #f3f4f6; /* Added slight border to contain white cards visually */
   }
 
   @media (min-width: 640px) {
     .fsn-slide {
-      flex: 0 0 40vw;
+      flex: 0 0 280px; /* Perfect card fixed size to prevent huge vertical stretching */
     }
   }
 
   @media (min-width: 1024px) {
     .fsn-slide {
-      flex: 0 0 280px; /* Fixed nice width for larger screens */
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .fsn-slide {
-      flex: 0 0 320px;
+      flex: 0 0 290px;
     }
   }
 
@@ -395,11 +391,11 @@
   }
 
   .fsn-nav-btn.prev {
-    left: 2vw;
+    left: 20px;
   }
 
   .fsn-nav-btn.next {
-    right: 2vw;
+    right: 20px;
   }
 
   @media (max-width: 768px) {
