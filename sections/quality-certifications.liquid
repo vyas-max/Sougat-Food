@@ -1,0 +1,343 @@
+{%- liquid
+  assign text_color = section.settings.text_color
+  assign heading_color = section.settings.heading_color
+  assign accent_color = section.settings.accent_color
+  assign card_bg = section.settings.card_bg
+  assign section_bg = section.settings.bg_color
+-%}
+
+{%- style -%}
+  .quality-certs-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section_bg }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Decorative soft accent blur */
+  .quality-certs-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 70%);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .quality-certs-{{ section.id }} .container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ── */
+  .quality-certs-{{ section.id }} .header-wrap {
+    text-align: left;
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    max-width: 900px;
+  }
+
+  .quality-certs-{{ section.id }} .main-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: {{ heading_color }};
+    margin: 0 0 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  .quality-certs-{{ section.id }} .subheading {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    color: {{ text_color }};
+    opacity: 0.85;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 450;
+  }
+
+  /* ── Certifications Grid ── */
+  .quality-certs-{{ section.id }} .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  @media screen and (min-width: 768px) {
+    .quality-certs-{{ section.id }} .certs-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .quality-certs-{{ section.id }} .certs-grid {
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    }
+  }
+
+  /* ── Cert Card ── */
+  .quality-certs-{{ section.id }} .cert-card {
+    background: {{ card_bg }};
+    padding: 2rem;
+    border-radius: 28px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    height: 100%;
+    min-height: 160px;
+  }
+
+  .quality-certs-{{ section.id }} .cert-card:hover {
+    transform: translateY(-12px);
+    border-color: {{ accent_color | color_modify: 'alpha', 0.2 }};
+    box-shadow: 0 30px 60px rgba(20, 68, 45, 0.1);
+  }
+
+  .quality-certs-{{ section.id }} .cert-icon-box {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1.25rem;
+    color: {{ accent_color }};
+    background: {{ accent_color | color_modify: 'alpha', 0.05 }};
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quality-certs-{{ section.id }} .cert-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: {{ heading_color }};
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Footer Info Box ── */
+  .quality-certs-{{ section.id }} .footer-box {
+    background: {{ card_bg }};
+    padding: clamp(2.5rem, 5vw, 5rem);
+    border-radius: 48px;
+    border: 1px solid rgba(20, 68, 45, 0.08);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .quality-certs-{{ section.id }} .footer-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 6px;
+    background: {{ accent_color }};
+    border-radius: 0 0 10px 10px;
+  }
+
+  .quality-certs-{{ section.id }} .footer-text {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: {{ text_color }};
+    line-height: 1.6;
+    margin: 0;
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 500;
+    opacity: 0.95;
+  }
+
+  @media screen and (max-width: 767px) {
+    .quality-certs-{{ section.id }} .container {
+      padding: 0 1.25rem;
+    }
+    .quality-certs-{{ section.id }} .footer-box {
+      padding: 3rem 1.5rem;
+      border-radius: 32px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="quality-certs-{{ section.id }}" id="Quality-{{ section.id }}">
+  <div class="container">
+    
+    <div class="header-wrap">
+      {%- if section.settings.title != blank -%}
+        <h2 class="main-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="certs-grid">
+      {%- for block in section.blocks -%}
+        <div class="cert-card" {{ block.shopify_attributes }}>
+          <div class="cert-icon-box">
+             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          {%- if block.settings.title != blank -%}
+            <h4 class="cert-name">{{ block.settings.title | escape }}</h4>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.footer_text != blank -%}
+      <div class="footer-box">
+        <div class="footer-text">
+          {{ section.settings.footer_text }}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quality & Certifications",
+  "tag": "section",
+  "class": "section-quality-certs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Quality & Certifications"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Quality is at the heart of everything we do. Our manufacturing processes strictly follow international food safety standards. We are proud to be certified with:"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on Desktop",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F8FBFA"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#14442D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#10A560"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "certification",
+      "name": "Certification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Certification Name",
+          "default": "BRC"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quality & Certifications",
+      "blocks": [
+        { "type": "certification", "settings": { "title": "BRC" } },
+        { "type": "certification", "settings": { "title": "FSSC 22000" } },
+        { "type": "certification", "settings": { "title": "HACCP" } },
+        { "type": "certification", "settings": { "title": "SEDEX" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
