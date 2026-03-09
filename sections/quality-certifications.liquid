@@ -13,6 +13,7 @@
     background: {{ section_bg }};
     overflow: hidden;
     position: relative;
+    font-display: swap;
   }
 
   /* Decorative soft accent blur */
@@ -23,7 +24,7 @@
     right: -10%;
     width: 60%;
     height: 60%;
-    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 70%);
+    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 70%);
     filter: blur(100px);
     pointer-events: none;
     z-index: 0;
@@ -37,24 +38,48 @@
     z-index: 1;
   }
 
+  /* ── Animations ── */
+  @keyframes scaleUpAnim {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes fadeUpAnim {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .quality-certs-{{ section.id }} .anim-scale {
+    animation: scaleUpAnim 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+  .quality-certs-{{ section.id }} .anim-fade {
+    animation: fadeUpAnim 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    opacity: 0;
+  }
+  .quality-certs-{{ section.id }} .ds-1 { animation-delay: 0.1s; }
+  .quality-certs-{{ section.id }} .ds-2 { animation-delay: 0.2s; }
+  .quality-certs-{{ section.id }} .ds-3 { animation-delay: 0.3s; }
+  .quality-certs-{{ section.id }} .ds-4 { animation-delay: 0.4s; }
+
   /* ── Header ── */
   .quality-certs-{{ section.id }} .header-wrap {
-    text-align: left;
-    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    text-align: center;
+    margin-bottom: clamp(3.5rem, 7vw, 5rem);
     max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .quality-certs-{{ section.id }} .main-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     color: {{ heading_color }};
     margin: 0 0 1.5rem;
     font-weight: 900;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.05em;
     line-height: 1.05;
   }
 
   .quality-certs-{{ section.id }} .subheading {
-    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
     color: {{ text_color }};
     opacity: 0.85;
     line-height: 1.6;
@@ -64,63 +89,72 @@
 
   /* ── Certifications Grid ── */
   .quality-certs-{{ section.id }} .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: clamp(3.5rem, 8vw, 6rem);
-  }
-
-  @media screen and (min-width: 768px) {
-    .quality-certs-{{ section.id }} .certs-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    .quality-certs-{{ section.id }} .certs-grid {
-      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
-    }
-  }
-
-  /* ── Cert Card ── */
-  .quality-certs-{{ section.id }} .cert-card {
-    background: {{ card_bg }};
-    padding: 2rem;
-    border-radius: 28px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    text-align: center;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    height: 100%;
-    min-height: 160px;
+    gap: 1.5rem;
+    margin-bottom: clamp(4rem, 9vw, 6.5rem);
+  }
+
+  /* ── Premium Badge Card ── */
+  .quality-certs-{{ section.id }} .cert-card {
+    background: linear-gradient(135deg, {{ card_bg }} 0%, rgba(255,255,255,0.7) 100%);
+    padding: 1.75rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255,255,255,1);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    flex: 1 1 200px;
+    max-width: 320px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quality-certs-{{ section.id }} .cert-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, {{ accent_color | color_modify: 'alpha', 0.04 }}, transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
   }
 
   .quality-certs-{{ section.id }} .cert-card:hover {
-    transform: translateY(-12px);
-    border-color: {{ accent_color | color_modify: 'alpha', 0.2 }};
-    box-shadow: 0 30px 60px rgba(20, 68, 45, 0.1);
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 25px 50px rgba(20, 68, 45, 0.08), 0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.1 }};
+  }
+
+  .quality-certs-{{ section.id }} .cert-card:hover::before {
+    transform: translateX(100%);
   }
 
   .quality-certs-{{ section.id }} .cert-icon-box {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 1.25rem;
+    width: 48px;
+    height: 48px;
     color: {{ accent_color }};
-    background: {{ accent_color | color_modify: 'alpha', 0.05 }};
-    border-radius: 16px;
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.15 }}, {{ accent_color | color_modify: 'alpha', 0.05 }});
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 12px {{ accent_color | color_modify: 'alpha', 0.1 }};
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .quality-certs-{{ section.id }} .cert-card:hover .cert-icon-box {
+    transform: scale(1.15) rotate(10deg);
   }
 
   .quality-certs-{{ section.id }} .cert-name {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 850;
     color: {{ heading_color }};
     margin: 0;
     letter-spacing: 0.02em;
@@ -128,14 +162,15 @@
 
   /* ── Footer Info Box ── */
   .quality-certs-{{ section.id }} .footer-box {
-    background: {{ card_bg }};
-    padding: clamp(2.5rem, 5vw, 5rem);
+    background: linear-gradient(145deg, {{ card_bg }}, rgba(255,255,255,0.8));
+    padding: clamp(3rem, 5vw, 4.5rem);
     border-radius: 48px;
-    border: 1px solid rgba(20, 68, 45, 0.08);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255,255,255,0.7);
     position: relative;
-    overflow: hidden;
     text-align: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .quality-certs-{{ section.id }} .footer-box::before {
@@ -144,38 +179,34 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
+    width: 120px;
     height: 6px;
-    background: {{ accent_color }};
+    background: linear-gradient(90deg, transparent, {{ accent_color }}, transparent);
     border-radius: 0 0 10px 10px;
+    opacity: 0.8;
   }
 
   .quality-certs-{{ section.id }} .footer-text {
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
     color: {{ text_color }};
-    line-height: 1.6;
+    line-height: 1.7;
     margin: 0;
     max-width: 900px;
     margin: 0 auto;
     font-weight: 500;
-    opacity: 0.95;
+    opacity: 0.9;
   }
 
   @media screen and (max-width: 767px) {
-    .quality-certs-{{ section.id }} .container {
-      padding: 0 1.25rem;
-    }
-    .quality-certs-{{ section.id }} .footer-box {
-      padding: 3rem 1.5rem;
-      border-radius: 32px;
-    }
+    .quality-certs-{{ section.id }} .container { padding: 0 1.25rem; }
+    .quality-certs-{{ section.id }} .footer-box { padding: 3rem 1.5rem; border-radius: 32px; }
   }
 {%- endstyle -%}
 
 <section class="quality-certs-{{ section.id }}" id="Quality-{{ section.id }}">
   <div class="container">
     
-    <div class="header-wrap">
+    <div class="header-wrap anim-fade">
       {%- if section.settings.title != blank -%}
         <h2 class="main-title">{{ section.settings.title }}</h2>
       {%- endif -%}
@@ -186,9 +217,10 @@
 
     <div class="certs-grid">
       {%- for block in section.blocks -%}
-        <div class="cert-card" {{ block.shopify_attributes }}>
+        {%- assign delay_class = forloop.index | modulo: 4 | plus: 1 -%}
+        <div class="cert-card anim-scale ds-{{ delay_class }}" {{ block.shopify_attributes }}>
           <div class="cert-icon-box">
-             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           </div>
           {%- if block.settings.title != blank -%}
             <h4 class="cert-name">{{ block.settings.title | escape }}</h4>
@@ -198,7 +230,7 @@
     </div>
 
     {%- if section.settings.footer_text != blank -%}
-      <div class="footer-box">
+      <div class="footer-box anim-fade ds-2">
         <div class="footer-text">
           {{ section.settings.footer_text }}
         </div>
