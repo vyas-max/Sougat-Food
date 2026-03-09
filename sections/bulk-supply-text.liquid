@@ -1,0 +1,188 @@
+{% schema %}
+{
+  "name": "Bulk Supply Text",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "<p>We offer scalable bulk supply solutions for retailers, distributors, institutions, and export partners. With consistent quality, customized packaging, and reliable logistics support, Sougat ensures seamless bulk fulfillment tailored to your business needs.</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111827"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Font Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Font Size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "justify", "label": "Justify" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bulk Supply Text"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, sans-serif);
+    display: flex;
+    justify-content: center;
+  }
+
+  {% if request.design_mode %}
+  .section-{{ section.id }} .bst-fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  {% endif %}
+
+  .bst-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .bst-content {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.font_size_desktop }}px;
+    line-height: 1.8;
+    text-align: {{ section.settings.text_alignment }};
+    letter-spacing: 0.01em;
+  }
+  
+  .bst-content p {
+    margin: 0 0 1rem 0;
+  }
+  
+  .bst-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | divided_by: 1.5 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 1.5 }}px;
+    }
+    
+    .bst-content {
+      font-size: {{ section.settings.font_size_mobile }}px;
+      line-height: 1.7;
+    }
+  }
+
+  /* Reveal Animations */
+  .bst-fade-up {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  .bst-fade-up.bst-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class="section-{{ section.id }}">
+  <div class="bst-container">
+    {% if section.settings.text_content != blank %}
+      <div class="bst-content bst-fade-up">
+        {{ section.settings.text_content }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initBST() {
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('bst-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, observerOptions);
+
+      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .bst-fade-up');
+      fadeElements.forEach(el => observer.observe(el));
+    }
+
+    initBST();
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initBST();
+      }
+    });
+  })();
+</script>
