@@ -56,9 +56,24 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "bulk_supply_text_6txkXK": {
+      "type": "bulk-supply-text",
+      "name": "Bulk Supply Text",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_content": "<p>We offer scalable bulk supply solutions for retailers, distributors, institutions, and export partners. With consistent quality, customized packaging, and reliable logistics support, Sougat ensures seamless bulk fulfillment tailored to your business needs.</p>",
+        "text_color": "#111827",
+        "font_size_desktop": 18,
+        "font_size_mobile": 16,
+        "text_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "bulk_supply_text_6txkXK"
   ]
 }
