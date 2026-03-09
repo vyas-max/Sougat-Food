@@ -157,11 +157,11 @@
         "footer_text": "<p>Our advanced processing technology ensures superior taste retention, nutritional value preservation, and extended shelf life — especially in our freeze-drying segment, where we focus on premium quality and global export standards.</p>",
         "columns": 3,
         "max_width": 1300,
-        "bg_color": "#FFFFFF",
-        "card_bg": "#F8FBFA",
-        "heading_color": "#14442D",
-        "text_color": "#14442D",
-        "accent_color": "#10A560",
+        "bg_color": "#ffffff",
+        "card_bg": "#f8fbfa",
+        "heading_color": "#14442d",
+        "text_color": "#14442d",
+        "accent_color": "#10a560",
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -207,8 +207,64 @@
         "footer_text": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>",
         "columns": 4,
         "max_width": 1300,
-        "bg_color": "#F8FBFA",
-        "card_bg": "#FFFFFF",
+        "bg_color": "#f8fbfa",
+        "card_bg": "#ffffff",
+        "heading_color": "#14442d",
+        "text_color": "#14442d",
+        "accent_color": "#10a560",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "infrastructure_technology_arLyFK": {
+      "type": "infrastructure-technology",
+      "blocks": {
+        "offering_tNN88d": {
+          "type": "offering",
+          "settings": {
+            "title": "Private Label Manufacturing"
+          }
+        },
+        "offering_xwJJAx": {
+          "type": "offering",
+          "settings": {
+            "title": "Contract Manufacturing"
+          }
+        },
+        "offering_neKCBV": {
+          "type": "offering",
+          "settings": {
+            "title": "Customized Packaging Solutions"
+          }
+        },
+        "offering_9V4ByB": {
+          "type": "offering",
+          "settings": {
+            "title": "Bulk & Retail Packing Options"
+          }
+        },
+        "offering_qK9Vja": {
+          "type": "offering",
+          "settings": {
+            "title": "Complete Export Documentation & Compliance Support"
+          }
+        }
+      },
+      "block_order": [
+        "offering_tNN88d",
+        "offering_xwJJAx",
+        "offering_neKCBV",
+        "offering_9V4ByB",
+        "offering_qK9Vja"
+      ],
+      "name": "Infrastructure & Tech",
+      "settings": {
+        "title": "Infrastructure & Technology",
+        "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
+        "offer_title": "We offer:",
+        "max_width": 1300,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#F8FBFA",
         "heading_color": "#14442D",
         "text_color": "#14442D",
         "accent_color": "#10A560",
@@ -1210,6 +1266,7 @@
     "main",
     "our_expertise_cQm4Ni",
     "quality_certifications_KjwKkK",
+    "infrastructure_technology_arLyFK",
     "176923639961994b9e",
     "scrolling_image_marquee_FpU3wk",
     "section_iQ9V3p",
