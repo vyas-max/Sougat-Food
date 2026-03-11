@@ -618,6 +618,9 @@
           {%- endif -%}
         {%- endfor -%}
 
+        // Store the target media ID when variant changes, before gallery replacement
+        var pendingMediaId = null;
+
         // Build media ID → slide index map from the current gallery DOM
         function buildMediaIndexMap(gallery) {
           var map = {};
@@ -675,59 +678,55 @@
           }
         }
 
-        // Dedicated handler for the variant update
-        function handleVariantUpdate(featuredMedia) {
-          if (!featuredMedia || !featuredMedia.id) return;
-          var targetMediaId = String(featuredMedia.id);
-
-          // The variant update event typically triggers a DOM replacement of media-gallery.
-          // We must wait for the replacement to be finished.
-          var attempts = 0;
-          function checkGallery() {
+        // Observe DOM changes to detect when gallery is replaced
+        var observer = new MutationObserver(function(mutations) {
+          if (pendingMediaId) {
             var gallery = document.querySelector('media-gallery');
             if (gallery) {
-              // Even if the element exists, the inner slideshow might be re-initializing.
+              // Wait for the new gallery to be fully initialized
               requestAnimationFrame(function() {
-                navigateGalleryToMedia(gallery, targetMediaId);
+                setTimeout(function() {
+                  navigateGalleryToMedia(gallery, pendingMediaId);
+                  pendingMediaId = null;
+                }, 50);
               });
-            } else if (attempts < 10) {
-              attempts++;
-              setTimeout(checkGallery, 100);
             }
-          }
-          checkGallery();
-        }
-
-        // Listen for the theme's variant:update event at the document level.
-        document.addEventListener('variant:update', function(e) {
-          if (!e.detail || !e.detail.resource) return;
-          // Support both direct featured_media and fallback through variant ID
-          if (e.detail.resource.featured_media) {
-            handleVariantUpdate(e.detail.resource.featured_media);
-          } else if (e.detail.resource.id && variantMediaMap[e.detail.resource.id]) {
-            handleVariantUpdate({ id: variantMediaMap[e.detail.resource.id] });
           }
         });
 
-        // Use 'change' as a secondary trigger for immediate response where possible
+        // Start observing the parent container for gallery replacements
+        var container = document.querySelector('.product-information') || document.body;
+        observer.observe(container, { childList: true, subtree: true });
+
+        // Listen for variant changes and store the target media ID
+        document.addEventListener('variant:selected', function(e) {
+          if (!e.detail || !e.detail.resource) return;
+          pendingMediaId = null;
+        });
+
         document.addEventListener('change', function(e) {
           var input = e.target;
           if (!input || !input.closest) return;
           var picker = input.closest('variant-picker');
           if (!picker) return;
 
-          var variantId = null;
-          if (input.dataset && input.dataset.variantId) {
-            variantId = input.dataset.variantId;
+          var mediaId = null;
+          if (input.dataset && input.dataset.variantMediaId) {
+            mediaId = input.dataset.variantMediaId;
           } else if (input.tagName === 'SELECT') {
             var selectedOption = input.options[input.selectedIndex];
-            if (selectedOption && selectedOption.dataset.variantId) {
-              variantId = selectedOption.dataset.variantId;
+            if (selectedOption && selectedOption.dataset.variantMediaId) {
+              mediaId = selectedOption.dataset.variantMediaId;
             }
           }
 
-          if (variantId && variantMediaMap[variantId]) {
-             handleVariantUpdate({ id: variantMediaMap[variantId] });
+          if (mediaId) {
+            pendingMediaId = mediaId;
+            // Also try immediate navigation for faster response
+            var gallery = document.querySelector('media-gallery');
+            if (gallery) {
+              navigateGalleryToMedia(gallery, mediaId);
+            }
           }
         });
       })();
