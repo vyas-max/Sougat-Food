@@ -610,17 +610,6 @@
   {%- unless selected_product == blank or block_settings.update_image_on_variant_change == false -%}
     <script data-variant-image-switch>
       (function() {
-        // Build variant ID → featured media ID map from Liquid
-        var variantMediaMap = {};
-        {%- for variant in selected_product.variants -%}
-          {%- if variant.featured_media -%}
-            variantMediaMap["{{ variant.id }}"] = "{{ variant.featured_media.id }}";
-          {%- endif -%}
-        {%- endfor -%}
-
-        // Store the target media ID when variant changes, before gallery replacement
-        var pendingMediaId = null;
-
         // Build media ID → slide index map from the current gallery DOM
         function buildMediaIndexMap(gallery) {
           var map = {};
@@ -678,32 +667,7 @@
           }
         }
 
-        // Observe DOM changes to detect when gallery is replaced
-        var observer = new MutationObserver(function(mutations) {
-          if (pendingMediaId) {
-            var gallery = document.querySelector('media-gallery');
-            if (gallery) {
-              // Wait for the new gallery to be fully initialized
-              requestAnimationFrame(function() {
-                setTimeout(function() {
-                  navigateGalleryToMedia(gallery, pendingMediaId);
-                  pendingMediaId = null;
-                }, 50);
-              });
-            }
-          }
-        });
-
-        // Start observing the parent container for gallery replacements
-        var container = document.querySelector('.product-information') || document.body;
-        observer.observe(container, { childList: true, subtree: true });
-
-        // Listen for variant changes and store the target media ID
-        document.addEventListener('variant:selected', function(e) {
-          if (!e.detail || !e.detail.resource) return;
-          pendingMediaId = null;
-        });
-
+        // Listen for variant changes and navigate immediately for faster response
         document.addEventListener('change', function(e) {
           var input = e.target;
           if (!input || !input.closest) return;
@@ -721,8 +685,6 @@
           }
 
           if (mediaId) {
-            pendingMediaId = mediaId;
-            // Also try immediate navigation for faster response
             var gallery = document.querySelector('media-gallery');
             if (gallery) {
               navigateGalleryToMedia(gallery, mediaId);

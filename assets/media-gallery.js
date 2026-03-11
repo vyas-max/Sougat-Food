@@ -33,19 +33,32 @@ export class MediaGallery extends Component {
   }
 
   /**
-   * Handles a variant update event by replacing the current media gallery with a new one.
+   * Handles a variant update event by navigating to the variant's featured media.
    *
    * @param {VariantUpdateEvent} event - The variant update event.
    */
   #handleVariantUpdate = (event) => {
-    const source = event.detail.data.html;
-
-    if (!source) return;
-    const newMediaGallery = source.querySelector('media-gallery');
-
-    if (!newMediaGallery) return;
-
-    this.replaceWith(newMediaGallery);
+    const { resource } = event.detail;
+    
+    if (!resource || !resource.featured_media) return;
+    
+    const mediaId = String(resource.featured_media.id);
+    const mediaItems = this.querySelectorAll('[data-media-id]');
+    
+    for (let i = 0; i < mediaItems.length; i++) {
+      if (mediaItems[i].getAttribute('data-media-id') === mediaId) {
+        if (this.slideshow && typeof this.slideshow.select === 'function') {
+          this.slideshow.select(i, undefined, { animate: false });
+        }
+        
+        // Update thumbnails if present
+        const thumbs = this.querySelectorAll('.slideshow-controls__thumbnail');
+        thumbs.forEach((thumb, idx) => {
+          thumb.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+        });
+        break;
+      }
+    }
   };
 
   /**
