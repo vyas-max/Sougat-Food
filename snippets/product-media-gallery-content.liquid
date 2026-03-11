@@ -701,7 +701,12 @@
         // Listen for the theme's variant:update event at the document level.
         document.addEventListener('variant:update', function(e) {
           if (!e.detail || !e.detail.resource) return;
-          handleVariantUpdate(e.detail.resource.featured_media);
+          // Support both direct featured_media and fallback through variant ID
+          if (e.detail.resource.featured_media) {
+            handleVariantUpdate(e.detail.resource.featured_media);
+          } else if (e.detail.resource.id && variantMediaMap[e.detail.resource.id]) {
+            handleVariantUpdate({ id: variantMediaMap[e.detail.resource.id] });
+          }
         });
 
         // Use 'change' as a secondary trigger for immediate response where possible
