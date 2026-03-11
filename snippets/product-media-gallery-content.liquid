@@ -607,7 +607,7 @@
   </media-gallery>
 
   {%- comment -%} Variant Image Switch - Handles gallery replacement lifecycle {%- endcomment -%}
-  {%- unless selected_product == blank -%}
+  {%- unless selected_product == blank or block_settings.update_image_on_variant_change == false -%}
     <script data-variant-image-switch>
       (function() {
         // Build variant ID → featured media ID map from Liquid
