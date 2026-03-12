@@ -248,6 +248,113 @@
   }
 {%- endstyle -%}
 
+<style>
+  /* ── Popup Overlay ── */
+  .blog-card-popup-overlay-{{ section.id }} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* ── Popup Modal ── */
+  .blog-card-popup-{{ section.id }} {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    display: none;
+    animation: slideUp 0.3s ease;
+  }
+
+  .blog-card-popup-header-{{ section.id }} {
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .blog-card-popup-title-{{ section.id }} {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+  }
+
+  .blog-card-popup-close-{{ section.id }} {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+  }
+
+  .blog-card-popup-close-{{ section.id }}:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .blog-card-popup-close-icon-{{ section.id }} {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+  }
+
+  .blog-card-popup-content-{{ section.id }} {
+    padding: 24px;
+    font-size: 0.95rem;
+    color: #555555;
+    line-height: 1.7;
+  }
+
+  .blog-card-popup-content-{{ section.id }} p {
+    margin: 0 0 16px;
+  }
+
+  .blog-card-popup-content-{{ section.id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  /* ── Mobile tweaks ── */
+  @media screen and (max-width: 749px) {
+    .blog-card-popup-{{ section.id }} {
+      width: 95%;
+      max-height: 90vh;
+    }
+  }
+</style>
+
 <div class="blog-cards-section-{{ section.id }}">
   <div class="blog-cards-container-{{ section.id }}">
 
@@ -305,41 +412,27 @@
               </div>
             {%- endif -%}
 
-            {%- comment -%} Dropdown / Read More {%- endcomment -%}
+            {%- comment -%} Popup / Read More {%- endcomment -%}
             {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
-              <div class="blog-card-dropdown-{{ section.id }}">
+              <div class="blog-card-popup-trigger-{{ section.id }}">
                 <button
                   type="button"
-                  class="blog-card-dropdown-toggle-{{ section.id }}"
+                  class="blog-card-popup-trigger-btn-{{ section.id }}"
                   aria-expanded="false"
-                  aria-controls="blog-dropdown-{{ section.id }}-{{ block.id }}"
+                  aria-controls="blog-popup-{{ section.id }}-{{ block.id }}"
                   onclick="(function(btn){
-                    var content = document.getElementById('blog-dropdown-{{ section.id }}-{{ block.id }}');
-                    var isOpen = btn.getAttribute('aria-expanded') === 'true';
-                    btn.setAttribute('aria-expanded', !isOpen);
-                    if (!isOpen) {
-                      content.style.maxHeight = content.scrollHeight + 'px';
-                      content.classList.add('is-open');
-                    } else {
-                      content.style.maxHeight = '0';
-                      content.classList.remove('is-open');
-                    }
+                    var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+                    var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
+                    popup.style.display = 'block';
+                    overlay.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
                   })(this)"
                 >
                   <span>{{ block.settings.dropdown_label }}</span>
-                  <svg class="blog-card-dropdown-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="blog-card-popup-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                   </svg>
                 </button>
-
-                <div
-                  class="blog-card-dropdown-content-{{ section.id }}"
-                  id="blog-dropdown-{{ section.id }}-{{ block.id }}"
-                >
-                  <div class="blog-card-dropdown-inner-{{ section.id }}">
-                    {{ block.settings.dropdown_content }}
-                  </div>
-                </div>
               </div>
             {%- endif -%}
 
@@ -349,6 +442,42 @@
         </div>
       {%- endfor -%}
     </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
+        <div class="blog-card-popup-overlay-{{ section.id }}" id="blog-popup-overlay-{{ section.id }}-{{ block.id }}" onclick="(function(overlay){
+          overlay.style.display = 'none';
+          var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+          popup.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        })(this)">
+        </div>
+
+        <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
+          <div class="blog-card-popup-header-{{ section.id }}">
+            <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
+            <button
+              type="button"
+              class="blog-card-popup-close-{{ section.id }}"
+              onclick="(function(btn){
+                var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+                var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
+                popup.style.display = 'none';
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+              })(this)"
+            >
+              <svg class="blog-card-popup-close-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          <div class="blog-card-popup-content-{{ section.id }}">
+            {{ block.settings.dropdown_content }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
 
   </div>
 </div>
