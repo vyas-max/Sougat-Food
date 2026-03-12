@@ -231,7 +231,39 @@
     margin-bottom: 0;
   }
 
+  /* ── Popup Trigger Button ── */
+  .blog-card-popup-trigger-{{ section.id }} {
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 0;
+  }
 
+  .blog-card-popup-trigger-btn-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: {{ section.settings.accent_color }};
+    transition: color 0.25s ease;
+    font-family: inherit;
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}:hover {
+    color: {{ section.settings.accent_hover }};
+  }
+
+  .blog-card-popup-icon-{{ section.id }} {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
 
   /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
@@ -443,44 +475,44 @@
       {%- endfor -%}
     </div>
 
-    {%- for block in section.blocks -%}
-      {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
-        <div class="blog-card-popup-overlay-{{ section.id }}" id="blog-popup-overlay-{{ section.id }}-{{ block.id }}" onclick="(function(overlay){
-          overlay.style.display = 'none';
-          var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-          popup.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        })(this)">
-        </div>
-
-        <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
-          <div class="blog-card-popup-header-{{ section.id }}">
-            <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
-            <button
-              type="button"
-              class="blog-card-popup-close-{{ section.id }}"
-              onclick="(function(btn){
-                var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-                var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
-                popup.style.display = 'none';
-                overlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
-              })(this)"
-            >
-              <svg class="blog-card-popup-close-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </button>
-          </div>
-          <div class="blog-card-popup-content-{{ section.id }}">
-            {{ block.settings.dropdown_content }}
-          </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
-
   </div>
 </div>
+
+{%- for block in section.blocks -%}
+  {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
+    <div class="blog-card-popup-overlay-{{ section.id }}" id="blog-popup-overlay-{{ section.id }}-{{ block.id }}" onclick="(function(overlay){
+      overlay.style.display = 'none';
+      var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+      popup.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    })(this)">
+    </div>
+
+    <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
+      <div class="blog-card-popup-header-{{ section.id }}">
+        <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
+        <button
+          type="button"
+          class="blog-card-popup-close-{{ section.id }}"
+          onclick="(function(btn){
+            var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+            var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          })(this)"
+        >
+          <svg class="blog-card-popup-close-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="blog-card-popup-content-{{ section.id }}">
+        {{ block.settings.dropdown_content }}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endfor -%}
 
 {% schema %}
 {
