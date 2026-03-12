@@ -169,35 +169,57 @@
   /* ── Popup Trigger Button ── */
   .blog-card-popup-trigger-{{ section.id }} {
     margin-top: auto;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    padding-top: 0;
+    padding-top: 16px;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }} {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: none;
+    gap: 8px;
+    background: linear-gradient(135deg, {{ section.settings.accent_color }}, {{ section.settings.accent_hover }});
+    color: #ffffff;
     border: none;
-    padding: 14px 0;
+    padding: 12px 24px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
-    color: {{ section.settings.accent_color }};
-    transition: color 0.25s ease;
     font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover {
-    color: {{ section.settings.accent_hover }};
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}:hover::before {
+    left: 100%;
   }
 
   .blog-card-popup-icon-{{ section.id }} {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}:hover .blog-card-popup-icon-{{ section.id }} {
+    transform: translateX(4px);
   }
 
   /* ── Mobile tweaks ── */
@@ -223,10 +245,17 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1000;
     display: none;
-    animation: fadeIn 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .blog-card-popup-overlay-{{ section.id }}.active {
+    opacity: 1;
   }
 
   /* ── Popup Modal ── */
@@ -234,58 +263,99 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.9);
     background: #ffffff;
-    max-width: 800px;
+    max-width: 700px;
     width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-height: 85vh;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
     z-index: 1001;
     display: none;
-    animation: slideUp 0.3s ease;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .blog-card-popup-{{ section.id }}.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .blog-card-popup-image-{{ section.id }} {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
   }
 
   .blog-card-popup-header-{{ section.id }} {
-    padding: 24px 24px 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 28px 28px 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 16px;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   }
 
   .blog-card-popup-title-{{ section.id }} {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111111;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
     margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   .blog-card-popup-close-{{ section.id }} {
-    background: none;
+    background: #f1f5f9;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px;
     border-radius: 50%;
-    transition: background 0.2s ease;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .blog-card-popup-close-{{ section.id }}:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: #e2e8f0;
+    transform: rotate(90deg);
   }
 
   .blog-card-popup-close-icon-{{ section.id }} {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
+    width: 20px;
+    height: 20px;
+    stroke: #475569;
   }
 
   .blog-card-popup-content-{{ section.id }} {
-    padding: 24px;
-    font-size: 0.95rem;
-    color: #555555;
-    line-height: 1.7;
+    padding: 0 28px 28px;
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.8;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  .blog-card-popup-content-{{ section.id }}::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .blog-card-popup-content-{{ section.id }}::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  .blog-card-popup-content-{{ section.id }}::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .blog-card-popup-content-{{ section.id }}::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
   }
 
   .blog-card-popup-content-{{ section.id }} p {
@@ -296,21 +366,34 @@
     margin-bottom: 0;
   }
 
-  /* ── Animations ── */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .blog-card-popup-footer-{{ section.id }} {
+    padding: 20px 28px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
   }
 
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -40%);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-    }
+  .blog-card-popup-btn-{{ section.id }} {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+  }
+
+  .blog-card-popup-btn-close-{{ section.id }} {
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+  }
+
+  .blog-card-popup-btn-close-{{ section.id }}:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
   }
 
   /* ── Mobile tweaks ── */
@@ -318,6 +401,28 @@
     .blog-card-popup-{{ section.id }} {
       width: 95%;
       max-height: 90vh;
+      border-radius: 20px;
+    }
+
+    .blog-card-popup-header-{{ section.id }} {
+      padding: 20px 20px 16px;
+    }
+
+    .blog-card-popup-title-{{ section.id }} {
+      font-size: 1.35rem;
+    }
+
+    .blog-card-popup-content-{{ section.id }} {
+      padding: 0 20px 20px;
+      max-height: 50vh;
+    }
+
+    .blog-card-popup-image-{{ section.id }} {
+      height: 160px;
+    }
+
+    .blog-card-popup-footer-{{ section.id }} {
+      padding: 16px 20px;
     }
   }
 </style>
@@ -393,6 +498,10 @@
                     popup.style.display = 'block';
                     overlay.style.display = 'block';
                     document.body.style.overflow = 'hidden';
+                    setTimeout(function() {
+                      popup.classList.add('active');
+                      overlay.classList.add('active');
+                    }, 10);
                   })(this)"
                 >
                   <span>{{ block.settings.dropdown_label }}</span>
@@ -416,14 +525,25 @@
 {%- for block in section.blocks -%}
   {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
     <div class="blog-card-popup-overlay-{{ section.id }}" id="blog-popup-overlay-{{ section.id }}-{{ block.id }}" onclick="(function(overlay){
-      overlay.style.display = 'none';
       var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-      popup.style.display = 'none';
+      popup.classList.remove('active');
+      overlay.classList.remove('active');
+      setTimeout(function() {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+      }, 300);
       document.body.style.overflow = 'auto';
     })(this)">
     </div>
 
     <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
+      {%- if block.settings.image != blank -%}
+        <img
+          src="{{ block.settings.image | image_url: width: 800 }}"
+          alt="{{ block.settings.title | escape }}"
+          class="blog-card-popup-image-{{ section.id }}"
+        >
+      {%- endif -%}
       <div class="blog-card-popup-header-{{ section.id }}">
         <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
         <button
@@ -432,8 +552,12 @@
           onclick="(function(btn){
             var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
             var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
-            popup.style.display = 'none';
-            overlay.style.display = 'none';
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+            setTimeout(function() {
+              popup.style.display = 'none';
+              overlay.style.display = 'none';
+            }, 300);
             document.body.style.overflow = 'auto';
           })(this)"
         >
@@ -445,9 +569,46 @@
       <div class="blog-card-popup-content-{{ section.id }}">
         {{ block.settings.dropdown_content }}
       </div>
+      <div class="blog-card-popup-footer-{{ section.id }}">
+        <button
+          type="button"
+          class="blog-card-popup-btn-{{ section.id }} blog-card-popup-btn-close-{{ section.id }}"
+          onclick="(function(btn){
+            var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+            var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+            setTimeout(function() {
+              popup.style.display = 'none';
+              overlay.style.display = 'none';
+            }, 300);
+            document.body.style.overflow = 'auto';
+          })(this)"
+        >
+          Close
+        </button>
+      </div>
     </div>
   {%- endif -%}
 {%- endfor -%}
+
+<script>
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var overlays = document.querySelectorAll('[id^="blog-popup-overlay-{{ section.id }}"]');
+      var popups = document.querySelectorAll('[id^="blog-popup-{{ section.id }}-"]');
+      overlays.forEach(function(overlay) {
+        overlay.classList.remove('active');
+        setTimeout(function() { overlay.style.display = 'none'; }, 300);
+      });
+      popups.forEach(function(popup) {
+        popup.classList.remove('active');
+        setTimeout(function() { popup.style.display = 'none'; }, 300);
+      });
+      document.body.style.overflow = 'auto';
+    }
+  });
+</script>
 
 {% schema %}
 {
