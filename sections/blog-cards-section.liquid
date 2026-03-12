@@ -397,7 +397,7 @@
                 >
                   <span>{{ block.settings.dropdown_label }}</span>
                   <svg class="blog-card-popup-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                   </svg>
                 </button>
               </div>
@@ -645,19 +645,19 @@
         },
         {
           "type": "header",
-          "content": "Dropdown (Read More)"
+          "content": "Popup (Read More)"
         },
         {
           "type": "text",
           "id": "dropdown_label",
-          "label": "Dropdown Button Label",
+          "label": "Popup Button Label",
           "default": "Read More",
-          "info": "Toggle to reveal extra content"
+          "info": "Click to open popup with full content"
         },
         {
           "type": "richtext",
           "id": "dropdown_content",
-          "label": "Dropdown Content",
+          "label": "Popup Content",
           "default": "<p>This section reveals additional details about the blog post when the reader clicks the button above.</p>"
         },
 
@@ -669,9 +669,9 @@
       "name": "Recipe Grid Cards",
       "category": "Blog",
       "blocks": [
-        { "type": "recipe_block" },
-        { "type": "recipe_block" },
-        { "type": "recipe_block" }
+        { "type": "blog_card" },
+        { "type": "blog_card" },
+        { "type": "blog_card" }
       ]
     }
   ]
