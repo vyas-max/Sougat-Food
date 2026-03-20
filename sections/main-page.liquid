@@ -1,364 +1,76 @@
 {% stylesheet %}
   .main-page-section {
     position: relative;
-    overflow: hidden;
-  }
-
-  .main-page-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at top left, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.02) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
   }
 
   .main-page-wrapper {
-    position: relative;
-    z-index: 1;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-left: var(--page-margin);
+    padding-right: var(--page-margin);
   }
 
   .main-page-header {
-    text-align: center;
-    padding: {{ section.settings.header_padding }}px 0;
-    position: relative;
-  }
-
-  .main-page-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgb(var(--color-button-primary-rgb, 36, 123, 159)), transparent);
-    border-radius: 100px;
-  }
-
-  .main-page-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 20px;
-    background: linear-gradient(135deg, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.08) 0%, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.02) 100%);
-    color: rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1.25rem;
-    animation: fadeInDown 0.6s ease-out forwards;
-    animation-delay: 0.1s;
-    opacity: 0;
+    text-align: {{ section.settings.text_alignment }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.header_bottom_spacing }}px;
   }
 
   .main-page-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    color: rgb(var(--color-foreground-rgb, 0, 0, 0));
-    margin: 0 0 0.75rem;
-    line-height: 1.15;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: rgb(var(--color-foreground-rgb));
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
     letter-spacing: -0.02em;
-    animation: fadeInDown 0.6s ease-out forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
   }
 
   .main-page-subtitle {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: rgb(var(--color-foreground-rgb, 0, 0, 0));
-    opacity: 0.7;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: rgb(var(--color-foreground-rgb));
+    opacity: 0.75;
     margin: 0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: {{ section.settings.subtitle_max_width }}px;
     line-height: 1.6;
-    animation: fadeInDown 0.6s ease-out forwards;
-    animation-delay: 0.3s;
-    opacity: 0;
+    {% if section.settings.text_alignment == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+    {% elsif section.settings.text_alignment == 'right' %}
+      margin-left: auto;
+    {% endif %}
   }
 
   .main-page-content {
     position: relative;
   }
 
-  .main-page-content > * {
-    animation: fadeInUp 0.6s ease-out forwards;
-    opacity: 0;
-  }
-
-  .main-page-content > *:nth-child(1) { animation-delay: 0.4s; }
-  .main-page-content > *:nth-child(2) { animation-delay: 0.5s; }
-  .main-page-content > *:nth-child(3) { animation-delay: 0.6s; }
-  .main-page-content > *:nth-child(4) { animation-delay: 0.7s; }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .main-page-decorative-element {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .main-page-decorative-element--top-left {
-    top: -100px;
-    left: -100px;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.06) 0%, transparent 70%);
-    animation: floatDecorative 15s ease-in-out infinite;
-  }
-
-  .main-page-decorative-element--bottom-right {
-    bottom: -80px;
-    right: -80px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.04) 0%, transparent 70%);
-    animation: floatDecorative 12s ease-in-out infinite reverse;
-  }
-
-  @keyframes floatDecorative {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(20px, -15px) scale(1.05); }
-    66% { transform: translate(-15px, 10px) scale(0.95); }
-  }
-
-  .main-page-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 1.5rem;
-    font-size: 0.85rem;
-    animation: fadeInDown 0.6s ease-out forwards;
-    opacity: 0;
-  }
-
-  .main-page-breadcrumb a {
-    color: rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .main-page-breadcrumb a:hover {
-    opacity: 0.7;
-  }
-
-  .main-page-breadcrumb-separator {
-    opacity: 0.4;
-  }
-
-  .main-page-breadcrumb-current {
-    opacity: 0.6;
-  }
-
-  .main-page-cta-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0.5s;
-    opacity: 0;
-  }
-
-  .main-page-cta-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    background: rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    color: rgb(var(--color-button-label-rgb, 255, 255, 255));
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    border-radius: 100px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.25);
-  }
-
-  .main-page-cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(var(--color-button-primary-rgb, 36, 123, 159), 0.35);
-  }
-
-  .main-page-cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    background: transparent;
-    color: rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    border-radius: 100px;
-    border: 2px solid rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    transition: all 0.3s ease;
-  }
-
-  .main-page-cta-secondary:hover {
-    background: rgb(var(--color-button-primary-rgb, 36, 123, 159));
-    color: rgb(var(--color-button-label-rgb, 255, 255, 255));
+  .main-page-content > * + * {
+    margin-top: {{ section.settings.content_gap }}px;
   }
 
   @media screen and (max-width: 749px) {
     .main-page-header {
-      padding: 40px 0 30px;
+      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.header_bottom_spacing | divided_by: 2 }}px;
     }
 
-    .main-page-cta-group {
-      flex-direction: column;
-      align-items: stretch;
+    .main-page-title {
+      font-size: 1.75rem;
     }
 
-    .main-page-cta-primary,
-    .main-page-cta-secondary {
-      justify-content: center;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .main-page-eyebrow,
-    .main-page-title,
-    .main-page-subtitle,
-    .main-page-content > *,
-    .main-page-breadcrumb,
-    .main-page-cta-group,
-    .main-page-decorative-element {
-      animation: none;
-      opacity: 1;
+    .main-page-subtitle {
+      font-size: 1rem;
     }
   }
 {% endstylesheet %}
 
-<script is:critical>
-  document.addEventListener('DOMContentLoaded', function() {
-    const section = document.querySelector('.main-page-section');
-    if (!section) return;
-
-    const animateOnScroll = () => {
-      const elements = section.querySelectorAll('.main-page-content > *');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationDelay = `${index * 0.1}s`;
-            entry.target.classList.add('animate-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-      elements.forEach(el => observer.observe(el));
-    };
-
-    const addParallaxEffect = () => {
-      const decorElements = section.querySelectorAll('.main-page-decorative-element');
-      
-      window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        decorElements.forEach((el, i) => {
-          const speed = (i + 1) * 0.02;
-          el.style.transform = `translateY(${scrollY * speed}px)`;
-        });
-      }, { passive: true });
-    };
-
-    if ('IntersectionObserver' in window) {
-      animateOnScroll();
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-      addParallaxEffect();
-    }
-  });
-</script>
-
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<section class="section page-width-content color-{{ section.settings.color_scheme }} main-page-section main-page-wrapper" id="MainPage-{{ section.id }}">
-  {%- if section.settings.show_decorative -%}
-    <div class="main-page-decorative-element main-page-decorative-element--top-left" aria-hidden="true"></div>
-    <div class="main-page-decorative-element main-page-decorative-element--bottom-right" aria-hidden="true"></div>
-  {%- endif -%}
-
-  {%- if section.settings.show_header -%}
-    <header class="main-page-header" style="padding: {{ section.settings.header_padding }}px 0;">
-      {%- if section.settings.eyebrow_text != blank -%}
-        <span class="main-page-eyebrow">{{ section.settings.eyebrow_text }}</span>
-      {%- endif -%}
-      
-      {%- if section.settings.show_breadcrumb -%}
-        <nav class="main-page-breadcrumb" aria-label="Breadcrumb">
-          <a href="{{ routes.root_url }}">Home</a>
-          <span class="main-page-breadcrumb-separator">/</span>
-          <span class="main-page-breadcrumb-current">{{ page.title | default: 'Page' }}</span>
-        </nav>
-      {%- endif -%}
-      
-      <h1 class="main-page-title">{{ section.settings.custom_title | default: page.title | default: 'Welcome' }}</h1>
-      
-      {%- if section.settings.subtitle != blank -%}
-        <p class="main-page-subtitle">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
-      
-      {%- if section.settings.primary_cta_text != blank or section.settings.secondary_cta_text != blank -%}
-        <div class="main-page-cta-group">
-          {%- if section.settings.primary_cta_text != blank -%}
-            <a href="{{ section.settings.primary_cta_url }}" class="main-page-cta-primary">
-              {{ section.settings.primary_cta_text }}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </a>
-          {%- endif -%}
-          {%- if section.settings.secondary_cta_text != blank -%}
-            <a href="{{ section.settings.secondary_cta_url }}" class="main-page-cta-secondary">
-              {{ section.settings.secondary_cta_text }}
-            </a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    </header>
-  {%- endif -%}
-
+<div class="section main-page-section color-{{ section.settings.color_scheme }}">
   <div
     class="
       spacing-style
       layout-panel-flex
-      layout-panel-flex--{{ section.settings.content_direction }}
+      layout-panel-flex--column
+      main-page-wrapper
       section-content-wrapper
-      main-page-content
-      {%- if section.settings.content_direction == 'row' and section.settings.vertical_on_mobile %} mobile-column{%- endif -%}
     "
     style="
       {% render 'layout-panel-style', settings: section.settings %}
@@ -367,7 +79,7 @@
   >
     {% content_for 'blocks' %}
   </div>
-</section>
+</div>
 
 {% schema %}
 {
@@ -389,84 +101,34 @@
   },
   "settings": [
     {
-      "type": "header",
-      "content": "Page Header"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_header",
-      "label": "Show Page Header",
-      "default": true,
-      "info": "Display a custom header section at the top of the page"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_breadcrumb",
-      "label": "Show Breadcrumb Navigation",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_decorative",
-      "label": "Show Decorative Elements",
-      "default": true,
-      "info": "Add subtle animated decorative elements in the background"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow_text",
-      "label": "Eyebrow Text",
-      "default": "Welcome"
-    },
-    {
-      "type": "text",
-      "id": "custom_title",
-      "label": "Custom Title",
-      "info": "Leave blank to use page title"
-    },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "info": "Optional subtitle below the main title"
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
     },
     {
       "type": "range",
-      "id": "header_padding",
-      "label": "Header Padding",
-      "min": 20,
-      "max": 120,
-      "step": 5,
+      "id": "subtitle_max_width",
+      "label": "Subtitle Max Width",
+      "min": 400,
+      "max": 900,
+      "step": 50,
       "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "header",
-      "content": "Call to Action Buttons"
-    },
-    {
-      "type": "text",
-      "id": "primary_cta_text",
-      "label": "Primary Button Text"
-    },
-    {
-      "type": "url",
-      "id": "primary_cta_url",
-      "label": "Primary Button URL"
-    },
-    {
-      "type": "text",
-      "id": "secondary_cta_text",
-      "label": "Secondary Button Text"
-    },
-    {
-      "type": "url",
-      "id": "secondary_cta_url",
-      "label": "Secondary Button URL"
-    },
-    {
-      "type": "header",
-      "content": "Content Layout"
+      "default": 600
     },
     {
       "type": "select",
@@ -489,6 +151,16 @@
       "max": 100,
       "step": 1,
       "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Content Block Gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
       "default": 24
     },
     {
@@ -503,13 +175,13 @@
     },
     {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
+      "id": "padding_top",
+      "label": "Top Padding",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 40
     },
     {
       "type": "range",
@@ -517,9 +189,19 @@
       "label": "t:settings.bottom",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_spacing",
+      "label": "Bottom Spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 32
     }
   ]
 }
