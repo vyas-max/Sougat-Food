@@ -90,8 +90,8 @@
   .our-expertise-{{ section.id }} .d-6 { animation-delay: 0.6s; }
 
   .our-expertise-{{ section.id }} .header-wrap {
-    text-align: left;
-    margin-bottom: clamp(3.5rem, 6vw, 5rem);
+    text-align: center;
+    margin: 0 auto clamp(3.5rem, 6vw, 5rem) auto;
     max-width: 900px;
   }
 
@@ -141,7 +141,8 @@
     content: '';
     position: absolute;
     bottom: -10px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 80px;
     height: 4px;
     background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
