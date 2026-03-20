@@ -263,7 +263,7 @@
       ],
       "name": "Infrastructure & Tech",
       "settings": {
-        "title": "Infrastructure & Technology",
+        "title": "Infrastructure                                                                    &                                                                                                                        Technology",
         "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
         "offer_title": "We offer:",
         "max_width": 1300,
@@ -291,7 +291,7 @@
         "text_block_pCtaHp": {
           "type": "text_block",
           "settings": {
-            "show_icon": false,
+            "show_icon": true,
             "title": "Our Vision",
             "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>",
             "show_divider": true
