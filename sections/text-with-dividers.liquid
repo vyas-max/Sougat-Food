@@ -16,18 +16,42 @@
     font-display: swap;
   }
 
+  @keyframes slowFloat {
+    0%, 100% { transform: translate(0, 0) scale(1.0); }
+    33% { transform: translate(30px, -40px) scale(1.05); }
+    66% { transform: translate(-30px, 40px) scale(0.95); }
+  }
+
+  @keyframes slowFloatAlt {
+    0%, 100% { transform: translate(0, 0) scale(1.0); }
+    33% { transform: translate(-40px, 30px) scale(0.95); }
+    66% { transform: translate(40px, -30px) scale(1.05); }
+  }
+
   .text-dividers-{{ section.id }}::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(ellipse at 10% 20%, {{ accent_color | color_modify: 'alpha', 0.03 }} 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 80%, {{ heading_color | color_modify: 'alpha', 0.02 }} 0%, transparent 50%);
+    top: -15%;
+    left: -10%;
+    width: 60%;
+    height: 70%;
+    background: radial-gradient(ellipse at center, {{ accent_color | color_modify: 'alpha', 0.05 }} 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
+    animation: slowFloat 20s ease-in-out infinite;
+  }
+  
+  .text-dividers-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    bottom: -15%;
+    right: -10%;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(ellipse at center, {{ heading_color | color_modify: 'alpha', 0.04 }} 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+    animation: slowFloatAlt 25s ease-in-out infinite;
   }
 
   .text-dividers-{{ section.id }} .container {
@@ -51,31 +75,31 @@
     to { opacity: 1; transform: scaleX(1); }
   }
   @keyframes slideInIcon {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; transform: translateX(-15px) rotate(-10deg); }
+    to { opacity: 1; transform: translateX(0) rotate(0deg); }
   }
 
   .text-dividers-{{ section.id }} .anim-fade {
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   .text-dividers-{{ section.id }} .anim-block {
     opacity: 0;
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .text-dividers-{{ section.id }} .anim-icon {
-    animation: slideInIcon 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideInIcon 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   .text-dividers-{{ section.id }} .anim-divider {
-    animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: scaleIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     transform-origin: left;
     opacity: 0;
   }
 
   .text-dividers-{{ section.id }} .section-header {
     text-align: center;
-    margin-bottom: clamp(3.5rem, 7vw, 6rem);
+    margin-bottom: clamp(4rem, 8vw, 7rem);
     position: relative;
   }
 
@@ -88,18 +112,23 @@
     line-height: 1.1;
     position: relative;
     display: inline-block;
+    background: linear-gradient(135deg, {{ heading_color }} 0%, {{ accent_color | color_darken: 15 }} 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .text-dividers-{{ section.id }} .section-title::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
+    width: 60px;
     height: 4px;
     background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
-    border-radius: 2px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px {{ accent_color | color_modify: 'alpha', 0.4 }};
   }
 
   .text-dividers-{{ section.id }} .blocks-wrap {
@@ -109,78 +138,92 @@
   }
 
   .text-dividers-{{ section.id }} .text-block {
-    padding: clamp(2.5rem, 5vw, 4rem) 0;
+    padding: clamp(2.5rem, 5vw, 3.5rem) 2rem;
+    margin: 0 -2rem;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border-radius: 24px;
+    border-radius: 28px;
     position: relative;
+    border: 1px solid transparent;
   }
 
   .text-dividers-{{ section.id }} .text-block:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.04),
+      0 1px 3px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-4px);
   }
 
   .text-dividers-{{ section.id }} .text-block:hover .block-title {
-    color: {{ accent_color }};
+    color: {{ heading_color }};
+    text-shadow: 0 2px 10px rgba(0,0,0,0.02);
   }
 
   .text-dividers-{{ section.id }} .text-block:hover .block-icon {
-    transform: translateX(5px);
-    border-left-color: {{ accent_color | color_lighten: 15 }};
+    transform: translateX(6px) scale(1.05);
+    box-shadow: 0 12px 24px {{ accent_color | color_modify: 'alpha', 0.25 }};
+    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_darken: 10 }} 100%);
+  }
+
+  .text-dividers-{{ section.id }} .text-block:hover .block-icon svg {
+    color: #fff;
+    transform: translateX(2px);
   }
 
   .text-dividers-{{ section.id }} .block-header {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .text-dividers-{{ section.id }} .block-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
-    border-radius: 14px;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.02 }} 100%);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    box-shadow: 0 4px 12px {{ accent_color | color_modify: 'alpha', 0.05 }}, inset 0 1px 0 rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.5);
   }
 
-  .text-dividers-{{ section.id }} .block-icon::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 14px solid {{ accent_color }};
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .text-dividers-{{ section.id }} .block-icon svg {
+    color: {{ accent_color }};
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .text-dividers-{{ section.id }} .block-title {
-    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
     color: {{ heading_color }};
     margin: 0;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: -0.02em;
-    line-height: 1.2;
-    transition: color 0.4s ease;
+    line-height: 1.25;
+    transition: all 0.4s ease;
   }
 
   .text-dividers-{{ section.id }} .block-content {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
     color: {{ text_color }};
-    line-height: 1.8;
+    line-height: 1.85;
     margin: 0;
     font-weight: 400;
-    opacity: 0.85;
+    opacity: 0.88;
     max-width: 900px;
-    padding-left: calc(48px + 1.25rem);
+    padding-left: calc(52px + 1.5rem);
   }
 
   .text-dividers-{{ section.id }} .block-content p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
   .text-dividers-{{ section.id }} .block-content p:last-child {
     margin-bottom: 0;
@@ -189,9 +232,23 @@
   .text-dividers-{{ section.id }} .divider {
     height: 2px;
     width: 100%;
-    background: linear-gradient(90deg, {{ divider_color }}, {{ divider_color | color_modify: 'alpha', 0.3 }} 70%, transparent);
-    margin-top: clamp(2.5rem, 5vw, 4rem);
+    background: linear-gradient(90deg, transparent, {{ divider_color | color_modify: 'alpha', 0.4 }} 5%, {{ divider_color | color_modify: 'alpha', 0.1 }} 80%, transparent);
+    margin-top: clamp(3rem, 5vw, 4.5rem);
     position: relative;
+  }
+
+  /* Glowing dot on the divider */
+  .text-dividers-{{ section.id }} .divider::after {
+    content: '';
+    position: absolute;
+    left: calc(52px + 1.5rem); /* Align with text */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: {{ accent_color }};
+    box-shadow: 0 0 12px {{ accent_color | color_modify: 'alpha', 0.8 }}, inset 0 1px 2px rgba(255,255,255,0.8);
   }
 
   .text-dividers-{{ section.id }} .divider::before {
@@ -199,11 +256,12 @@
     position: absolute;
     left: 0;
     top: -1px;
-    width: 60px;
+    width: calc(52px + 1.5rem);
     height: 4px;
-    background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
+    background: linear-gradient(90deg, {{ accent_color | color_modify: 'alpha', 0.8 }}, {{ accent_color | color_lighten: 15 }});
     border-radius: 2px;
     transform: translateY(-50%);
+    box-shadow: 0 2px 10px {{ accent_color | color_modify: 'alpha', 0.3 }};
   }
 
   .text-dividers-{{ section.id }} .text-block.no-divider .divider {
@@ -214,21 +272,25 @@
     .text-dividers-{{ section.id }} .container {
       padding: 0 1.25rem;
     }
+    .text-dividers-{{ section.id }} .text-block {
+      padding: 2rem 1.25rem;
+      margin: 0 -1.25rem;
+      border-radius: 20px;
+    }
     .text-dividers-{{ section.id }} .block-content {
       padding-left: 0;
+      margin-top: 1.25rem;
     }
     .text-dividers-{{ section.id }} .block-icon {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
     }
-    .text-dividers-{{ section.id }} .block-icon::before {
-      border-top-width: 6px;
-      border-bottom-width: 6px;
-      border-left-width: 10px;
+    .text-dividers-{{ section.id }} .divider::after {
+      left: 10px;
     }
     .text-dividers-{{ section.id }} .divider::before {
-      width: 40px;
+      width: 30px;
     }
   }
 {%- endstyle -%}
@@ -250,7 +312,12 @@
           {%- if block.settings.title != blank -%}
             <div class="block-header">
               {%- if block.settings.show_icon -%}
-                <div class="block-icon anim-icon" style="animation-delay: {{ delay_factor | plus: 0.1 }}s;"></div>
+                <div class="block-icon anim-icon" style="animation-delay: {{ delay_factor | plus: 0.1 }}s;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
               {%- endif -%}
               <h3 class="block-title">{{ block.settings.title }}</h3>
             </div>
@@ -365,7 +432,7 @@
         {
           "type": "checkbox",
           "id": "show_icon",
-          "label": "Show Triangle Icon",
+          "label": "Show Arrow Icon",
           "default": true
         },
         {
