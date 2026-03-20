@@ -311,7 +311,7 @@
       "name": "Text with Dividers",
       "settings": {
         "title": "",
-        "max_width": 988,
+        "max_width": 1300,
         "bg_color": "#f8fbfa",
         "heading_color": "#14442d",
         "text_color": "#14442d",
