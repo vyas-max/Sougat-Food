@@ -34,7 +34,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<p>Farm Fresh Naturally Preserved</p>",
+            "text": "<p>  Nutrition</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -87,7 +87,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p></p><p>Uses:</p><p>• Instant Cooking</p><p>• Soups & Noodles</p><p>• Ready Meals</p><p>• Camping / Travel Food</p><p>• HoReCa Supply</p>",
+            "text": "<p></p><p>Uses:</p><p>• Health Drinks</p><p>• Baby Food</p><p>• Nutraceuticals</p><p>• Bakery & Confectionery</p><p>• Food Formulations</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
