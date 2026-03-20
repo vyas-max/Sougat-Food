@@ -2065,8 +2065,8 @@
         "feature_LKyzMC"
       ],
       "custom_css": [
-        ".card{margin-left:200px }",
-        ".why-choose-title{margin-left: 20px}"
+        ".card {margin-left: 200px;}",
+        ".why-choose-title {margin-left: 20px;}"
       ],
       "name": "About Freeze Dried",
       "settings": {
@@ -2082,7 +2082,7 @@
         "heading_color": "#14442d",
         "text_color": "#14442d",
         "accent_color": "#10a560",
-        "padding_top": 80,
+        "padding_top": 0,
         "padding_bottom": 80
       }
     },
