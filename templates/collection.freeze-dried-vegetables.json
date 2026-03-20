@@ -87,7 +87,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p></p><p>Uses:</p><p>• Health Drinks</p><p>• Baby Food</p><p>• Nutraceuticals</p><p>• Bakery & Confectionery</p><p>• Food Formulations</p>",
+            "text": "<p>xyz</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
