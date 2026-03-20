@@ -1,0 +1,414 @@
+<style>
+  .premium-gifting-section {
+    background-color: #FAF8F5;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .premium-gifting-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .premium-gifting-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .premium-gifting-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #247B9F;
+    margin-bottom: 16px;
+  }
+
+  .premium-gifting-title {
+    font-size: 48px;
+    font-weight: 300;
+    color: #247B9F;
+    margin: 0 0 24px 0;
+    line-height: 1.2;
+  }
+
+  .premium-gifting-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #247B9F;
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  .premium-gifting-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  @media (max-width: 1200px) {
+    .premium-gifting-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .premium-gifting-grid {
+      grid-template-columns: 1fr;
+    }
+    .premium-gifting-section {
+      padding: 50px 20px;
+    }
+    .premium-gifting-title {
+      font-size: 32px;
+    }
+  }
+
+  .premium-hamper-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(36, 123, 159, 0.08);
+    position: relative;
+  }
+
+  .premium-hamper-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(36, 123, 159, 0.15);
+  }
+
+  .premium-hamper-image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(145deg, #F5F3F0 0%, #FFFDF9 100%);
+  }
+
+  .premium-hamper-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .premium-hamper-card:hover .premium-hamper-image {
+    transform: scale(1.05);
+  }
+
+  .premium-hamper-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #247B9F;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .premium-hamper-content {
+    padding: 24px;
+    text-align: center;
+  }
+
+  .premium-hamper-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #247B9F;
+    margin: 0 0 8px 0;
+  }
+
+  .premium-hamper-items {
+    font-size: 13px;
+    color: #247B9F;
+    opacity: 0.75;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+
+  .premium-hamper-price {
+    font-size: 22px;
+    font-weight: 600;
+    color: #247B9F;
+    margin: 0 0 16px 0;
+  }
+
+  .premium-hamper-cta {
+    display: inline-block;
+    padding: 12px 32px;
+    border: 2px solid #247B9F;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #247B9F;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .premium-hamper-cta:hover {
+    background: #247B9F;
+    color: #FFFFFF;
+  }
+
+  .premium-gifting-decoration {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(36, 123, 159, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .premium-gifting-decoration--top-right {
+    top: -150px;
+    right: -100px;
+  }
+
+  .premium-gifting-decoration--bottom-left {
+    bottom: -150px;
+    left: -100px;
+  }
+</style>
+
+<div class="premium-gifting-section">
+  <div class="premium-gifting-decoration premium-gifting-decoration--top-right"></div>
+  <div class="premium-gifting-decoration premium-gifting-decoration--bottom-left"></div>
+  
+  <div class="premium-gifting-container">
+    <div class="premium-gifting-header">
+      <p class="premium-gifting-subtitle">{{ section.settings.subheading | default: 'Premium Gifting Collections' }}</p>
+      <h2 class="premium-gifting-title">{{ section.settings.heading | default: 'Celebrate Health & Taste' }}</h2>
+      <p class="premium-gifting-description">{{ section.settings.description | default: 'Beautifully packed and thoughtfully designed, our freeze-dried hampers are perfect for festive occasions, corporate gifting, and special celebrations — combining elegance with nutrition.' }}</p>
+    </div>
+
+    <div class="premium-gifting-grid">
+      {% for block in section.blocks %}
+        <div class="premium-hamper-card" {{ block.shopify_attributes }}>
+          <div class="premium-hamper-image-wrapper">
+            {% if block.settings.image != blank %}
+              <img 
+                src="{{ block.settings.image | image_url: width: 600 }}" 
+                alt="{{ block.settings.title }}"
+                class="premium-hamper-image"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="premium-hamper-image" style="display: flex; align-items: center; justify-content: center;">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" style="opacity: 0.3;">
+                  <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                  <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+                </svg>
+              </div>
+            {% endif %}
+            {% if block.settings.badge != blank %}
+              <span class="premium-hamper-badge">{{ block.settings.badge }}</span>
+            {% endif %}
+          </div>
+          <div class="premium-hamper-content">
+            <h3 class="premium-hamper-name">{{ block.settings.title }}</h3>
+            <p class="premium-hamper-items">{{ block.settings.items }}</p>
+            <p class="premium-hamper-price">{{ block.settings.price }}</p>
+            {% if block.settings.product_url != blank %}
+              <a href="{{ block.settings.product_url }}" class="premium-hamper-cta">View Hamper</a>
+            {% else %}
+              <button class="premium-hamper-cta">View Hamper</button>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <div class="premium-hamper-card">
+          <div class="premium-hamper-image-wrapper">
+            <div class="premium-hamper-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #F5F3F0 0%, #FFFDF9 100%);">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" style="opacity: 0.3;">
+                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="premium-hamper-badge">Bestseller</span>
+          </div>
+          <div class="premium-hamper-content">
+            <h3 class="premium-hamper-name">Festive Delight Hamper</h3>
+            <p class="premium-hamper-items">Freeze-dried Mango, Strawberry & Pineapple</p>
+            <p class="premium-hamper-price">₹1,499</p>
+            <button class="premium-hamper-cta">View Hamper</button>
+          </div>
+        </div>
+        <div class="premium-hamper-card">
+          <div class="premium-hamper-image-wrapper">
+            <div class="premium-hamper-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #F5F3F0 0%, #FFFDF9 100%);">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" style="opacity: 0.3;">
+                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="premium-hamper-badge">Premium</span>
+          </div>
+          <div class="premium-hamper-content">
+            <h3 class="premium-hamper-name">Corporate Excellence</h3>
+            <p class="premium-hamper-items">Mixed Berry Selection, 12 items</p>
+            <p class="premium-hamper-price">₹2,499</p>
+            <button class="premium-hamper-cta">View Hamper</button>
+          </div>
+        </div>
+        <div class="premium-hamper-card">
+          <div class="premium-hamper-image-wrapper">
+            <div class="premium-hamper-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #F5F3F0 0%, #FFFDF9 100%);">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" style="opacity: 0.3;">
+                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="premium-hamper-badge">New</span>
+          </div>
+          <div class="premium-hamper-content">
+            <h3 class="premium-hamper-name">Wellness Gift Box</h3>
+            <p class="premium-hamper-items">Dragon Fruit, Kiwi & Papaya</p>
+            <p class="premium-hamper-price">₹1,899</p>
+            <button class="premium-hamper-cta">View Hamper</button>
+          </div>
+        </div>
+        <div class="premium-hamper-card">
+          <div class="premium-hamper-image-wrapper">
+            <div class="premium-hamper-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #F5F3F0 0%, #FFFDF9 100%);">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" style="opacity: 0.3;">
+                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="premium-hamper-content">
+            <h3 class="premium-hamper-name">Classic Fruit Box</h3>
+            <p class="premium-hamper-items">Seasonal Favorites, 8 items</p>
+            <p class="premium-hamper-price">₹999</p>
+            <button class="premium-hamper-cta">View Hamper</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Gifting Collections",
+  "tag": "section",
+  "class": "section-premium-gifting",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium Gifting Collections"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Celebrate Health & Taste"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Beautifully packed and thoughtfully designed, our freeze-dried hampers are perfect for festive occasions, corporate gifting, and special celebrations — combining elegance with nutrition."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hamper",
+      "name": "Gift Hamper",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Hamper Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Hamper Name",
+          "default": "Gift Hamper"
+        },
+        {
+          "type": "text",
+          "id": "items",
+          "label": "Items Description",
+          "default": "Freeze-dried fruits selection"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹1,499"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text",
+          "default": "Bestseller"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Gifting Collections",
+      "blocks": [
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Festive Delight Hamper",
+            "items": "Freeze-dried Mango, Strawberry & Pineapple",
+            "price": "₹1,499",
+            "badge": "Bestseller"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Corporate Excellence",
+            "items": "Mixed Berry Selection, 12 items",
+            "price": "₹2,499",
+            "badge": "Premium"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Wellness Gift Box",
+            "items": "Dragon Fruit, Kiwi & Papaya",
+            "price": "₹1,899",
+            "badge": "New"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Classic Fruit Box",
+            "items": "Seasonal Favorites, 8 items",
+            "price": "₹999",
+            "badge": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

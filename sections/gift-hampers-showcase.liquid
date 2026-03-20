@@ -1,0 +1,640 @@
+<style>
+  .gift-hampers-showcase {
+    background-color: #FAF8F5;
+    background: linear-gradient(135deg, #FAF8F5 0%, #FFFDF9 50%, #F5F3F0 100%);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gift-hampers-showcase::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(36, 123, 159, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gift-hampers-showcase::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(36, 123, 159, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gift-hampers-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .gift-hampers-content {
+    animation: fadeSlideInLeft 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeSlideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .gift-hampers-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #247B9F;
+    margin-bottom: 20px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .gift-hampers-eyebrow::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: #247B9F;
+    opacity: 0.5;
+  }
+
+  .gift-hampers-title {
+    font-size: 52px;
+    font-weight: 300;
+    color: #247B9F;
+    margin: 0 0 24px 0;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  .gift-hampers-description {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #247B9F;
+    margin: 0 0 40px 0;
+    max-width: 480px;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+
+  .gift-hampers-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: #247B9F;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 20px rgba(36, 123, 159, 0.25);
+  }
+
+  .gift-hampers-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(36, 123, 159, 0.35);
+    background: #1a5f7f;
+  }
+
+  .gift-hampers-cta svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  .gift-hampers-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  .gift-hampers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    animation: fadeSlideInRight 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeSlideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .gift-hamper-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 24px rgba(36, 123, 159, 0.08);
+    position: relative;
+  }
+
+  .gift-hamper-card:nth-child(1) { animation-delay: 0.1s; }
+  .gift-hamper-card:nth-child(2) { animation-delay: 0.2s; }
+  .gift-hamper-card:nth-child(3) { animation-delay: 0.3s; }
+  .gift-hamper-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .gift-hamper-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 50px rgba(36, 123, 159, 0.18);
+  }
+
+  .gift-hamper-image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(145deg, #F8F6F3 0%, #FFFEFA 100%);
+  }
+
+  .gift-hamper-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gift-hamper-card:hover .gift-hamper-image {
+    transform: scale(1.08);
+  }
+
+  .gift-hamper-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #247B9F;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 12px rgba(36, 123, 159, 0.3);
+  }
+
+  .gift-hamper-wishlist {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .gift-hamper-card:hover .gift-hamper-wishlist {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gift-hamper-wishlist:hover {
+    background: #247B9F;
+  }
+
+  .gift-hamper-wishlist:hover svg {
+    stroke: #FFFFFF;
+  }
+
+  .gift-hamper-wishlist svg {
+    width: 18px;
+    height: 18px;
+    stroke: #247B9F;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .gift-hamper-content {
+    padding: 22px;
+    text-align: center;
+  }
+
+  .gift-hamper-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #247B9F;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.2px;
+  }
+
+  .gift-hamper-items {
+    font-size: 13px;
+    color: #247B9F;
+    opacity: 0.7;
+    margin: 0 0 14px 0;
+    line-height: 1.5;
+  }
+
+  .gift-hamper-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid rgba(36, 123, 159, 0.1);
+  }
+
+  .gift-hamper-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #247B9F;
+    margin: 0;
+  }
+
+  .gift-hamper-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(36, 123, 159, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .gift-hamper-link:hover {
+    background: #247B9F;
+  }
+
+  .gift-hamper-link svg {
+    width: 18px;
+    height: 18px;
+    stroke: #247B9F;
+    stroke-width: 2;
+    fill: none;
+    transition: stroke 0.3s ease;
+  }
+
+  .gift-hamper-link:hover svg {
+    stroke: #FFFFFF;
+  }
+
+  @keyframes cardFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .gift-hamper-card {
+    animation: cardFadeIn 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .gift-hampers-container {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+
+    .gift-hampers-content {
+      text-align: center;
+    }
+
+    .gift-hampers-eyebrow::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .gift-hampers-description {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .gift-hampers-showcase {
+      padding: 60px 20px;
+    }
+
+    .gift-hampers-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .gift-hampers-title {
+      font-size: 36px;
+    }
+
+    .gift-hampers-description {
+      font-size: 15px;
+    }
+
+    .gift-hamper-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      border-radius: 16px;
+    }
+
+    .gift-hamper-image-wrapper {
+      aspect-ratio: auto;
+      height: 100%;
+ min-height: 160px;
+    }
+
+    .gift-hamper-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding: 16px;
+    }
+
+    .gift-hamper-footer {
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    .gift-hamper-wishlist {
+      opacity: 1;
+      transform: scale(1);
+    }
+    }
+</style>
+
+<section class="gift-hampers-showcase">
+  <div class="gift-hampers-container">
+    <div class="gift-hampers-content">
+      <span class="gift-hampers-eyebrow">{{ section.settings.subheading | default: 'Premium Gifting Collections' }}</span>
+      <h2 class="gift-hampers-title">{{ section.settings.heading | default: 'Celebrate Health & Taste' }}</h2>
+      <p class="gift-hampers-description">{{ section.settings.description | default: 'Beautifully packed and thoughtfully designed, our freeze-dried hampers are perfect for festive occasions, corporate gifting, and special celebrations — combining elegance with nutrition.' }}</p>
+      
+      {% if section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="gift-hampers-cta">
+          {{ section.settings.button_text | default: 'Explore Collection' }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      {% else %}
+        <button class="gift-hampers-cta">
+          {{ section.settings.button_text | default: 'Explore Collection' }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+
+    <div class="gift-hampers-grid">
+      {% for block in section.blocks %}
+        <div class="gift-hamper-card" {{ block.shopify_attributes }}>
+          <div class="gift-hamper-image-wrapper">
+            {% if block.settings.image != blank %}
+              <img 
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title }}"
+                class="gift-hamper-image"
+                loading="lazy"
+              >
+            {% else %}
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style="opacity: 0.25;">
+                  <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                  <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+                </svg>
+              </div>
+            {% endif %}
+            {% if block.settings.badge != blank %}
+              <span class="gift-hamper-badge">{{ block.settings.badge }}</span>
+            {% endif %}
+            <button class="gift-hamper-wishlist" aria-label="Add to wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="gift-hamper-content">
+            <h3 class="gift-hamper-name">{{ block.settings.title }}</h3>
+            <p class="gift-hamper-items">{{ block.settings.items }}</p>
+            <div class="gift-hamper-footer">
+              <p class="gift-hamper-price">{{ block.settings.price }}</p>
+              {% if block.settings.product_url != blank %}
+                <a href="{{ block.settings.product_url }}" class="gift-hamper-link" aria-label="View product">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              {% else %}
+                <span class="gift-hamper-link">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        {% assign default_cards = "Festive Delight Hamper,Corporate Excellence,Wellness Gift Box,Classic Fruit Box" | split: "," %}
+        {% assign default_items = "Freeze-dried Mango & Strawberry,Mixed Berry Selection,Dragon Fruit & Kiwi,Seasonal Favorites" | split: "," %}
+        {% assign default_prices = "₹1,499,₹2,499,₹1,899,₹999" | split: "," %}
+        {% assign default_badges = "Bestseller,Premium,New," | split: "," %}
+        
+        {% for i in (0..3) %}
+          <div class="gift-hamper-card">
+            <div class="gift-hamper-image-wrapper">
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style="opacity: 0.25;">
+                  <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#247B9F" stroke-width="1.5"/>
+                  <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="#247B9F" stroke-width="1.5"/>
+                </svg>
+              </div>
+              {% if default_badges[forloop.index0] != blank %}
+                <span class="gift-hamper-badge">{{ default_badges[forloop.index0] }}</span>
+              {% endif %}
+              <button class="gift-hamper-wishlist" aria-label="Add to wishlist">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gift-hamper-content">
+              <h3 class="gift-hamper-name">{{ default_cards[forloop.index0] }}</h3>
+              <p class="gift-hamper-items">{{ default_items[forloop.index0] }}</p>
+              <div class="gift-hamper-footer">
+                <p class="gift-hamper-price">{{ default_prices[forloop.index0] }}</p>
+                <span class="gift-hamper-link">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Hampers Showcase",
+  "tag": "section",
+  "class": "section-gift-hampers-showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium Gifting Collections"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Celebrate Health & Taste"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Beautifully packed and thoughtfully designed, our freeze-dried hampers are perfect for festive occasions, corporate gifting, and special celebrations — combining elegance with nutrition."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hamper",
+      "name": "Gift Hamper",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Hamper Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Hamper Name",
+          "default": "Gift Hamper"
+        },
+        {
+          "type": "text",
+          "id": "items",
+          "label": "Items Description",
+          "default": "Freeze-dried fruits selection"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹1,499"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text",
+          "default": "Bestseller"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Hampers Showcase",
+      "blocks": [
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Festive Delight Hamper",
+            "items": "Freeze-dried Mango & Strawberry",
+            "price": "₹1,499",
+            "badge": "Bestseller"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Corporate Excellence",
+            "items": "Mixed Berry Selection",
+            "price": "₹2,499",
+            "badge": "Premium"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Wellness Gift Box",
+            "items": "Dragon Fruit & Kiwi",
+            "price": "₹1,899",
+            "badge": "New"
+          }
+        },
+        {
+          "type": "hamper",
+          "settings": {
+            "title": "Classic Fruit Box",
+            "items": "Seasonal Favorites",
+            "price": "₹999",
+            "badge": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
