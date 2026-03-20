@@ -6,7 +6,19 @@
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#fcfcfc"
+      "default": "#f8fdfaf5"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#10b981"
+    },
+    {
+      "type": "color",
+      "id": "secondary_accent",
+      "label": "Secondary Accent",
+      "default": "#f59e0b"
     },
     {
       "type": "range",
@@ -46,7 +58,7 @@
       "type": "text",
       "id": "chairman_title",
       "label": "Chairman's Title",
-      "default": "Chairman’s Message"
+      "default": "Chairman's Message"
     },
     {
       "type": "textarea",
@@ -68,7 +80,7 @@
       "type": "text",
       "id": "director_title",
       "label": "Director's Title",
-      "default": "Director’s Message"
+      "default": "Director's Message"
     },
     {
       "type": "textarea",
@@ -170,17 +182,47 @@
 }
 {% endschema %}
 
+{%- liquid
+  assign bg_color = section.settings.background_color
+  assign accent = section.settings.accent_color
+  assign secondary = section.settings.secondary_accent
+-%}
+
 <style>
   .section-{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
+    background: linear-gradient(180deg, {{ bg_color }} 0%, rgba(248, 253, 250, 1) 100%);
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
     font-family: var(--font-body-family, sans-serif);
     overflow: hidden;
+    position: relative;
   }
-  
+
+  .section-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(ellipse, {{ accent | color_modify: 'alpha', 0.06 }} 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: -5%;
+    width: 40%;
+    height: 50%;
+    background: radial-gradient(ellipse, {{ secondary | color_modify: 'alpha', 0.04 }} 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
   {% if request.design_mode %}
-  /* Force items to be visible in Shopify Editor */
   .section-{{ section.id }} .am-fade-up {
     opacity: 1 !important;
     transform: none !important;
@@ -188,62 +230,92 @@
   {% endif %}
 
   .am-container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .am-achievements-header {
+    text-align: left;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
   }
 
   .am-achievements-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
-    color: #4ade80; /* Updated to green color from image */
-    letter-spacing: -0.025em;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: {{ accent }};
+    letter-spacing: -0.03em;
+    margin: 0;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
   }
 
-  /* Decorative underline for title */
   .am-achievements-title::after {
     content: '';
     position: absolute;
-    width: 60px;
-    height: 3px;
-    bottom: -15px;
-    background: linear-gradient(90deg, #f59e0b 50%, #10b981 50%);
+    bottom: -12px;
+    left: 0;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, {{ accent }}, {{ secondary }});
     border-radius: 2px;
   }
 
   .am-stats-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
-    margin-bottom: 5rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: clamp(4rem, 8vw, 6rem);
   }
 
   @media (min-width: 640px) {
     .am-stats-grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
     }
   }
 
   @media (min-width: 1024px) {
     .am-stats-grid {
       grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
     }
   }
 
   .am-stat-card {
-    background: #ffffff;
-    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff 0%, rgba(248, 253, 250, 0.8) 100%);
+    border-radius: 24px;
     padding: 2.5rem 1.5rem;
     text-align: center;
-    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(0,0,0,0.02);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.04),
+      0 1px 3px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -251,150 +323,280 @@
     position: relative;
     overflow: hidden;
   }
-  
-  /* Subtle glass shimmer effect on hover */
+
   .am-stat-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-20deg);
-    transition: all 0.7s ease;
-    z-index: 1;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, {{ accent }}, {{ secondary }});
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .am-stat-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
   }
 
   .am-stat-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
-    border-color: rgba(245, 158, 11, 0.2);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 
+      0 25px 50px rgba(16, 185, 129, 0.12),
+      0 0 0 1px {{ accent | color_modify: 'alpha', 0.1 }};
   }
-  
+
   .am-stat-card:hover::before {
-    left: 200%;
+    opacity: 1;
+  }
+
+  .am-stat-card:hover::after {
+    opacity: 1;
+  }
+
+  .am-stat-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, {{ accent | color_modify: 'alpha', 0.1 }} 0%, {{ secondary | color_modify: 'alpha', 0.1 }} 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: all 0.4s ease;
+  }
+
+  .am-stat-card:hover .am-stat-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: linear-gradient(135deg, {{ accent | color_modify: 'alpha', 0.15 }} 0%, {{ secondary | color_modify: 'alpha', 0.15 }} 100%);
+  }
+
+  .am-stat-icon svg {
+    width: 28px;
+    height: 28px;
+    color: {{ accent }};
+    transition: transform 0.3s ease;
+  }
+
+  .am-stat-card:hover .am-stat-icon svg {
+    transform: scale(1.1);
   }
 
   .am-stat-value-container {
     display: flex;
     align-items: baseline;
     justify-content: center;
-    margin-bottom: 0.75rem;
-    z-index: 2;
+    margin-bottom: 0.5rem;
     position: relative;
+    z-index: 2;
   }
 
   .am-stat-number {
-    font-size: 3rem;
-    font-weight: 800;
+    font-size: clamp(2.75rem, 5vw, 3.5rem);
+    font-weight: 900;
     line-height: 1;
     font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--num-color) 0%, var(--num-color-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: transform 0.3s ease;
   }
 
   .am-stat-suffix {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-left: 2px;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 800;
+    margin-left: 4px;
+    letter-spacing: -0.01em;
   }
 
   .am-stat-label {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #4b5563;
+    position: relative;
     z-index: 2;
-    position: relative;
+    letter-spacing: 0.02em;
   }
 
-  .am-chairman-section {
+  .am-message-section {
     max-width: 900px;
-    margin: 0 auto;
-    background: #ffffff;
-    padding: 4rem;
-    border-radius: 24px;
-    box-shadow: 0 15px 50px -15px rgba(0,0,0,0.06);
+    margin: 0;
+    background: linear-gradient(145deg, #ffffff 0%, rgba(248, 253, 250, 0.95) 100%);
+    padding: clamp(2.5rem, 5vw, 4rem);
+    border-radius: 32px;
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.06),
+      0 1px 3px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
     position: relative;
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(255, 255, 255, 0.9);
   }
 
-  .am-chairman-section::before {
-    content: '“';
+  .am-message-section::before {
+    content: '';
     position: absolute;
-    top: 2rem;
-    left: 2rem;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(180deg, {{ accent }}, {{ secondary }});
+    border-radius: 32px 0 0 32px;
+  }
+
+  .am-message-section::after {
+    content: '"';
+    position: absolute;
+    top: 1.5rem;
+    left: 2.5rem;
     font-size: 8rem;
     line-height: 1;
-    color: rgba(245, 158, 11, 0.1);
-    font-family: serif;
+    color: {{ accent | color_modify: 'alpha', 0.08 }};
+    font-family: Georgia, 'Times New Roman', serif;
+    pointer-events: none;
   }
 
-  .am-chairman-title {
-    font-size: 2.25rem;
+  .am-message-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .am-message-icon-wrap {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, {{ accent }} 0%, {{ secondary }} 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px {{ accent | color_modify: 'alpha', 0.3 }};
+  }
+
+  .am-message-icon-wrap svg {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
+
+  .am-message-badge {
+    font-size: 0.8rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: {{ accent }};
+    background: {{ accent | color_modify: 'alpha', 0.1 }};
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    border: 1px solid {{ accent | color_modify: 'alpha', 0.2 }};
+  }
+
+  .am-message-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 900;
     margin-bottom: 1.5rem;
     color: #111827;
     position: relative;
     z-index: 2;
+    letter-spacing: -0.02em;
   }
 
-  .am-chairman-text {
-    font-size: 1.25rem;
-    line-height: 1.8;
+  .am-message-text {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
     color: #4b5563;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .am-message-text:last-of-type {
     margin-bottom: 2rem;
-    position: relative;
-    z-index: 2;
   }
 
-  .am-chairman-sub {
-    font-size: 1.25rem;
+  .am-message-sub {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
     font-weight: 700;
-    color: #111827;
+    color: {{ accent }};
+    position: relative;
+    z-index: 2;
+    padding-left: 1.25rem;
+    border-left: 3px solid {{ secondary }};
+    line-height: 1.5;
+  }
+
+  .am-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, {{ accent | color_modify: 'alpha', 0.2 }}, transparent);
+    margin: 2rem 0;
     position: relative;
     z-index: 2;
   }
-  
+
   @media (max-width: 768px) {
-    .am-chairman-section {
-      padding: 2.5rem 1.5rem;
+    .am-message-section {
+      padding: 2rem 1.5rem;
+      border-radius: 24px;
     }
-    
-    .am-chairman-title {
-      font-size: 1.75rem;
+
+    .am-message-section::before {
+      width: 4px;
     }
-    
-    .am-chairman-text, .am-chairman-sub {
-      font-size: 1.1rem;
+
+    .am-message-section::after {
+      font-size: 5rem;
+      top: 1rem;
+      left: 1.5rem;
     }
-    
-    .am-achievements-title {
-      font-size: 2rem;
+
+    .am-stat-card {
+      padding: 2rem 1rem;
+    }
+
+    .am-message-icon-wrap {
+      width: 42px;
+      height: 42px;
+    }
+
+    .am-message-icon-wrap svg {
+      width: 20px;
+      height: 20px;
     }
   }
 
-  /* Reveal Animations */
   .am-fade-up {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .am-fade-up.am-visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .am-full-divider {
-    border: none; 
-    border-top: 1px solid #e5e7eb; 
-    margin: 2.5rem -4rem; 
-    width: calc(100% + 8rem);
-  }
-
-  @media (max-width: 768px) {
-    .am-full-divider {
-      margin: 2rem -1.5rem;
-      width: calc(100% + 3rem);
+  @media (prefers-reduced-motion: reduce) {
+    .am-fade-up {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .am-stat-card:hover {
+      transform: none;
     }
   }
 </style>
@@ -402,12 +604,36 @@
 <div class="section-{{ section.id }}">
   <div class="am-container">
     {% if section.settings.achievements_title != blank %}
-      <h2 class="am-achievements-title am-fade-up">{{ section.settings.achievements_title }}</h2>
+      <div class="am-achievements-header am-fade-up">
+        <h2 class="am-achievements-title">{{ section.settings.achievements_title }}</h2>
+      </div>
     {% endif %}
 
     <div class="am-stats-grid">
       {% for block in section.blocks %}
-        <div class="am-stat-card am-fade-up" style="transition-delay: {{ forloop.index | times: 100 }}ms;" {{ block.shopify_attributes }}>
+        <div class="am-stat-card am-fade-up" style="--num-color: {{ block.settings.number_color }}; --num-color-light: {{ block.settings.number_color | color_lighten: 15 }}; transition-delay: {{ forloop.index | times: 100 }}ms;" {{ block.shopify_attributes }}>
+          <div class="am-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              {% case forloop.index %}
+                {% when 1 %}
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                {% when 2 %}
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                {% when 3 %}
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                {% else %}
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              {% endcase %}
+            </svg>
+          </div>
           <div class="am-stat-value-container">
             <span class="am-stat-number am-number-{{ section.id }}" style="color: {{ block.settings.number_color }};">
               {{ block.settings.number }}
@@ -423,36 +649,56 @@
       {% endfor %}
     </div>
 
-    <div class="am-chairman-section am-fade-up" style="transition-delay: 400ms;">
+    <div class="am-message-section am-fade-up" style="transition-delay: 400ms;">
+      <div class="am-message-icon">
+        <div class="am-message-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <span class="am-message-badge">Leadership</span>
+      </div>
       {% if section.settings.chairman_title != blank %}
-        <h2 class="am-chairman-title">{{ section.settings.chairman_title }}</h2>
+        <h2 class="am-message-title">{{ section.settings.chairman_title }}</h2>
       {% endif %}
       
       {% if section.settings.chairman_message != blank %}
-        <p class="am-chairman-text">{{ section.settings.chairman_message }}</p>
+        <p class="am-message-text">{{ section.settings.chairman_message }}</p>
       {% endif %}
       
       {% if section.settings.chairman_sub_message != blank %}
-        <p class="am-chairman-sub">{{ section.settings.chairman_sub_message }}</p>
+        <p class="am-message-sub">{{ section.settings.chairman_sub_message }}</p>
       {% endif %}
     </div>
 
-    <div class="am-chairman-section am-fade-up" style="transition-delay: 500ms; margin-top: 3rem;">
+    <div class="am-message-section am-fade-up" style="transition-delay: 500ms; margin-top: 2.5rem;">
+      <div class="am-message-icon">
+        <div class="am-message-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <span class="am-message-badge">Leadership</span>
+      </div>
       {% if section.settings.director_title != blank %}
-        <h2 class="am-chairman-title">{{ section.settings.director_title }}</h2>
+        <h2 class="am-message-title">{{ section.settings.director_title }}</h2>
       {% endif %}
       
       {% if section.settings.director_message_1 != blank %}
-        <p class="am-chairman-text">{{ section.settings.director_message_1 }}</p>
+        <p class="am-message-text">{{ section.settings.director_message_1 }}</p>
       {% endif %}
       
       {% if section.settings.director_message_2 != blank %}
-        <hr class="am-full-divider">
-        <p class="am-chairman-text">{{ section.settings.director_message_2 }}</p>
+        <hr class="am-divider">
+        <p class="am-message-text">{{ section.settings.director_message_2 }}</p>
       {% endif %}
       
       {% if section.settings.director_sub_message != blank %}
-        <p class="am-chairman-sub">{{ section.settings.director_sub_message }}</p>
+        <p class="am-message-sub">{{ section.settings.director_sub_message }}</p>
       {% endif %}
     </div>
   </div>
