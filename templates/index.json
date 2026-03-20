@@ -2029,28 +2029,32 @@
           "type": "feature",
           "settings": {
             "title": "Built on Experience",
-            "text": "<p>Sougat Foods has been in the food industry since 1962, known for quality and trust.</p>"
+            "text": "<p>Sougat Foods has been in the food industry since 1962, known for quality and trust.</p>",
+            "link": ""
           }
         },
         "feature_CzwGjx": {
           "type": "feature",
           "settings": {
             "title": "A New Step Forward",
-            "text": "<p>Our freeze-dried range is a new addition — combining modern technology with our long-standing food expertise.</p>"
+            "text": "<p>Our freeze-dried range is a new addition — combining modern technology with our long-standing food expertise.</p>",
+            "link": ""
           }
         },
         "feature_ELhQpc": {
           "type": "feature",
           "settings": {
             "title": "Naturally Preserved",
-            "text": "<p>Freeze-drying gently removes moisture while keeping the natural taste, color, and nutrients intact — without added preservatives or artificial ingredients.</p>"
+            "text": "<p>Freeze-drying gently removes moisture while keeping the natural taste, color, and nutrients intact — without added preservatives or artificial ingredients.</p>",
+            "link": ""
           }
         },
         "feature_LKyzMC": {
           "type": "feature",
           "settings": {
             "title": "Made for Better Choices",
-            "text": "<p>Lightweight, convenient, and made from real ingredients, our products offer a cleaner alternative to heavily processed snacks.</p>"
+            "text": "<p>Lightweight, convenient, and made from real ingredients, our products offer a cleaner alternative to heavily processed snacks.</p>",
+            "link": ""
           }
         }
       },
@@ -2060,13 +2064,19 @@
         "feature_ELhQpc",
         "feature_LKyzMC"
       ],
+      "custom_css": [
+        ".card{margin-left:200px }",
+        ".why-choose-title{margin-left: 20px}"
+      ],
       "name": "About Freeze Dried",
       "settings": {
+        "badge_text": "Innovation",
         "title": "",
         "subheading": "",
         "why_title": "Why Choose Sougat Foods?",
+        "show_divider": true,
         "columns": 4,
-        "max_width": 1300,
+        "max_width": 10000,
         "bg_color": "#f8fbfa",
         "card_bg": "#ffffff",
         "heading_color": "#14442d",
