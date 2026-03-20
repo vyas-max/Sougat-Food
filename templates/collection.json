@@ -11,6 +11,7 @@
   "sections": {
     "collection-hero-banner": {
       "type": "collection-hero-banner",
+      "disabled": true,
       "settings": {
         "section_height": 400,
         "section_height_mobile": 300,
@@ -294,6 +295,7 @@
           ]
         }
       },
+      "disabled": true,
       "settings": {
         "layout_type": "grid",
         "product_card_size": "medium",
