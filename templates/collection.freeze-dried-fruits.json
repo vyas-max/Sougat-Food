@@ -34,7 +34,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<p>  Nutrition</p>",
+            "text": "<p>Naturally Sweet & Crunchy</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -87,7 +87,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p></p><p>Uses:</p><p>• Health Drinks</p><p>• Baby Food</p><p>• Nutraceuticals</p><p>• Bakery & Confectionery</p><p>• Food Formulations</p>",
+            "text": "<p>Uses:</p><p>• Healthy Snacking</p><p>• Breakfast Cereals</p><p>• Smoothies & Shakes</p><p>• Baking & Desserts</p><p>•Travel Snacks<br/><br/><br/><br/></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
