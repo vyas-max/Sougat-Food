@@ -313,11 +313,24 @@
         "padding-block-start": 0,
         "padding-block-end": 32
       }
+    },
+    "corporate_inquiry_form_Bcawrd": {
+      "type": "corporate-inquiry-form",
+      "name": "Corporate Inquiry Form",
+      "settings": {
+        "heading": "For Corporate Gifting Inquiries",
+        "subheading": "Please fill out the form below, and one of our sales representatives will reach out to you shortly.",
+        "button_text": "Submit",
+        "success_message": "Thanks for contacting us. We'll get back to you as soon as possible.",
+        "privacy_url": "",
+        "tos_url": ""
+      }
     }
   },
   "order": [
     "collection-hero-banner",
     "section",
-    "main"
+    "main",
+    "corporate_inquiry_form_Bcawrd"
   ]
 }
