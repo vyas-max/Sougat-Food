@@ -1,122 +1,49 @@
 {%- style -%}
+  /* ── Section Wrapper ── */
   .blog-cards-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-    position: relative;
-    overflow: hidden;
-  }
-
-  .blog-cards-section-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    right: -15%;
-    width: 60%;
-    height: 70%;
-    background: radial-gradient(ellipse, {{ section.settings.accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .blog-cards-section-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    left: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(ellipse, {{ section.settings.heading_color | color_modify: 'alpha', 0.02 }} 0%, transparent 50%);
-    pointer-events: none;
+    background-color: {{ section.settings.background_color }};
   }
 
   .blog-cards-container-{{ section.id }} {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
-    padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
+    padding: 0 20px;
   }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-
+  /* ── Section Header ── */
   .blog-cards-header-{{ section.id }} {
     text-align: center;
-    margin-bottom: clamp(2.5rem, 6vw, 4rem);
-  }
-
-  .blog-cards-badge-wrap-{{ section.id }} {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .blog-cards-badge-icon-{{ section.id }} {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, {{ section.settings.accent_color }} 0%, {{ section.settings.accent_hover }} 100%);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    box-shadow: 0 6px 20px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
-  }
-
-  .blog-cards-badge-icon-{{ section.id }} svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .blog-cards-badge-text-{{ section.id }} {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: {{ section.settings.accent_color }};
-    background: {{ section.settings.accent_color | color_modify: 'alpha', 0.1 }};
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
-    border: 1px solid {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
+    margin-bottom: 50px;
   }
 
   .blog-cards-heading-{{ section.id }} {
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-size: clamp(1.8rem, 4vw, 3rem);
     color: {{ section.settings.heading_color }};
-    margin: 0 0 1rem;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    margin: 0 0 12px 0;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
   }
 
   .blog-cards-subheading-{{ section.id }} {
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
     color: {{ section.settings.subheading_color }};
-    max-width: 600px;
+    max-width: 620px;
     margin: 0 auto;
-    line-height: 1.7;
+    line-height: 1.65;
     font-weight: 400;
-    opacity: 0.9;
   }
 
+  /* ── Grid Layout ── */
   .blog-cards-grid-{{ section.id }} {
     display: grid;
     grid-template-columns: 1fr;
     gap: {{ section.settings.card_gap }}px;
   }
 
-  @media screen and (min-width: 640px) {
+  @media screen and (min-width: 750px) {
     .blog-cards-grid-{{ section.id }} {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -128,56 +55,32 @@
     }
   }
 
+  /* ── Card ── */
   .blog-card-{{ section.id }} {
     background: {{ section.settings.card_bg }};
     border-radius: {{ section.settings.card_radius }}px;
     overflow: hidden;
-    box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.04),
-      0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
     height: 100%;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     position: relative;
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-
-  .blog-card-{{ section.id }}:nth-child(1) { animation-delay: 0.1s; }
-  .blog-card-{{ section.id }}:nth-child(2) { animation-delay: 0.2s; }
-  .blog-card-{{ section.id }}:nth-child(3) { animation-delay: 0.3s; }
-  .blog-card-{{ section.id }}:nth-child(4) { animation-delay: 0.4s; }
-  .blog-card-{{ section.id }}:nth-child(5) { animation-delay: 0.5s; }
-  .blog-card-{{ section.id }}:nth-child(6) { animation-delay: 0.6s; }
-
-  .blog-card-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, {{ section.settings.accent_color | color_modify: 'alpha', 0.02 }} 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 0;
   }
 
   .blog-card-{{ section.id }}:hover {
-    transform: translateY(-10px) scale(1.01);
-    box-shadow: 
-      0 25px 50px rgba(0, 0, 0, 0.1),
-      0 0 0 1px {{ section.settings.accent_color | color_modify: 'alpha', 0.1 }};
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   }
 
-  .blog-card-{{ section.id }}:hover::before {
-    opacity: 1;
-  }
-
+  /* ── Card Image ── */
   .blog-card-img-wrap-{{ section.id }} {
     position: relative;
     width: 100%;
     padding-bottom: {{ section.settings.image_ratio }}%;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    background: linear-gradient(135deg, #f5f5f5, #ececec);
     overflow: hidden;
   }
 
@@ -188,12 +91,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .blog-card-{{ section.id }}:hover .blog-card-img-{{ section.id }} {
-    transform: scale(1.1);
-    filter: brightness(0.7);
+    transform: scale(1.08);
   }
 
   .blog-card-placeholder-{{ section.id }} {
@@ -205,293 +107,174 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
   }
 
   .blog-card-placeholder-{{ section.id }} svg {
-    width: 40%;
-    height: 40%;
-    opacity: 0.2;
-    color: #fff;
+    width: 60%;
+    height: 60%;
+    opacity: 0.35;
   }
 
-  .blog-card-overlay-{{ section.id }} {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, 
-      transparent 0%, 
-      rgba(0, 0, 0, 0.2) 40%,
-      rgba(0, 0, 0, 0.6) 70%,
-      rgba(0, 0, 0, 0.85) 100%);
-    z-index: 1;
-    transition: background 0.4s ease;
-  }
-
-  .blog-card-{{ section.id }}:hover .blog-card-overlay-{{ section.id }} {
-    background: linear-gradient(180deg, 
-      rgba(0, 0, 0, 0.1) 0%, 
-      rgba(0, 0, 0, 0.3) 40%,
-      rgba(0, 0, 0, 0.7) 70%,
-      rgba(0, 0, 0, 0.95) 100%);
-  }
-
-  .blog-card-content-{{ section.id }} {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 2rem 1.5rem 1.5rem;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 50%;
-  }
-
+  /* ── Badge ── */
   .blog-card-badge-{{ section.id }} {
     position: absolute;
-    top: 16px;
-    left: 16px;
-    background: rgba(255, 255, 255, 0.95);
-    color: {{ section.settings.accent_color }};
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 6px 14px;
+    top: 14px;
+    left: 14px;
+    background: {{ section.settings.badge_bg }};
+    color: {{ section.settings.badge_color }};
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5px 14px;
     border-radius: 50px;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    z-index: 3;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing: 0.8px;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  .blog-card-{{ section.id }}:hover .blog-card-badge-{{ section.id }} {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .blog-card-actions-{{ section.id }} {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 3;
+  /* ── Card Body ── */
+  .blog-card-body-{{ section.id }} {
+    padding: 24px 24px 20px;
     display: flex;
-    gap: 8px;
-  }
-
-  .blog-card-action-btn-{{ section.id }} {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    border: none;
-  }
-
-  .blog-card-{{ section.id }}:hover .blog-card-action-btn-{{ section.id }} {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .blog-card-action-btn-{{ section.id }}:nth-child(1) { transition-delay: 0s; }
-  .blog-card-action-btn-{{ section.id }}:nth-child(2) { transition-delay: 0.05s; }
-
-  .blog-card-action-btn-{{ section.id }}:hover {
-    background: #fff;
-    transform: scale(1.1);
-  }
-
-  .blog-card-action-btn-{{ section.id }} svg {
-    width: 18px;
-    height: 18px;
-    color: {{ section.settings.accent_color }};
-  }
-
-  .blog-card-title-wrap-{{ section.id }} {
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   .blog-card-title-{{ section.id }} {
     font-size: 1.35rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
+    font-weight: 700;
+    color: {{ section.settings.card_title_color }};
+    margin: 0 0 10px 0;
     line-height: 1.3;
     letter-spacing: -0.01em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .blog-card-{{ section.id }}:hover .blog-card-title-{{ section.id }} {
-    color: #fff;
-  }
-
-  .blog-card-meta-{{ section.id }} {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 0.75rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .blog-card-{{ section.id }}:hover .blog-card-meta-{{ section.id }} {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .blog-card-meta-item-{{ section.id }} {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
-  }
-
-  .blog-card-meta-item-{{ section.id }} svg {
-    width: 14px;
-    height: 14px;
-    opacity: 0.9;
   }
 
   .blog-card-desc-{{ section.id }} {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.6;
-    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    color: {{ section.settings.card_desc_color }};
+    line-height: 1.65;
+    margin: 0 0 16px 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
   }
 
-  .blog-card-{{ section.id }}:hover .blog-card-desc-{{ section.id }} {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  /* ── Popup Trigger Button ── */
   .blog-card-popup-trigger-{{ section.id }} {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-  }
-
-  .blog-card-{{ section.id }}:hover .blog-card-popup-trigger-{{ section.id }} {
-    opacity: 1;
-    transform: translateY(0);
+    margin-top: auto;
+    padding-top: 16px;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }} {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, {{ section.settings.accent_color }}, {{ section.settings.accent_hover }});
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 10px 20px;
+    border: none;
+    padding: 12px 24px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     font-family: inherit;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover {
-    background: {{ section.settings.accent_color }};
-    border-color: {{ section.settings.accent_color }};
-    transform: translateX(5px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+  }
+
+  .blog-card-popup-trigger-btn-{{ section.id }}:hover::before {
+    left: 100%;
   }
 
   .blog-card-popup-icon-{{ section.id }} {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover .blog-card-popup-icon-{{ section.id }} {
-    transform: translateX(3px);
+    transform: translateX(4px);
   }
 
+  /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
-    .blog-card-content-{{ section.id }} {
-      padding: 1.5rem 1rem 1rem;
+    .blog-card-body-{{ section.id }} {
+      padding: 18px 18px 14px;
     }
+
     .blog-card-title-{{ section.id }} {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
     .blog-cards-header-{{ section.id }} {
-      margin-bottom: 2rem;
-    }
-    .blog-card-meta-{{ section.id }},
-    .blog-card-desc-{{ section.id }},
-    .blog-card-popup-trigger-{{ section.id }} {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .blog-card-action-btn-{{ section.id }} {
-      opacity: 1;
-      transform: translateY(0);
+      margin-bottom: 30px;
     }
   }
 {%- endstyle -%}
 
 <style>
+  /* ── Popup Overlay ── */
   .blog-card-popup-overlay-{{ section.id }} {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1000;
     display: none;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
   }
 
   .blog-card-popup-overlay-{{ section.id }}.active {
     opacity: 1;
   }
 
+  /* ── Popup Modal ── */
   .blog-card-popup-{{ section.id }} {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.92);
+    transform: translate(-50%, -50%) scale(0.9);
     background: #ffffff;
-    max-width: 800px;
-    width: 92%;
-    max-height: 90vh;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
     overflow: hidden;
-    border-radius: 28px;
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
     z-index: 1001;
     display: none;
     opacity: 0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .blog-card-popup-{{ section.id }}.active {
@@ -499,53 +282,38 @@
     transform: translate(-50%, -50%) scale(1);
   }
 
-  .blog-card-popup-image-wrap-{{ section.id }} {
-    position: relative;
-    width: 100%;
-    height: 240px;
-    overflow: hidden;
-  }
-
   .blog-card-popup-image-{{ section.id }} {
     width: 100%;
-    height: 100%;
+    height: 200px;
     object-fit: cover;
     display: block;
   }
 
-  .blog-card-popup-image-overlay-{{ section.id }} {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
-  }
-
   .blog-card-popup-header-{{ section.id }} {
-    padding: 1.75rem 2rem 1.25rem;
+    padding: 28px 28px 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 16px;
     background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .blog-card-popup-title-{{ section.id }} {
-    font-size: 1.5rem;
-    font-weight: 900;
+    font-size: 1.75rem;
+    font-weight: 800;
     color: #0f172a;
     margin: 0;
-    line-height: 1.25;
+    line-height: 1.3;
     letter-spacing: -0.02em;
-    flex: 1;
   }
 
   .blog-card-popup-close-{{ section.id }} {
     background: #f1f5f9;
     border: none;
     cursor: pointer;
-    padding: 12px;
+    padding: 10px;
     border-radius: 50%;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.25s ease;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -554,7 +322,7 @@
 
   .blog-card-popup-close-{{ section.id }}:hover {
     background: #e2e8f0;
-    transform: rotate(90deg) scale(1.05);
+    transform: rotate(90deg);
   }
 
   .blog-card-popup-close-icon-{{ section.id }} {
@@ -564,11 +332,11 @@
   }
 
   .blog-card-popup-content-{{ section.id }} {
-    padding: 1.5rem 2rem 2rem;
+    padding: 0 28px 28px;
     font-size: 1rem;
     color: #475569;
     line-height: 1.8;
-    max-height: 45vh;
+    max-height: 40vh;
     overflow-y: auto;
   }
 
@@ -591,7 +359,7 @@
   }
 
   .blog-card-popup-content-{{ section.id }} p {
-    margin: 0 0 1rem;
+    margin-bottom: 16px;
   }
 
   .blog-card-popup-content-{{ section.id }} p:last-child {
@@ -599,7 +367,7 @@
   }
 
   .blog-card-popup-footer-{{ section.id }} {
-    padding: 1.25rem 2rem;
+    padding: 20px 28px;
     background: #f8fafc;
     border-top: 1px solid #e2e8f0;
     display: flex;
@@ -608,57 +376,53 @@
   }
 
   .blog-card-popup-btn-{{ section.id }} {
-    padding: 12px 28px;
-    border-radius: 50px;
+    padding: 10px 24px;
+    border-radius: 10px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.25s ease;
     font-family: inherit;
   }
 
   .blog-card-popup-btn-close-{{ section.id }} {
-    background: linear-gradient(135deg, {{ section.settings.accent_color }}, {{ section.settings.accent_hover }});
-    color: #ffffff;
-    border: none;
-    box-shadow: 0 4px 15px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #e2e8f0;
   }
 
   .blog-card-popup-btn-close-{{ section.id }}:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px {{ section.settings.accent_color | color_modify: 'alpha', 0.4 }};
+    background: #f1f5f9;
+    border-color: #cbd5e1;
   }
 
+  /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
     .blog-card-popup-{{ section.id }} {
-      width: 96%;
-      max-height: 92vh;
+      width: 95%;
+      max-height: 90vh;
       border-radius: 20px;
     }
 
-    .blog-card-popup-image-wrap-{{ section.id }} {
-      height: 180px;
-    }
-
     .blog-card-popup-header-{{ section.id }} {
-      padding: 1.25rem 1.25rem 1rem;
+      padding: 20px 20px 16px;
     }
-
+    
     .blog-card-popup-title-{{ section.id }} {
-      font-size: 1.2rem;
+      font-size: 1.35rem;
     }
-
+    
     .blog-card-popup-content-{{ section.id }} {
-      padding: 1rem 1.25rem 1.5rem;
+      padding: 0 20px 20px;
       max-height: 50vh;
     }
-
-    .blog-card-popup-footer-{{ section.id }} {
-      padding: 1rem 1.25rem;
+    
+    .blog-card-popup-image-{{ section.id }} {
+      height: 160px;
     }
-
-    .blog-card-popup-btn-{{ section.id }} {
-      padding: 10px 20px;
+    
+    .blog-card-popup-footer-{{ section.id }} {
+      padding: 16px 20px;
     }
   }
 </style>
@@ -668,15 +432,6 @@
 
     {%- if section.settings.title != blank or section.settings.subheading != blank -%}
       <div class="blog-cards-header-{{ section.id }}">
-        <div class="blog-cards-badge-wrap-{{ section.id }}">
-          <div class="blog-cards-badge-icon-{{ section.id }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-          </div>
-          <span class="blog-cards-badge-text-{{ section.id }}">{{ section.settings.badge_text | default: 'Blog' }}</span>
-        </div>
         {%- if section.settings.title != blank -%}
           <h2 class="blog-cards-heading-{{ section.id }}">{{ section.settings.title }}</h2>
         {%- endif -%}
@@ -690,45 +445,11 @@
       {%- for block in section.blocks -%}
         <div class="blog-card-{{ section.id }}" {{ block.shopify_attributes }}>
 
+          {%- comment -%} Image {%- endcomment -%}
           <div class="blog-card-img-wrap-{{ section.id }}">
             {%- if block.settings.badge != blank -%}
               <span class="blog-card-badge-{{ section.id }}">{{ block.settings.badge }}</span>
             {%- endif -%}
-
-            <div class="blog-card-actions-{{ section.id }}">
-              <button type="button" class="blog-card-action-btn-{{ section.id }}" onclick="(function(btn){
-                var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-                var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
-                popup.style.display = 'block';
-                overlay.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                setTimeout(function() {
-                  popup.classList.add('active');
-                  overlay.classList.add('active');
-                }, 10);
-              })(this)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </button>
-              <button type="button" class="blog-card-action-btn-{{ section.id }}" onclick="(function(btn){
-                var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-                var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
-                popup.style.display = 'block';
-                overlay.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                setTimeout(function() {
-                  popup.classList.add('active');
-                  overlay.classList.add('active');
-                }, 10);
-              })(this)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5v14"></path>
-                </svg>
-              </button>
-            </div>
 
             {%- if block.settings.image != blank -%}
               <img
@@ -748,68 +469,51 @@
                 {{ 'image' | placeholder_svg_tag }}
               </div>
             {%- endif -%}
-
-            <div class="blog-card-overlay-{{ section.id }}"></div>
-
-            <div class="blog-card-content-{{ section.id }}">
-              {%- if block.settings.title != blank -%}
-                <div class="blog-card-title-wrap-{{ section.id }}">
-                  <h3 class="blog-card-title-{{ section.id }}">{{ block.settings.title }}</h3>
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings.description != blank -%}
-                <div class="blog-card-meta-{{ section.id }}">
-                  <span class="blog-card-meta-item-{{ section.id }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    Latest
-                  </span>
-                  <span class="blog-card-meta-item-{{ section.id }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    5 min read
-                  </span>
-                </div>
-                <div class="blog-card-desc-{{ section.id }}">
-                  {{ block.settings.description | strip_html | truncatewords: 15 }}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
-                <div class="blog-card-popup-trigger-{{ section.id }}">
-                  <button
-                    type="button"
-                    class="blog-card-popup-trigger-btn-{{ section.id }}"
-                    aria-expanded="false"
-                    aria-controls="blog-popup-{{ section.id }}-{{ block.id }}"
-                    onclick="(function(btn){
-                      var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
-                      var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
-                      popup.style.display = 'block';
-                      overlay.style.display = 'block';
-                      document.body.style.overflow = 'hidden';
-                      setTimeout(function() {
-                        popup.classList.add('active');
-                        overlay.classList.add('active');
-                      }, 10);
-                    })(this)"
-                  >
-                    <span>{{ block.settings.dropdown_label }}</span>
-                    <svg class="blog-card-popup-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                    </svg>
-                  </button>
-                </div>
-              {%- endif -%}
-            </div>
           </div>
+
+          {%- comment -%} Body {%- endcomment -%}
+          <div class="blog-card-body-{{ section.id }}">
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="blog-card-title-{{ section.id }}">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <div class="blog-card-desc-{{ section.id }}">
+                {{ block.settings.description }}
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Popup / Read More {%- endcomment -%}
+            {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
+              <div class="blog-card-popup-trigger-{{ section.id }}">
+                <button
+                  type="button"
+                  class="blog-card-popup-trigger-btn-{{ section.id }}"
+                  aria-expanded="false"
+                  aria-controls="blog-popup-{{ section.id }}-{{ block.id }}"
+                  onclick="(function(btn){
+                    var popup = document.getElementById('blog-popup-{{ section.id }}-{{ block.id }}');
+                    var overlay = document.getElementById('blog-popup-overlay-{{ section.id }}-{{ block.id }}');
+                    popup.style.display = 'block';
+                    overlay.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                    setTimeout(function() {
+                      popup.classList.add('active');
+                      overlay.classList.add('active');
+                    }, 10);
+                  })(this)"
+                >
+                  <span>{{ block.settings.dropdown_label }}</span>
+                  <svg class="blog-card-popup-icon-{{ section.id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                </button>
+              </div>
+            {%- endif -%}
+
+          </div>
+
 
         </div>
       {%- endfor -%}
@@ -827,21 +531,18 @@
       setTimeout(function() {
         popup.style.display = 'none';
         overlay.style.display = 'none';
-      }, 400);
+      }, 300);
       document.body.style.overflow = 'auto';
     })(this)">
     </div>
 
     <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
       {%- if block.settings.image != blank -%}
-        <div class="blog-card-popup-image-wrap-{{ section.id }}">
-          <img
-            src="{{ block.settings.image | image_url: width: 800 }}"
-            alt="{{ block.settings.title | escape }}"
-            class="blog-card-popup-image-{{ section.id }}"
-          >
-          <div class="blog-card-popup-image-overlay-{{ section.id }}"></div>
-        </div>
+        <img
+          src="{{ block.settings.image | image_url: width: 800 }}"
+          alt="{{ block.settings.title | escape }}"
+          class="blog-card-popup-image-{{ section.id }}"
+        >
       {%- endif -%}
       <div class="blog-card-popup-header-{{ section.id }}">
         <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
@@ -856,7 +557,7 @@
             setTimeout(function() {
               popup.style.display = 'none';
               overlay.style.display = 'none';
-            }, 400);
+            }, 300);
             document.body.style.overflow = 'auto';
           })(this)"
         >
@@ -880,7 +581,7 @@
             setTimeout(function() {
               popup.style.display = 'none';
               overlay.style.display = 'none';
-            }, 400);
+            }, 300);
             document.body.style.overflow = 'auto';
           })(this)"
         >
@@ -898,11 +599,11 @@
       var popups = document.querySelectorAll('[id^="blog-popup-{{ section.id }}-"]');
       overlays.forEach(function(overlay) {
         overlay.classList.remove('active');
-        setTimeout(function() { overlay.style.display = 'none'; }, 400);
+        setTimeout(function() { overlay.style.display = 'none'; }, 300);
       });
       popups.forEach(function(popup) {
         popup.classList.remove('active');
-        setTimeout(function() { popup.style.display = 'none'; }, 400);
+        setTimeout(function() { popup.style.display = 'none'; }, 300);
       });
       document.body.style.overflow = 'auto';
     }
@@ -932,12 +633,6 @@
       "default": "Discover the latest stories, tips, and inspiration handpicked for you."
     },
     {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Badge Text",
-      "default": "Blog"
-    },
-    {
       "type": "header",
       "content": "Layout"
     },
@@ -958,7 +653,7 @@
       "step": 2,
       "unit": "px",
       "label": "Gap Between Cards",
-      "default": 28
+      "default": 30
     },
     {
       "type": "range",
@@ -968,7 +663,8 @@
       "step": 5,
       "unit": "%",
       "label": "Image Aspect Ratio",
-      "default": 65
+      "default": 65,
+      "info": "Lower = wider image, Higher = taller image"
     },
     {
       "type": "range",
@@ -978,7 +674,7 @@
       "step": 2,
       "unit": "px",
       "label": "Card Corner Radius",
-      "default": 20
+      "default": 16
     },
     {
       "type": "number",
@@ -1093,7 +789,8 @@
           "type": "text",
           "id": "badge",
           "label": "Badge Label",
-          "default": "Featured"
+          "default": "Featured",
+          "info": "Small label shown on the image corner"
         },
         {
           "type": "text",
@@ -1115,7 +812,8 @@
           "type": "text",
           "id": "dropdown_label",
           "label": "Popup Button Label",
-          "default": "Read More"
+          "default": "Read More",
+          "info": "Click to open popup with full content"
         },
         {
           "type": "richtext",
@@ -1128,7 +826,7 @@
   ],
   "presets": [
     {
-      "name": "Blog Cards",
+      "name": "Recipe Grid Cards",
       "category": "Blog",
       "blocks": [
         { "type": "blog_card" },
