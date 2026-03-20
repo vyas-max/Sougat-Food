@@ -58,6 +58,7 @@
         "text_twGGkJ": {
           "type": "text",
           "name": "Description",
+          "disabled": true,
           "settings": {
             "text": "<p>Select your favorite nutrient-rich snacks from our verified collection.</p>",
             "width": "fit-content",
@@ -85,7 +86,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p>• Instant Cooking </p><p>• Soups & Noodles</p><p>• Ready Meals</p><p>• Camping / Travel Food</p><p>• HoReCa Supply</p><p> </p>",
+            "text": "<p>Uses:</p><p>• Health Drinks</p><p>• Baby Food</p><p>• Nutraceuticals</p><p>• Bakery &<br/>Confectionery</p><p>• Food Formulations</p><p> </p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
