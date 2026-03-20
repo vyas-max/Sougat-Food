@@ -34,7 +34,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h2>Explore Our Range</h2>",
+            "text": "<p> Naturally Sweet & Crunchy</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -87,7 +87,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p>Uses:</p><p>• Health Drinks</p><p>• Baby Food</p><p>• Nutraceuticals</p><p>• Bakery &<br/>Confectionery</p><p>• Food Formulations</p><p> </p>",
+            "text": "<p></p><p>Uses:</p><p>• Healthy Snacking</p><p>• Breakfast Cereals</p><p>• Smoothies & Shakes</p><p>• Baking & Desserts</p><p>• Travel Snacks</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -115,7 +115,6 @@
         "text_twGGkJ",
         "text_RcRXqJ"
       ],
-      "disabled": true,
       "name": "Collection heading",
       "settings": {
         "content_direction": "column",
@@ -316,6 +315,7 @@
     },
     "corporate_inquiry_form_Bcawrd": {
       "type": "corporate-inquiry-form",
+      "disabled": true,
       "name": "Corporate Inquiry Form",
       "settings": {
         "heading": "For Corporate Gifting Inquiries",
