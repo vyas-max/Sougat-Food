@@ -2064,10 +2064,7 @@
         "feature_ELhQpc",
         "feature_LKyzMC"
       ],
-      "custom_css": [
-        ".card {margin-left: 200px;}",
-        ".why-choose-title {margin-left: 20px;}"
-      ],
+      "custom_css": [],
       "name": "About Freeze Dried",
       "settings": {
         "badge_text": "Innovation",
