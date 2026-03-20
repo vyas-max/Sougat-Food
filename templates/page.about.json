@@ -31,7 +31,7 @@
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
-            "padding-block-start": 0,
+            "padding-block-start": 44,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -95,11 +95,15 @@
         "image_WNQ9DD"
       ],
       "settings": {
+        "text_alignment": "center",
+        "subtitle_max_width": 600,
         "content_direction": "column",
         "gap": 32,
+        "content_gap": 24,
         "color_scheme": "scheme-about-cream",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding_top": 56,
+        "padding-block-end": 40,
+        "header_bottom_spacing": 32
       }
     },
     "our_expertise_cQm4Ni": {
@@ -375,6 +379,8 @@
       "name": "Achievements & Message",
       "settings": {
         "background_color": "#fcfcfc",
+        "accent_color": "#10b981",
+        "secondary_accent": "#f59e0b",
         "padding_top": 60,
         "padding_bottom": 60,
         "achievements_title": "Achievements",
