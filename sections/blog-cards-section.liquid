@@ -1,49 +1,122 @@
 {%- style -%}
-  /* ── Section Wrapper ── */
   .blog-cards-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    background-color: {{ section.settings.background_color }};
+    background: {{ section.settings.background_color }};
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-cards-section-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 60%;
+    height: 70%;
+    background: radial-gradient(ellipse, {{ section.settings.accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .blog-cards-section-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(ellipse, {{ section.settings.heading_color | color_modify: 'alpha', 0.02 }} 0%, transparent 50%);
+    pointer-events: none;
   }
 
   .blog-cards-container-{{ section.id }} {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ── Section Header ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
   .blog-cards-header-{{ section.id }} {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .blog-cards-badge-wrap-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-cards-badge-icon-{{ section.id }} {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, {{ section.settings.accent_color }} 0%, {{ section.settings.accent_hover }} 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 6px 20px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
+  }
+
+  .blog-cards-badge-icon-{{ section.id }} svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .blog-cards-badge-text-{{ section.id }} {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: {{ section.settings.accent_color }};
+    background: {{ section.settings.accent_color | color_modify: 'alpha', 0.1 }};
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    border: 1px solid {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
   }
 
   .blog-cards-heading-{{ section.id }} {
-    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3.25rem);
     color: {{ section.settings.heading_color }};
-    margin: 0 0 12px 0;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+    margin: 0 0 1rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
   }
 
   .blog-cards-subheading-{{ section.id }} {
-    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
     color: {{ section.settings.subheading_color }};
-    max-width: 620px;
+    max-width: 600px;
     margin: 0 auto;
-    line-height: 1.65;
+    line-height: 1.7;
     font-weight: 400;
+    opacity: 0.9;
   }
 
-  /* ── Grid Layout ── */
   .blog-cards-grid-{{ section.id }} {
     display: grid;
     grid-template-columns: 1fr;
     gap: {{ section.settings.card_gap }}px;
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 640px) {
     .blog-cards-grid-{{ section.id }} {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -55,33 +128,71 @@
     }
   }
 
-  /* ── Card ── */
   .blog-card-{{ section.id }} {
     background: {{ section.settings.card_bg }};
     border-radius: {{ section.settings.card_radius }}px;
     overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.04),
+      0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     height: 100%;
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     position: relative;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  .blog-card-{{ section.id }}:nth-child(1) { animation-delay: 0.1s; }
+  .blog-card-{{ section.id }}:nth-child(2) { animation-delay: 0.2s; }
+  .blog-card-{{ section.id }}:nth-child(3) { animation-delay: 0.3s; }
+  .blog-card-{{ section.id }}:nth-child(4) { animation-delay: 0.4s; }
+  .blog-card-{{ section.id }}:nth-child(5) { animation-delay: 0.5s; }
+  .blog-card-{{ section.id }}:nth-child(6) { animation-delay: 0.6s; }
+
+  .blog-card-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, {{ section.settings.accent_color | color_modify: 'alpha', 0.02 }} 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
   }
 
   .blog-card-{{ section.id }}:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px) scale(1.01);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.1),
+      0 0 0 1px {{ section.settings.accent_color | color_modify: 'alpha', 0.1 }};
   }
 
-  /* ── Card Image ── */
+  .blog-card-{{ section.id }}:hover::before {
+    opacity: 1;
+  }
+
   .blog-card-img-wrap-{{ section.id }} {
     position: relative;
     width: 100%;
     padding-bottom: {{ section.settings.image_ratio }}%;
-    background: linear-gradient(135deg, #f5f5f5, #ececec);
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
     overflow: hidden;
+  }
+
+  .blog-card-img-wrap-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+
+  .blog-card-{{ section.id }}:hover .blog-card-img-wrap-{{ section.id }}::after {
+    opacity: 1;
   }
 
   .blog-card-img-{{ section.id }} {
@@ -91,11 +202,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .blog-card-{{ section.id }}:hover .blog-card-img-{{ section.id }} {
-    transform: scale(1.08);
+    transform: scale(1.12);
   }
 
   .blog-card-placeholder-{{ section.id }} {
@@ -107,86 +218,126 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
   }
 
   .blog-card-placeholder-{{ section.id }} svg {
-    width: 60%;
-    height: 60%;
-    opacity: 0.35;
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
   }
 
-  /* ── Badge ── */
   .blog-card-badge-{{ section.id }} {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 16px;
+    left: 16px;
     background: {{ section.settings.badge_bg }};
     color: {{ section.settings.badge_color }};
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 5px 14px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px 16px;
     border-radius: 50px;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.08em;
     z-index: 2;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
   }
 
-  /* ── Card Body ── */
+  .blog-card-{{ section.id }}:hover .blog-card-badge-{{ section.id }} {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-card-overlay-icon-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-card-overlay-icon-{{ section.id }} svg {
+    width: 24px;
+    height: 24px;
+    color: {{ section.settings.accent_color }};
+  }
+
+  .blog-card-{{ section.id }}:hover .blog-card-overlay-icon-{{ section.id }} {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
   .blog-card-body-{{ section.id }} {
-    padding: 24px 24px 20px;
+    padding: 1.5rem 1.75rem 1.25rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    position: relative;
+    z-index: 1;
   }
 
   .blog-card-title-{{ section.id }} {
-    font-size: 1.35rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: {{ section.settings.card_title_color }};
-    margin: 0 0 10px 0;
-    line-height: 1.3;
+    margin: 0 0 0.75rem;
+    line-height: 1.35;
     letter-spacing: -0.01em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: color 0.3s ease;
+  }
+
+  .blog-card-{{ section.id }}:hover .blog-card-title-{{ section.id }} {
+    color: {{ section.settings.accent_color }};
   }
 
   .blog-card-desc-{{ section.id }} {
     font-size: 0.95rem;
     color: {{ section.settings.card_desc_color }};
-    line-height: 1.65;
-    margin: 0 0 16px 0;
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    opacity: 0.85;
   }
 
-  /* ── Popup Trigger Button ── */
   .blog-card-popup-trigger-{{ section.id }} {
     margin-top: auto;
-    padding-top: 16px;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }} {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     background: linear-gradient(135deg, {{ section.settings.accent_color }}, {{ section.settings.accent_hover }});
     color: #ffffff;
     border: none;
-    padding: 12px 24px;
+    padding: 10px 22px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     font-family: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
     position: relative;
     overflow: hidden;
   }
@@ -198,13 +349,13 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.6s ease;
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 8px 25px {{ section.settings.accent_color | color_modify: 'alpha', 0.4 }};
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover::before {
@@ -214,7 +365,7 @@
   .blog-card-popup-icon-{{ section.id }} {
     width: 18px;
     height: 18px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
   }
 
@@ -222,59 +373,59 @@
     transform: translateX(4px);
   }
 
-  /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
     .blog-card-body-{{ section.id }} {
-      padding: 18px 18px 14px;
+      padding: 1.25rem 1.25rem 1rem;
     }
-
     .blog-card-title-{{ section.id }} {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
     }
     .blog-cards-header-{{ section.id }} {
-      margin-bottom: 30px;
+      margin-bottom: 2rem;
+    }
+    .blog-card-overlay-icon-{{ section.id }} {
+      width: 50px;
+      height: 50px;
     }
   }
 {%- endstyle -%}
 
 <style>
-  /* ── Popup Overlay ── */
   .blog-card-popup-overlay-{{ section.id }} {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     display: none;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
   }
 
   .blog-card-popup-overlay-{{ section.id }}.active {
     opacity: 1;
   }
 
-  /* ── Popup Modal ── */
   .blog-card-popup-{{ section.id }} {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.92);
     background: #ffffff;
-    max-width: 700px;
-    width: 90%;
-    max-height: 85vh;
+    max-width: 800px;
+    width: 92%;
+    max-height: 90vh;
     overflow: hidden;
-    border-radius: 24px;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
     z-index: 1001;
     display: none;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .blog-card-popup-{{ section.id }}.active {
@@ -282,38 +433,53 @@
     transform: translate(-50%, -50%) scale(1);
   }
 
+  .blog-card-popup-image-wrap-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+  }
+
   .blog-card-popup-image-{{ section.id }} {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
 
+  .blog-card-popup-image-overlay-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+  }
+
   .blog-card-popup-header-{{ section.id }} {
-    padding: 28px 28px 20px;
+    padding: 1.75rem 2rem 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 16px;
+    gap: 1rem;
     background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .blog-card-popup-title-{{ section.id }} {
-    font-size: 1.75rem;
-    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: 900;
     color: #0f172a;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.25;
     letter-spacing: -0.02em;
+    flex: 1;
   }
 
   .blog-card-popup-close-{{ section.id }} {
     background: #f1f5f9;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 12px;
     border-radius: 50%;
-    transition: all 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -322,7 +488,7 @@
 
   .blog-card-popup-close-{{ section.id }}:hover {
     background: #e2e8f0;
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.05);
   }
 
   .blog-card-popup-close-icon-{{ section.id }} {
@@ -332,11 +498,11 @@
   }
 
   .blog-card-popup-content-{{ section.id }} {
-    padding: 0 28px 28px;
+    padding: 1.5rem 2rem 2rem;
     font-size: 1rem;
     color: #475569;
     line-height: 1.8;
-    max-height: 40vh;
+    max-height: 45vh;
     overflow-y: auto;
   }
 
@@ -359,7 +525,7 @@
   }
 
   .blog-card-popup-content-{{ section.id }} p {
-    margin: 0 0 16px;
+    margin: 0 0 1rem;
   }
 
   .blog-card-popup-content-{{ section.id }} p:last-child {
@@ -367,7 +533,7 @@
   }
 
   .blog-card-popup-footer-{{ section.id }} {
-    padding: 20px 28px;
+    padding: 1.25rem 2rem;
     background: #f8fafc;
     border-top: 1px solid #e2e8f0;
     display: flex;
@@ -376,53 +542,57 @@
   }
 
   .blog-card-popup-btn-{{ section.id }} {
-    padding: 10px 24px;
-    border-radius: 10px;
+    padding: 12px 28px;
+    border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: inherit;
   }
 
   .blog-card-popup-btn-close-{{ section.id }} {
-    background: #ffffff;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, {{ section.settings.accent_color }}, {{ section.settings.accent_hover }});
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 15px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
   }
 
   .blog-card-popup-btn-close-{{ section.id }}:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px {{ section.settings.accent_color | color_modify: 'alpha', 0.4 }};
   }
 
-  /* ── Mobile tweaks ── */
   @media screen and (max-width: 749px) {
     .blog-card-popup-{{ section.id }} {
-      width: 95%;
-      max-height: 90vh;
+      width: 96%;
+      max-height: 92vh;
       border-radius: 20px;
     }
 
+    .blog-card-popup-image-wrap-{{ section.id }} {
+      height: 180px;
+    }
+
     .blog-card-popup-header-{{ section.id }} {
-      padding: 20px 20px 16px;
+      padding: 1.25rem 1.25rem 1rem;
     }
 
     .blog-card-popup-title-{{ section.id }} {
-      font-size: 1.35rem;
+      font-size: 1.2rem;
     }
 
     .blog-card-popup-content-{{ section.id }} {
-      padding: 0 20px 20px;
+      padding: 1rem 1.25rem 1.5rem;
       max-height: 50vh;
     }
 
-    .blog-card-popup-image-{{ section.id }} {
-      height: 160px;
+    .blog-card-popup-footer-{{ section.id }} {
+      padding: 1rem 1.25rem;
     }
 
-    .blog-card-popup-footer-{{ section.id }} {
-      padding: 16px 20px;
+    .blog-card-popup-btn-{{ section.id }} {
+      padding: 10px 20px;
     }
   }
 </style>
@@ -432,6 +602,15 @@
 
     {%- if section.settings.title != blank or section.settings.subheading != blank -%}
       <div class="blog-cards-header-{{ section.id }}">
+        <div class="blog-cards-badge-wrap-{{ section.id }}">
+          <div class="blog-cards-badge-icon-{{ section.id }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <span class="blog-cards-badge-text-{{ section.id }}">{{ section.settings.badge_text | default: 'Blog' }}</span>
+        </div>
         {%- if section.settings.title != blank -%}
           <h2 class="blog-cards-heading-{{ section.id }}">{{ section.settings.title }}</h2>
         {%- endif -%}
@@ -445,11 +624,19 @@
       {%- for block in section.blocks -%}
         <div class="blog-card-{{ section.id }}" {{ block.shopify_attributes }}>
 
-          {%- comment -%} Image {%- endcomment -%}
           <div class="blog-card-img-wrap-{{ section.id }}">
             {%- if block.settings.badge != blank -%}
               <span class="blog-card-badge-{{ section.id }}">{{ block.settings.badge }}</span>
             {%- endif -%}
+
+            <div class="blog-card-overlay-icon-{{ section.id }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+            </div>
 
             {%- if block.settings.image != blank -%}
               <img
@@ -471,7 +658,6 @@
             {%- endif -%}
           </div>
 
-          {%- comment -%} Body {%- endcomment -%}
           <div class="blog-card-body-{{ section.id }}">
 
             {%- if block.settings.title != blank -%}
@@ -484,7 +670,6 @@
               </div>
             {%- endif -%}
 
-            {%- comment -%} Popup / Read More {%- endcomment -%}
             {%- if block.settings.dropdown_label != blank and block.settings.dropdown_content != blank -%}
               <div class="blog-card-popup-trigger-{{ section.id }}">
                 <button
@@ -514,7 +699,6 @@
 
           </div>
 
-
         </div>
       {%- endfor -%}
     </div>
@@ -531,18 +715,21 @@
       setTimeout(function() {
         popup.style.display = 'none';
         overlay.style.display = 'none';
-      }, 300);
+      }, 400);
       document.body.style.overflow = 'auto';
     })(this)">
     </div>
 
     <div class="blog-card-popup-{{ section.id }}" id="blog-popup-{{ section.id }}-{{ block.id }}">
       {%- if block.settings.image != blank -%}
-        <img
-          src="{{ block.settings.image | image_url: width: 800 }}"
-          alt="{{ block.settings.title | escape }}"
-          class="blog-card-popup-image-{{ section.id }}"
-        >
+        <div class="blog-card-popup-image-wrap-{{ section.id }}">
+          <img
+            src="{{ block.settings.image | image_url: width: 800 }}"
+            alt="{{ block.settings.title | escape }}"
+            class="blog-card-popup-image-{{ section.id }}"
+          >
+          <div class="blog-card-popup-image-overlay-{{ section.id }}"></div>
+        </div>
       {%- endif -%}
       <div class="blog-card-popup-header-{{ section.id }}">
         <h3 class="blog-card-popup-title-{{ section.id }}">{{ block.settings.title }}</h3>
@@ -557,7 +744,7 @@
             setTimeout(function() {
               popup.style.display = 'none';
               overlay.style.display = 'none';
-            }, 300);
+            }, 400);
             document.body.style.overflow = 'auto';
           })(this)"
         >
@@ -581,7 +768,7 @@
             setTimeout(function() {
               popup.style.display = 'none';
               overlay.style.display = 'none';
-            }, 300);
+            }, 400);
             document.body.style.overflow = 'auto';
           })(this)"
         >
@@ -599,11 +786,11 @@
       var popups = document.querySelectorAll('[id^="blog-popup-{{ section.id }}-"]');
       overlays.forEach(function(overlay) {
         overlay.classList.remove('active');
-        setTimeout(function() { overlay.style.display = 'none'; }, 300);
+        setTimeout(function() { overlay.style.display = 'none'; }, 400);
       });
       popups.forEach(function(popup) {
         popup.classList.remove('active');
-        setTimeout(function() { popup.style.display = 'none'; }, 300);
+        setTimeout(function() { popup.style.display = 'none'; }, 400);
       });
       document.body.style.overflow = 'auto';
     }
@@ -633,6 +820,12 @@
       "default": "Discover the latest stories, tips, and inspiration handpicked for you."
     },
     {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Blog"
+    },
+    {
       "type": "header",
       "content": "Layout"
     },
@@ -653,7 +846,7 @@
       "step": 2,
       "unit": "px",
       "label": "Gap Between Cards",
-      "default": 30
+      "default": 28
     },
     {
       "type": "range",
@@ -663,8 +856,7 @@
       "step": 5,
       "unit": "%",
       "label": "Image Aspect Ratio",
-      "default": 65,
-      "info": "Lower = wider image, Higher = taller image"
+      "default": 65
     },
     {
       "type": "range",
@@ -674,7 +866,7 @@
       "step": 2,
       "unit": "px",
       "label": "Card Corner Radius",
-      "default": 16
+      "default": 20
     },
     {
       "type": "number",
@@ -789,8 +981,7 @@
           "type": "text",
           "id": "badge",
           "label": "Badge Label",
-          "default": "Featured",
-          "info": "Small label shown on the image corner"
+          "default": "Featured"
         },
         {
           "type": "text",
@@ -812,22 +1003,20 @@
           "type": "text",
           "id": "dropdown_label",
           "label": "Popup Button Label",
-          "default": "Read More",
-          "info": "Click to open popup with full content"
+          "default": "Read More"
         },
         {
           "type": "richtext",
           "id": "dropdown_content",
           "label": "Popup Content",
           "default": "<p>This section reveals additional details about the blog post when the reader clicks the button above.</p>"
-        },
-
+        }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Recipe Grid Cards",
+      "name": "Blog Cards",
       "category": "Blog",
       "blocks": [
         { "type": "blog_card" },
