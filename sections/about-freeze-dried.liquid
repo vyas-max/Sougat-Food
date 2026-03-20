@@ -7,254 +7,372 @@
   assign section_bg = section.settings.bg_color
 -%}
 
-{%- style -%}
-  .about-freeze-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-    background: {{ section_bg }};
-    overflow: hidden;
-    position: relative;
-    font-display: swap;
-  }
+.about-freeze-{{ section.id }} {
+  padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  background: {{ section_bg }};
+  position: relative;
+  overflow: hidden;
+}
 
-  /* ── Premium Mesh Background ── */
-  .about-freeze-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    left: -10%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.08 }} 0%, rgba(255,255,255,0) 60%);
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .about-freeze-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    right: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, {{ heading_color | color_modify: 'alpha', 0.03 }} 0%, rgba(255,255,255,0) 60%);
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
+.about-freeze-{{ section.id }}::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -20%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, {{ accent_color | color_modify: 'alpha', 0.07 }} 0%, transparent 50%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatBlob 20s ease-in-out infinite;
+}
 
-  .about-freeze-{{ section.id }} .container {
-    max-width: {{ section.settings.max_width }}px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
+.about-freeze-{{ section.id }}::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: -20%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, {{ heading_color | color_modify: 'alpha', 0.04 }} 0%, transparent 50%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatBlob 25s ease-in-out infinite reverse;
+}
 
-  /* ── Animations ── */
-  @keyframes fadeUpAnim {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .about-freeze-{{ section.id }} .animate-on-load {
-    animation: fadeUpAnim 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-    opacity: 0;
-  }
-  .about-freeze-{{ section.id }} .delay-1 { animation-delay: 0.1s; }
-  .about-freeze-{{ section.id }} .delay-2 { animation-delay: 0.2s; }
-  .about-freeze-{{ section.id }} .delay-3 { animation-delay: 0.3s; }
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
 
-  /* ── Header Styling ── */
-  .about-freeze-{{ section.id }} .header-group {
-    text-align: center;
-    margin-bottom: clamp(3.5rem, 8vw, 5.5rem);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.about-freeze-{{ section.id }} .container {
+  max-width: {{ section.settings.max_width }}px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  position: relative;
+  z-index: 1;
+}
 
-  .about-freeze-{{ section.id }} .badge {
-    display: inline-block;
-    padding: 6px 18px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.15 }}, {{ accent_color | color_modify: 'alpha', 0.05 }});
-    color: {{ accent_color }};
-    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 15px {{ accent_color | color_modify: 'alpha', 0.1 }};
-  }
+.about-freeze-{{ section.id }} .header-group {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
 
-  .about-freeze-{{ section.id }} .main-title {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    color: {{ heading_color }};
-    margin: 0 0 1.5rem;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 1.05;
-    max-width: 900px;
-  }
+.about-freeze-{{ section.id }} .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.04 }} 100%);
+  color: {{ accent_color }};
+  border: 1px solid {{ accent_color | color_modify: 'alpha', 0.25 }};
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+}
 
-  .about-freeze-{{ section.id }} .subheading {
-    font-size: clamp(1.15rem, 2vw, 1.45rem);
-    color: {{ text_color }};
-    max-width: 750px;
-    margin: 0;
-    opacity: 0.85;
-    line-height: 1.6;
-    font-weight: 400;
-  }
+.about-freeze-{{ section.id }} .badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
 
-  /* ── Why Choose Header ── */
-  .about-freeze-{{ section.id }} .why-choose-wrap {
-    margin-top: clamp(4rem, 10vw, 7rem);
-    text-align: center;
-    margin-bottom: 4rem;
-  }
+@keyframes shimmer {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
 
-  .about-freeze-{{ section.id }} .why-choose-title {
-    font-size: clamp(2.2rem, 4.5vw, 3.25rem);
-    color: {{ heading_color }};
-    font-weight: 850;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-  }
+.about-freeze-{{ section.id }} .badge-icon {
+  width: 16px;
+  height: 16px;
+}
 
-  .about-freeze-{{ section.id }} .why-choose-line {
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, {{ accent_color }}, transparent);
-    margin: 0 auto;
-    border-radius: 10px;
-    opacity: 0.7;
-  }
+.about-freeze-{{ section.id }} .main-title {
+  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  color: {{ heading_color }};
+  margin: 0 0 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, {{ heading_color }} 0%, {{ accent_color }} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  /* ── Robust Grid System ── */
+.about-freeze-{{ section.id }} .subheading {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  color: {{ text_color }};
+  max-width: 680px;
+  margin: 0 auto;
+  opacity: 0.8;
+  line-height: 1.65;
+  font-weight: 450;
+}
+
+.about-freeze-{{ section.id }} .divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: clamp(3rem, 8vw, 5rem) 0;
+}
+
+.about-freeze-{{ section.id }} .divider-line {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, {{ accent_color | color_modify: 'alpha', 0.4 }}, transparent);
+}
+
+.about-freeze-{{ section.id }} .divider-icon {
+  width: 48px;
+  height: 48px;
+  background: {{ card_bg }};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px {{ accent_color | color_modify: 'alpha', 0.15 }};
+  border: 1px solid {{ accent_color | color_modify: 'alpha', 0.1 }};
+}
+
+.about-freeze-{{ section.id }} .divider-icon svg {
+  width: 24px;
+  height: 24px;
+  color: {{ accent_color }};
+}
+
+.about-freeze-{{ section.id }} .why-choose-wrap {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.about-freeze-{{ section.id }} .why-choose-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  color: {{ heading_color }};
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.about-freeze-{{ section.id }} .why-choose-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_modify: 'alpha', 0.3 }});
+  border-radius: 100px;
+}
+
+.about-freeze-{{ section.id }} .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+@media screen and (min-width: 640px) {
   .about-freeze-{{ section.id }} .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: stretch;
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  @media screen and (min-width: 768px) {
-    .about-freeze-{{ section.id }} .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+@media screen and (min-width: 1024px) {
+  .about-freeze-{{ section.id }} .grid {
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
   }
+}
 
-  @media screen and (min-width: 1100px) {
-    .about-freeze-{{ section.id }} .grid {
-      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
-    }
-  }
+.about-freeze-{{ section.id }} .card {
+  background: {{ card_bg }};
+  padding: clamp(2rem, 4vw, 2.75rem);
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 
-  /* ── Premium Card Design ── */
-  .about-freeze-{{ section.id }} .card {
-    background: linear-gradient(135deg, {{ card_bg }} 0%, rgba(255,255,255,0.7) 100%);
-    padding: clamp(2.5rem, 4vw, 4rem) clamp(2rem, 3vw, 3rem);
-    border-radius: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03),
-                inset 0 1px 0 rgba(255, 255, 255, 1);
-    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
+.about-freeze-{{ section.id }} .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_modify: 'alpha', 0.3 }});
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-  .about-freeze-{{ section.id }} .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, {{ accent_color | color_modify: 'alpha', 0.08 }}, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
+.about-freeze-{{ section.id }} .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-  .about-freeze-{{ section.id }} .card:hover {
-    transform: translateY(-15px) scale(1.02);
-    border-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.06),
-                0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.1 }};
-  }
+.about-freeze-{{ section.id }} .card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.08), 0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.1 }};
+}
 
-  .about-freeze-{{ section.id }} .card:hover::after {
-    opacity: 1;
-  }
+.about-freeze-{{ section.id }} .card:hover::before,
+.about-freeze-{{ section.id }} .card:hover::after {
+  opacity: 1;
+}
 
-  .about-freeze-{{ section.id }} .card-icon-wrap {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 2.5rem;
-    background: {{ section_bg }};
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.04), inset 0 2px 4px rgba(255,255,255,0.8);
-    border: 1px solid rgba(0,0,0,0.03);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+.about-freeze-{{ section.id }} .card-number {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  background: {{ accent_color | color_modify: 'alpha', 0.08 }};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: {{ accent_color }};
+  z-index: 2;
+}
+
+.about-freeze-{{ section.id }} .card-icon-wrap {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.75rem;
+  background: linear-gradient(145deg, {{ accent_color | color_modify: 'alpha', 0.08 }} 0%, {{ accent_color | color_modify: 'alpha', 0.02 }} 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+}
+
+.about-freeze-{{ section.id }} .card:hover .card-icon-wrap {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 12px 28px {{ accent_color | color_modify: 'alpha', 0.2 }};
+}
+
+.about-freeze-{{ section.id }} .card-icon-wrap img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.about-freeze-{{ section.id }} .card-content {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.about-freeze-{{ section.id }} .card-title {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: {{ heading_color }};
+  margin: 0 0 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.about-freeze-{{ section.id }} .card:hover .card-title {
+  color: {{ accent_color }};
+}
+
+.about-freeze-{{ section.id }} .card-text {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  color: {{ text_color }};
+  line-height: 1.7;
+  margin: 0;
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+.about-freeze-{{ section.id }} .card-link {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: {{ accent_color }};
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.about-freeze-{{ section.id }} .card:hover .card-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-freeze-{{ section.id }} .card-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.about-freeze-{{ section.id }} .card:hover .card-link svg {
+  transform: translateX(4px);
+}
+
+@media screen and (max-width: 639px) {
+  .about-freeze-{{ section.id }} .card-number {
+    top: 1rem;
+    right: 1rem;
   }
   
-  .about-freeze-{{ section.id }} .card:hover .card-icon-wrap {
-    transform: scale(1.1) rotate(5deg);
+  .about-freeze-{{ section.id }} .card { padding: 2rem 1.5rem; }
+  
+  .about-freeze-{{ section.id }} .card-link {
+    opacity: 1;
+    transform: translateY(0);
   }
-
-  .about-freeze-{{ section.id }} .card-icon-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
-  }
-
-  .about-freeze-{{ section.id }} .card-content {
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about-freeze-{{ section.id }} .card-title {
-    font-size: clamp(1.4rem, 2vw, 1.75rem);
-    font-weight: 850;
-    color: {{ heading_color }};
-    margin: 0 0 1.25rem;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-
-  .about-freeze-{{ section.id }} .card-text {
-    font-size: clamp(1rem, 1.3vw, 1.15rem);
-    color: {{ text_color }};
-    line-height: 1.7;
-    margin: 0;
-    opacity: 0.85;
-    font-weight: 450;
-  }
-
-  @media screen and (max-width: 767px) {
-    .about-freeze-{{ section.id }} .container { padding: 0 1.25rem; }
-    .about-freeze-{{ section.id }} .header-group { margin-bottom: 3rem; }
-    .about-freeze-{{ section.id }} .card { padding: 3rem 1.5rem; }
-  }
+}
 {%- endstyle -%}
 
 <section class="about-freeze-{{ section.id }}" id="AboutFreeze-{{ section.id }}">
   <div class="container">
     {%- if section.settings.title != blank -%}
-      <div class="header-group animate-on-load">
-        <span class="badge">Innovation</span>
+      <div class="header-group">
+        <span class="badge">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          {{ section.settings.badge_text | default: 'Innovation' }}
+        </span>
         <h2 class="main-title">{{ section.settings.title }}</h2>
         {%- if section.settings.subheading != blank -%}
           <p class="subheading">{{ section.settings.subheading }}</p>
@@ -262,25 +380,47 @@
       </div>
     {%- endif -%}
 
+    {%- if section.settings.show_divider -%}
+      <div class="divider">
+        <span class="divider-line"></span>
+        <div class="divider-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 3v18M3 12h18M5.636 5.636l12.728 12.728M18.364 5.636L5.636 18.364"/>
+          </svg>
+        </div>
+        <span class="divider-line"></span>
+      </div>
+    {%- endif -%}
+
     {%- if section.settings.why_title != blank -%}
-      <div class="why-choose-wrap animate-on-load delay-1">
+      <div class="why-choose-wrap">
         <h3 class="why-choose-title">{{ section.settings.why_title }}</h3>
-        <div class="why-choose-line"></div>
       </div>
     {%- endif -%}
 
     <div class="grid">
       {%- for block in section.blocks -%}
-        {%- assign anim_delay = forloop.index | modulo: 3 | plus: 1 -%}
-        <div class="card animate-on-load delay-{{ anim_delay }}" {{ block.shopify_attributes }}>
+        <article class="card" {{ block.shopify_attributes }}>
+          <span class="card-number">{{ forloop.index }}</span>
           {%- if block.settings.image != blank -%}
             <div class="card-icon-wrap">
-              <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="80" height="80">
+              <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="40" height="40">
             </div>
           {%- else -%}
-             <div class="card-icon-wrap" style="background: {{ accent_color | color_modify: 'alpha', 0.05 }}">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{ accent_color }}" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
-             </div>
+            <div class="card-icon-wrap">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="{{ accent_color }}" stroke-width="1.5">
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  {%- when 2 -%}
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/>
+                  {%- when 3 -%}
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                  {%- else -%}
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
+                {%- endcase -%}
+              </svg>
+            </div>
           {%- endif -%}
           
           <div class="card-content">
@@ -289,12 +429,19 @@
             {%- endif -%}
             
             {%- if block.settings.text != blank -%}
-              <div class="card-text">
-                {{ block.settings.text }}
-              </div>
+              <div class="card-text">{{ block.settings.text }}</div>
+            {%- endif -%}
+
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="card-link">
+                Learn more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
             {%- endif -%}
           </div>
-        </div>
+        </article>
       {%- endfor -%}
     </div>
   </div>
@@ -308,7 +455,13 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section Header"
+      "content": "Header Settings"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Innovation"
     },
     {
       "type": "text",
@@ -320,13 +473,23 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Creative designed by Sougat maam, can be use in home page."
+      "default": "Discover the science and care behind our premium freeze-dried products"
+    },
+    {
+      "type": "header",
+      "content": "Why Choose Section"
     },
     {
       "type": "text",
       "id": "why_title",
       "label": "Why Choose Heading",
       "default": "Why Choose Sougat Foods?"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show Decorative Divider",
+      "default": true
     },
     {
       "type": "header",
@@ -339,13 +502,13 @@
       "max": 4,
       "step": 1,
       "label": "Columns on Desktop",
-      "default": 3
+      "default": 4
     },
     {
       "type": "number",
       "id": "max_width",
       "label": "Section Max Width (px)",
-      "default": 1300
+      "default": 1400
     },
     {
       "type": "header",
@@ -389,21 +552,21 @@
       "type": "range",
       "id": "padding_top",
       "min": 0,
-      "max": 100,
+      "max": 120,
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 80
+      "default": 100
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
-      "max": 100,
+      "max": 120,
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 80
+      "default": 100
     }
   ],
   "blocks": [
@@ -427,6 +590,11 @@
           "id": "text",
           "label": "Description",
           "default": "<p>Describe the benefits of your product here.</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
         }
       ]
     }
@@ -453,7 +621,7 @@
           "type": "feature",
           "settings": {
             "title": "Naturally Preserved",
-            "text": "<p>Freeze-drying gently removes moisture while keeping the natural taste, color, and nutrients intact — without added preservatives or artificial ingredients.</p>"
+            "text": "<p>Freeze-drying gently removes moisture while keeping the natural taste, color, and nutrients intact — without added preservatives.</p>"
           }
         },
         {
