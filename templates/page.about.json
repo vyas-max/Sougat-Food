@@ -379,8 +379,8 @@
       "name": "Achievements & Message",
       "settings": {
         "background_color": "#fcfcfc",
-        "accent_color": "#10b981",
-        "secondary_accent": "#f59e0b",
+        "accent_color": "#14442d",
+        "secondary_accent": "#38aa3d",
         "padding_top": 60,
         "padding_bottom": 60,
         "achievements_title": "Achievements",
