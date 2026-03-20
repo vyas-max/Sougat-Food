@@ -301,10 +301,11 @@
 }
 
 .about-freeze-{{ section.id }} .card-content {
-  text-align: center;
+  text-align: center !important;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
   z-index: 2;
 }
@@ -317,6 +318,8 @@
   line-height: 1.25;
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
+  text-align: center !important;
+  width: 100%;
 }
 
 .about-freeze-{{ section.id }} .card:hover .card-title {
@@ -330,11 +333,13 @@
     margin: 0;
     opacity: 0.75;
     font-weight: 400;
-    text-align: center;
+    text-align: center !important;
+    width: 100%;
   }
-  .about-freeze-{{ section.id }} .card-text p {
-    text-align: center;
-    margin: 0;
+  .about-freeze-{{ section.id }} .card-text p,
+  .about-freeze-{{ section.id }} .card-text * {
+    text-align: center !important;
+    margin: 0 auto;
   }
 
 .about-freeze-{{ section.id }} .card-link {
