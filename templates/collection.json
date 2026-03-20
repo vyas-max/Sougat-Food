@@ -115,6 +115,7 @@
         "text_twGGkJ",
         "text_RcRXqJ"
       ],
+      "disabled": true,
       "name": "Collection heading",
       "settings": {
         "content_direction": "column",
