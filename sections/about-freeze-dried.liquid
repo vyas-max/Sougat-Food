@@ -323,14 +323,19 @@
   color: {{ accent_color }};
 }
 
-.about-freeze-{{ section.id }} .card-text {
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-  color: {{ text_color }};
-  line-height: 1.7;
-  margin: 0;
-  opacity: 0.75;
-  font-weight: 400;
-}
+  .about-freeze-{{ section.id }} .card-text {
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    color: {{ text_color }};
+    line-height: 1.7;
+    margin: 0;
+    opacity: 0.75;
+    font-weight: 400;
+    text-align: center;
+  }
+  .about-freeze-{{ section.id }} .card-text p {
+    text-align: center;
+    margin: 0;
+  }
 
 .about-freeze-{{ section.id }} .card-link {
   margin-top: 1.25rem;
