@@ -184,34 +184,18 @@
 }
 
 .about-freeze-{{ section.id }} .grid {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: clamp(1.25rem, 2.5vw, 2rem);
-  justify-items: center;
   max-width: {{ section.settings.max_width }}px;
   margin: 0 auto;
 }
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
-  .about-freeze-{{ section.id }} .grid {
-    grid-template-columns: repeat(2, minmax(0, 280px));
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .about-freeze-{{ section.id }} .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 700px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .about-freeze-{{ section.id }} .grid {
-    grid-template-columns: repeat({{ section.settings.columns }}, minmax(0, 1fr));
-  }
-}
-
 .about-freeze-{{ section.id }} .card {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 320px;
   background: {{ card_bg }};
   padding: clamp(2rem, 4vw, 2.75rem);
   border-radius: 28px;
@@ -221,8 +205,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
-  max-width: 400px;
   position: relative;
   overflow: hidden;
 }
@@ -388,9 +370,21 @@
   }
 }
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
+@media screen and (min-width: 600px) {
   .about-freeze-{{ section.id }} .card {
-    max-width: 280px;
+    max-width: 340px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-freeze-{{ section.id }} .card {
+    max-width: 320px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .about-freeze-{{ section.id }} .card {
+    max-width: 350px;
   }
 }
 {%- endstyle -%}
