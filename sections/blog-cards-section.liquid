@@ -186,7 +186,7 @@
     font-weight: 600;
     font-family: inherit;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 4px 15px {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
     position: relative;
     overflow: hidden;
   }
@@ -204,7 +204,7 @@
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 6px 25px {{ section.settings.accent_hover | color_modify: 'alpha', 0.4 }};
   }
 
   .blog-card-popup-trigger-btn-{{ section.id }}:hover::before {
@@ -726,13 +726,13 @@
       "type": "color",
       "id": "accent_color",
       "label": "Accent / Link Color",
-      "default": "#2563EB"
+      "default": "#38aa3d"
     },
     {
       "type": "color",
       "id": "accent_hover",
       "label": "Accent Hover Color",
-      "default": "#1D4ED8"
+      "default": "#2e8b32"
     },
     {
       "type": "color",
