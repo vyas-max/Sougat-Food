@@ -2,15 +2,10 @@
  * Updates the recently viewed products in localStorage.
  */
 export class RecentlyViewed {
-  /** @static @constant {string} The key used to store the viewed products in session storage */
   static #STORAGE_KEY = 'viewedProducts';
-  /** @static @constant {number} The maximum number of products to store */
+  static #DATA_STORAGE_KEY = 'viewedProductsData';
   static #MAX_PRODUCTS = 4;
 
-  /**
-   * Adds a product to the recently viewed products list.
-   * @param {string} productId - The ID of the product to add.
-   */
   static addProduct(productId) {
     let viewedProducts = this.getProducts();
 
@@ -21,15 +16,26 @@ export class RecentlyViewed {
     localStorage.setItem(this.#STORAGE_KEY, JSON.stringify(viewedProducts));
   }
 
-  static clearProducts() {
-    localStorage.removeItem(this.#STORAGE_KEY);
+  static addProductData(productData) {
+    let products = this.getProductsData();
+
+    products = products.filter((/** @type {{ id: string }} */ p) => p.id !== productData.id);
+    products.unshift(productData);
+    products = products.slice(0, this.#MAX_PRODUCTS);
+
+    localStorage.setItem(this.#DATA_STORAGE_KEY, JSON.stringify(products));
   }
 
-  /**
-   * Retrieves the list of recently viewed products from session storage.
-   * @returns {string[]} The list of viewed products.
-   */
+  static clearProducts() {
+    localStorage.removeItem(this.#STORAGE_KEY);
+    localStorage.removeItem(this.#DATA_STORAGE_KEY);
+  }
+
   static getProducts() {
     return JSON.parse(localStorage.getItem(this.#STORAGE_KEY) || '[]');
+  }
+
+  static getProductsData() {
+    return JSON.parse(localStorage.getItem(this.#DATA_STORAGE_KEY) || '[]');
   }
 }

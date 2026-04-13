@@ -302,6 +302,85 @@
       });
     </script>
   {% endif %}
+
+  {% if settings.enable_recently_viewed %}
+    <div class="recently-viewed-section" data-recently-viewed-section style="--rv-columns: {{ settings.recently_viewed_columns | default: 4 }}">
+      {% if settings.recently_viewed_heading != blank %}
+        <h2 class="recently-viewed-section__heading">{{ settings.recently_viewed_heading }}</h2>
+      {% endif %}
+      <div class="recently-viewed-section__grid" data-recently-viewed-grid></div>
+    </div>
+
+    <template id="recently-viewed-card-template">
+      <a class="recently-viewed-card" href="">
+        <div class="recently-viewed-card__image-wrapper">
+          <img class="recently-viewed-card__image" src="" alt="" loading="lazy">
+          <span class="recently-viewed-card__badge" style="display:none">Sold out</span>
+        </div>
+        <div class="recently-viewed-card__content">
+          <h3 class="recently-viewed-card__title"></h3>
+          <div class="recently-viewed-card__price-wrapper">
+            <span class="recently-viewed-card__price"></span>
+            <span class="recently-viewed-card__compare-price"></span>
+          </div>
+        </div>
+      </a>
+    </template>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          var currentProductId = '{{ product.id }}';
+          var maxProducts = {{ settings.recently_viewed_max | default: 4 }};
+          var products = JSON.parse(localStorage.getItem('viewedProductsData') || '[]')
+            .filter(function(p) { return p.id !== currentProductId; })
+            .slice(0, maxProducts);
+
+          var section = document.querySelector('[data-recently-viewed-section]');
+          var grid = document.querySelector('[data-recently-viewed-grid]');
+          var template = document.getElementById('recently-viewed-card-template');
+
+          if (!section || !grid || !template || products.length === 0) {
+            if (section) section.style.display = 'none';
+            return;
+          }
+
+          products.forEach(function(product) {
+            var card = template.content.cloneNode(true);
+            card.querySelector('.recently-viewed-card').href = product.url;
+
+            var img = card.querySelector('.recently-viewed-card__image');
+            if (product.image && product.image !== '' && product.image !== 'null') {
+              img.src = product.image;
+              img.alt = product.title || '';
+            } else {
+              img.parentElement.classList.add('recently-viewed-card__image-wrapper--placeholder');
+            }
+
+            card.querySelector('.recently-viewed-card__title').textContent = product.title;
+            card.querySelector('.recently-viewed-card__price').textContent = product.priceFormatted;
+
+            var compareEl = card.querySelector('.recently-viewed-card__compare-price');
+            if (product.compareAtPriceFormatted && product.compareAtPrice && product.compareAtPrice !== product.price) {
+              compareEl.textContent = product.compareAtPriceFormatted;
+            } else {
+              compareEl.remove();
+            }
+
+            if (!product.available) {
+              var badge = card.querySelector('.recently-viewed-card__badge');
+              if (badge) badge.style.display = 'block';
+            }
+
+            grid.appendChild(card);
+          });
+        } catch(e) {
+          var section = document.querySelector('[data-recently-viewed-section]');
+          if (section) section.style.display = 'none';
+        }
+      });
+    </script>
+  {% endif %}
 </div>
 
 {% stylesheet %}
@@ -988,6 +1067,186 @@
       white-space: nowrap;
       flex-shrink: 0;
       padding-inline: 1.1rem;
+    }
+  }
+
+  .recently-viewed-section {
+    grid-column: 1 / -1;
+    padding: clamp(1.75rem, 3vw, 2.75rem) 0;
+    width: min(1380px, 100%);
+    margin: auto;
+  }
+
+  .recently-viewed-section__heading {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    color: #1a3e2b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .recently-viewed-section__heading::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #10a560, #0b6c3c);
+    border-radius: 2px;
+    margin: 0.6rem auto 0;
+  }
+
+  .recently-viewed-section__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--rv-columns, 4), 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .recently-viewed-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid rgba(20, 68, 45, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+  }
+
+  .recently-viewed-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(8, 32, 21, 0.12);
+  }
+
+  .recently-viewed-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #f7fbf8;
+  }
+
+  .recently-viewed-card__image-wrapper--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f2faf6, #e8f5ee);
+  }
+
+  .recently-viewed-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .recently-viewed-card:hover .recently-viewed-card__image {
+    transform: scale(1.05);
+  }
+
+  .recently-viewed-card__badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(20, 68, 45, 0.85);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    z-index: 1;
+  }
+
+  .recently-viewed-card__content {
+    padding: clamp(0.75rem, 1.5vw, 1.25rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .recently-viewed-card__title {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    font-weight: 600;
+    color: #1a3e2b;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.4;
+  }
+
+  .recently-viewed-card__price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+
+  .recently-viewed-card__price {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-weight: 700;
+    color: #0a4c2a;
+  }
+
+  .recently-viewed-card__compare-price {
+    font-size: 0.85rem;
+    color: rgba(23, 56, 38, 0.5);
+    text-decoration: line-through;
+  }
+
+  @media screen and (max-width: 989px) {
+    .recently-viewed-section__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .recently-viewed-section {
+      padding: clamp(1rem, 2.5vw, 2rem) 0;
+    }
+
+    .recently-viewed-section__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .recently-viewed-card {
+      border-radius: 16px;
+    }
+
+    .recently-viewed-card__content {
+      padding: 0.6rem;
+      gap: 0.35rem;
+    }
+
+    .recently-viewed-card__title {
+      font-size: 0.85rem;
+    }
+
+    .recently-viewed-card__price {
+      font-size: 0.9rem;
+    }
+
+    .recently-viewed-card__badge {
+      top: 0.5rem;
+      left: 0.5rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+    }
+  }
+
+  @media screen and (max-width: 389px) {
+    .recently-viewed-section__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .recently-viewed-section__heading {
+      font-size: 1.1rem;
     }
   }
 {% endstylesheet %}
