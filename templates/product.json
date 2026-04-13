@@ -227,6 +227,19 @@
     "main": {
       "type": "product-information",
       "blocks": {
+        "recently_viewed_D3Kqa3": {
+          "type": "recently-viewed",
+          "name": "Recently Viewed Products",
+          "settings": {
+            "heading": "Recently Viewed",
+            "empty_text": "No recently viewed products yet.",
+            "max_products": 4,
+            "columns": 4,
+            "padding-block-start": 20,
+            "padding-block-end": 20
+          },
+          "blocks": {}
+        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -510,6 +523,9 @@
           ]
         }
       },
+      "block_order": [
+        "recently_viewed_D3Kqa3"
+      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
