@@ -75,6 +75,19 @@
         "padding_bottom": 60
       }
     },
+    "business_inquiry_form_eKKpMt": {
+      "type": "business-inquiry-form",
+      "name": "Business Inquiry Form",
+      "settings": {
+        "background_gradient": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(249, 250, 251, 1) 100%)",
+        "title": "For Bulk Inquires",
+        "description": "Please fill out the form below, and one of our sales representatives will reach out to you shortly.",
+        "submit_text": "Submit",
+        "footer_text": "View our privacy policy and terms of service.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "section_rfKcEq": {
       "type": "section",
       "blocks": {
@@ -140,6 +153,7 @@
         "text_nADVBk",
         "contact_form_XqVqUE"
       ],
+      "disabled": true,
       "name": "t:names.contact_form",
       "settings": {
         "content_direction": "column",
@@ -173,6 +187,7 @@
   "order": [
     "main",
     "bulk_supply_text_6txkXK",
+    "business_inquiry_form_eKKpMt",
     "section_rfKcEq"
   ]
 }
