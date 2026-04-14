@@ -60,20 +60,22 @@
   endcapture
 
   capture header_cta_buttons
-    for block in section.blocks
-      if block.type == 'header_button'
-        assign btn_text = block.settings.button_text
-        assign btn_link = block.settings.button_link
-        assign btn_style = block.settings.button_style | default: 'primary'
-        assign btn_px = block.settings.button_padding_h | default: 20
-        assign btn_py = block.settings.button_padding_v | default: 10
-        assign btn_fs = block.settings.button_font_size | default: 13
-        assign btn_radius = block.settings.button_border_radius | default: 20
-        if btn_text != blank
-          echo '<a href="' | append: btn_link | append: '" class="header-cta-btn header-cta-btn--' | append: btn_style | append: '" style="--btn-px:' | append: btn_px | append: 'px;--btn-py:' | append: btn_py | append: 'px;--btn-fs:' | append: btn_fs | append: 'px;--btn-radius:' | append: btn_radius | append: 'px;--btn-bg:' | append: block.settings.button_bg_color | append: ';--btn-text:' | append: block.settings.button_text_color | append: ';--btn-border:' | append: block.settings.button_border_color | append: ';" ' | append: block.shopify_attributes | append: '>' | append: btn_text | append: '</a>'
-        endif
-      endif
-    endfor
+    if section.settings.enable_button_1 and section.settings.button_text_1 != blank
+      assign b1_style = section.settings.button_style_1 | default: 'primary'
+      assign b1_px = section.settings.button_padding_h_1 | default: 20
+      assign b1_py = section.settings.button_padding_v_1 | default: 10
+      assign b1_fs = section.settings.button_font_size_1 | default: 13
+      assign b1_radius = section.settings.button_border_radius_1 | default: 20
+      echo '<a href="' | append: section.settings.button_link_1 | append: '" class="header-cta-btn header-cta-btn--' | append: b1_style | append: '" style="--btn-px:' | append: b1_px | append: 'px;--btn-py:' | append: b1_py | append: 'px;--btn-fs:' | append: b1_fs | append: 'px;--btn-radius:' | append: b1_radius | append: 'px;--btn-bg:' | append: section.settings.button_bg_color_1 | append: ';--btn-text:' | append: section.settings.button_text_color_1 | append: ';--btn-border:' | append: section.settings.button_border_color_1 | append: ';">' | append: section.settings.button_text_1 | append: '</a>'
+    endif
+    if section.settings.enable_button_2 and section.settings.button_text_2 != blank
+      assign b2_style = section.settings.button_style_2 | default: 'secondary'
+      assign b2_px = section.settings.button_padding_h_2 | default: 20
+      assign b2_py = section.settings.button_padding_v_2 | default: 10
+      assign b2_fs = section.settings.button_font_size_2 | default: 13
+      assign b2_radius = section.settings.button_border_radius_2 | default: 20
+      echo '<a href="' | append: section.settings.button_link_2 | append: '" class="header-cta-btn header-cta-btn--' | append: b2_style | append: '" style="--btn-px:' | append: b2_px | append: 'px;--btn-py:' | append: b2_py | append: 'px;--btn-fs:' | append: b2_fs | append: 'px;--btn-radius:' | append: b2_radius | append: 'px;--btn-bg:' | append: section.settings.button_bg_color_2 | append: ';--btn-text:' | append: section.settings.button_text_color_2 | append: ';--btn-border:' | append: section.settings.button_border_color_2 | append: ';">' | append: section.settings.button_text_2 | append: '</a>'
+    endif
   endcapture
 
   capture actions
@@ -1257,108 +1259,168 @@
       ],
       "default": "default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
-    }
-  ],
-  "blocks": [
+    },
     {
-      "type": "header_button",
-      "name": "Header Button",
-      "limit": 2,
-      "settings": [
-        {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button Text",
-          "default": "Shop Now"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        },
-        {
-          "type": "select",
-          "id": "button_style",
-          "label": "Button Style",
-          "options": [
-            {
-              "value": "primary",
-              "label": "Primary (Filled)"
-            },
-            {
-              "value": "secondary",
-              "label": "Secondary (Outline)"
-            }
-          ],
-          "default": "primary"
-        },
-        {
-          "type": "header",
-          "content": "Padding & Size"
-        },
-        {
-          "type": "range",
-          "id": "button_padding_h",
-          "label": "Horizontal Padding",
-          "min": 8,
-          "max": 32,
-          "step": 2,
-          "unit": "px",
-          "default": 20
-        },
-        {
-          "type": "range",
-          "id": "button_padding_v",
-          "label": "Vertical Padding",
-          "min": 4,
-          "max": 20,
-          "step": 2,
-          "unit": "px",
-          "default": 10
-        },
-        {
-          "type": "range",
-          "id": "button_font_size",
-          "label": "Font Size",
-          "min": 10,
-          "max": 18,
-          "step": 1,
-          "unit": "px",
-          "default": 13
-        },
-        {
-          "type": "range",
-          "id": "button_border_radius",
-          "label": "Border Radius",
-          "min": 0,
-          "max": 30,
-          "step": 2,
-          "unit": "px",
-          "default": 20
-        },
-        {
-          "type": "header",
-          "content": "Colors"
-        },
-        {
-          "type": "color",
-          "id": "button_bg_color",
-          "label": "Button Background",
-          "default": "#247B9F"
-        },
-        {
-          "type": "color",
-          "id": "button_text_color",
-          "label": "Button Text Color",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "color",
-          "id": "button_border_color",
-          "label": "Button Border Color",
-          "default": "#247B9F"
-        }
-      ]
+      "type": "header",
+      "content": "Header Button 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_button_1",
+      "label": "Enable Button 1",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text_1",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style_1",
+      "label": "Button Style",
+      "options": [
+        { "value": "primary", "label": "Primary (Filled)" },
+        { "value": "secondary", "label": "Secondary (Outline)" }
+      ],
+      "default": "primary",
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_h_1",
+      "label": "Horizontal Padding",
+      "min": 8, "max": 32, "step": 2, "unit": "px", "default": 20,
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_v_1",
+      "label": "Vertical Padding",
+      "min": 4, "max": 20, "step": 2, "unit": "px", "default": 10,
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_1",
+      "label": "Font Size",
+      "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13,
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius_1",
+      "label": "Border Radius",
+      "min": 0, "max": 30, "step": 2, "unit": "px", "default": 20,
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_1",
+      "label": "Button Background",
+      "default": "#247B9F",
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_1",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_1",
+      "label": "Button Border Color",
+      "default": "#247B9F",
+      "visible_if": "{{ section.settings.enable_button_1 }}"
+    },
+    {
+      "type": "header",
+      "content": "Header Button 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_button_2",
+      "label": "Enable Button 2",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text_2",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style_2",
+      "label": "Button Style",
+      "options": [
+        { "value": "primary", "label": "Primary (Filled)" },
+        { "value": "secondary", "label": "Secondary (Outline)" }
+      ],
+      "default": "secondary",
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_h_2",
+      "label": "Horizontal Padding",
+      "min": 8, "max": 32, "step": 2, "unit": "px", "default": 20,
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_v_2",
+      "label": "Vertical Padding",
+      "min": 4, "max": 20, "step": 2, "unit": "px", "default": 10,
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_2",
+      "label": "Font Size",
+      "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13,
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius_2",
+      "label": "Border Radius",
+      "min": 0, "max": 30, "step": 2, "unit": "px", "default": 20,
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color_2",
+      "label": "Button Background",
+      "default": "#247B9F",
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color_2",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_button_2 }}"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color_2",
+      "label": "Button Border Color",
+      "default": "#247B9F",
+      "visible_if": "{{ section.settings.enable_button_2 }}"
     }
   ],
   "presets": []
