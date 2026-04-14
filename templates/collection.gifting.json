@@ -85,8 +85,9 @@
         "text_zxiJn7": {
           "type": "text",
           "name": "Description",
+          "disabled": true,
           "settings": {
-            "text": "<p></p><p></p><p></p><p></p><p></p><p></p><ul><li>Healthy Premium Hampers<br/><br/><br/><br/></li></ul>",
+            "text": "",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
