@@ -2080,7 +2080,7 @@
         "heading_color": "#14442d",
         "text_color": "#14442d",
         "accent_color": "#10a560",
-        "padding_top": 0,
+        "padding_top": 40,
         "padding_bottom": 80
       }
     },
