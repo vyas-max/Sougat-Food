@@ -59,8 +59,26 @@
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
 
+  capture header_cta_buttons
+    for block in section.blocks
+      if block.type == 'header_button'
+        assign btn_text = block.settings.button_text
+        assign btn_link = block.settings.button_link
+        assign btn_style = block.settings.button_style | default: 'primary'
+        assign btn_px = block.settings.button_padding_h | default: 20
+        assign btn_py = block.settings.button_padding_v | default: 10
+        assign btn_fs = block.settings.button_font_size | default: 13
+        assign btn_radius = block.settings.button_border_radius | default: 20
+        if btn_text != blank
+          echo '<a href="' | append: btn_link | append: '" class="header-cta-btn header-cta-btn--' | append: btn_style | append: '" style="--btn-px:' | append: btn_px | append: 'px;--btn-py:' | append: btn_py | append: 'px;--btn-fs:' | append: btn_fs | append: 'px;--btn-radius:' | append: btn_radius | append: 'px;--btn-bg:' | append: block.settings.button_bg_color | append: ';--btn-text:' | append: block.settings.button_text_color | append: ';--btn-border:' | append: block.settings.button_border_color | append: ';" ' | append: block.shopify_attributes | append: '>' | append: btn_text | append: '</a>'
+        endif
+      endif
+    endfor
+  endcapture
+
   capture actions
     render 'header-actions'
+    echo header_cta_buttons
   endcapture
 
   if shop.customer_accounts_enabled
@@ -743,6 +761,61 @@
   .header-menu .menu-list__submenu[data-active] {
     content-visibility: visible;
   }
+
+  .header-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--btn-py) var(--btn-px);
+    font-size: var(--btn-fs);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: var(--btn-radius);
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .header-cta-btn--primary {
+    background: var(--btn-bg, var(--color-button-primary));
+    color: var(--btn-text, var(--color-button-primary-text));
+    border: 2px solid var(--btn-border, var(--btn-bg, var(--color-button-primary)));
+  }
+
+  .header-cta-btn--primary:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  .header-cta-btn--secondary {
+    background: transparent;
+    color: var(--btn-text, var(--color-foreground));
+    border: 2px solid var(--btn-border, var(--color-foreground));
+  }
+
+  .header-cta-btn--secondary:hover {
+    background: var(--btn-bg, var(--color-foreground));
+    color: var(--btn-text, var(--color-background));
+  }
+
+  .header__column--right {
+    &:has(.header-cta-btn) {
+      gap: var(--gap-sm);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .header-cta-btn {
+      --btn-px: 12px;
+      --btn-py: 6px;
+      --btn-fs: 11px;
+      --btn-radius: 16px;
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1184,6 +1257,108 @@
       ],
       "default": "default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header_button",
+      "name": "Header Button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary (Filled)"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary (Outline)"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "header",
+          "content": "Padding & Size"
+        },
+        {
+          "type": "range",
+          "id": "button_padding_h",
+          "label": "Horizontal Padding",
+          "min": 8,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "button_padding_v",
+          "label": "Vertical Padding",
+          "min": 4,
+          "max": 20,
+          "step": 2,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "button_font_size",
+          "label": "Font Size",
+          "min": 10,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "button_border_radius",
+          "label": "Border Radius",
+          "min": 0,
+          "max": 30,
+          "step": 2,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background",
+          "default": "#247B9F"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Button Border Color",
+          "default": "#247B9F"
+        }
+      ]
     }
   ],
   "presets": []
