@@ -169,7 +169,7 @@
             "title": "Freeze Dried Fruits",
             "description": "PURE FOOD PERFECT CRUNCH",
             "button_text": "Explore Now",
-            "button_link": ""
+            "button_link": "shopify://collections/freeze-dried-fruits"
           }
         },
         "slide_Vr4wE8": {
@@ -179,7 +179,7 @@
             "title": "Kid's FaVORITE sNACKS",
             "description": "Made for little snackers.",
             "button_text": "EXPLORE NOW",
-            "button_link": ""
+            "button_link": "shopify://collections/kids-favorite-snacks"
           }
         },
         "slide_TWfDxw": {
@@ -189,7 +189,7 @@
             "title": "FREEZE DRIEND VEGETABLES",
             "description": "PURE FOOD PERFECT CRUNCH",
             "button_text": "EXPLORE NOW",
-            "button_link": ""
+            "button_link": "shopify://collections/freeze-dried-vegetables"
           }
         },
         "slide_6GaepD": {
@@ -199,7 +199,7 @@
             "title": "TRAVEL FRINDLY SNACKS",
             "description": "Discover our Collection",
             "button_text": "EXPLORE NOW",
-            "button_link": ""
+            "button_link": "shopify://collections/travel-friendly-snacks"
           }
         }
       },
