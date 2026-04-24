@@ -166,7 +166,7 @@
         "slide_kLfMiD": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_vz240uvz240uvz24.png",
+            "image": "shopify://shop_images/vegetables_Collection.jpg",
             "title": "Freeze Dried Fruits",
             "description": "PURE FOOD PERFECT CRUNCH",
             "button_text": "Explore Now",
@@ -176,7 +176,7 @@
         "slide_Vr4wE8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_nwqxd6nwqxd6nwqx.png",
+            "image": "shopify://shop_images/4.jpg",
             "title": "Kid's FaVORITE sNACKS",
             "description": "Made for little snackers.",
             "button_text": "EXPLORE NOW",
@@ -186,7 +186,7 @@
         "slide_TWfDxw": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_xg25epxg25epxg25.png",
+            "image": "shopify://shop_images/Fruits_Collection.jpg",
             "title": "FREEZE DRIEND VEGETABLES",
             "description": "PURE FOOD PERFECT CRUNCH",
             "button_text": "EXPLORE NOW",
@@ -196,7 +196,7 @@
         "slide_6GaepD": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_u7a2ofu7a2ofu7a2.png",
+            "image": "shopify://shop_images/2.jpg",
             "title": "TRAVEL FRINDLY SNACKS",
             "description": "Discover our Collection",
             "button_text": "EXPLORE NOW",
@@ -542,7 +542,7 @@
             "color_scheme": "scheme-5",
             "background_media": "image",
             "video_position": "cover",
-            "background_image": "shopify://shop_images/Gemini_Generated_Image_fujsaqfujsaqfujs.png",
+            "background_image": "shopify://shop_images/3.jpg",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
@@ -793,7 +793,7 @@
       ],
       "name": "Benefits highlight",
       "settings": {
-        "image": "shopify://shop_images/Gemini_Generated_Image_la2lykla2lykla2l.png",
+        "image": "shopify://shop_images/5.jpg",
         "heading": "Goodness you can trust, in every bite, for you and the ones you care about.",
         "button_link": "",
         "button_label": "Shop now",
@@ -909,7 +909,7 @@
         "card_VPBhEJ": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_cowttjcowttjcowt.png",
+            "image": "shopify://shop_images/6.jpg",
             "subtitle": "No Preservatives",
             "title": "Just Fruit. Nothing Else.",
             "background_color": "#fff8f0"
@@ -936,7 +936,7 @@
         "card_QarAYh": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_ukjq9fukjq9fukjq.png",
+            "image": "shopify://shop_images/7.jpg",
             "subtitle": "For Everyone",
             "title": "Snack anytime, anywhere.",
             "background_color": "#e3f2d4"
