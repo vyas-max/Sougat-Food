@@ -86,7 +86,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/new_photo.png",
+        "image_1": "shopify://shop_images/Nation_since_1962._Reliable._Quality_Products..jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
@@ -918,7 +918,7 @@
         "card_CMREN7": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_ahj2ubahj2ubahj2.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_25_2026_04_22_46_PM.png",
             "subtitle": "Cleanly Made",
             "title": "Gently Freeze-Dried for Freshness.",
             "background_color": "#fde4ca"
