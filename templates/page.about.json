@@ -103,7 +103,7 @@
         "bg_color": "#f9f7f2",
         "color_scheme": "scheme-3",
         "padding-block-start": 40,
-        "padding-block-end": 8
+        "padding-block-end": 0
       }
     },
     "our_expertise_cQm4Ni": {
@@ -163,7 +163,7 @@
         "bg_color": "#fff8f0",
         "accent_color": "#38aa3d",
         "footer_bg_color": "#003d2b",
-        "padding_top": 40,
+        "padding_top": 0,
         "max_width": 1300
       }
     },
