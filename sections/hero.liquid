@@ -695,15 +695,18 @@
   .hero__media-wrapper--slider > * {
     position: absolute;
     inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
-    visibility: hidden;
+    transition: transform 0.8s ease-in-out;
+    transform: translateX(100%);
   }
 
   .hero__media-wrapper--slider > .is-active {
-    opacity: 1;
-    visibility: visible;
+    transform: translateX(0);
     z-index: 2;
+  }
+
+  .hero__media-wrapper--slider > .was-active {
+    transform: translateX(-100%);
+    z-index: 1;
   }
 
   .hero__content-wrapper--design-mode * {
@@ -1568,8 +1571,20 @@
       const intervalTime = {{ section.settings.autoplay_speed | default: 5 }} * 1000;
 
       setInterval(() => {
-        slides[currentIndex].classList.remove('is-active');
+        const prevIndex = currentIndex;
         currentIndex = (currentIndex + 1) % slides.length;
+
+        // BEST PRACTICE: Reset the incoming slide to the right instantly before the transition starts
+        const incomingSlide = slides[currentIndex];
+        incomingSlide.style.transition = 'none';
+        incomingSlide.style.transform = 'translateX(100%)';
+        incomingSlide.offsetHeight; // Force reflow
+        incomingSlide.style.transition = '';
+        incomingSlide.style.transform = ''; // CLEAR inline style so CSS class can take over
+
+        // Execute the slide animation
+        slides.forEach(slide => slide.classList.remove('is-active', 'was-active'));
+        slides[prevIndex].classList.add('was-active');
         slides[currentIndex].classList.add('is-active');
       }, intervalTime);
     }
