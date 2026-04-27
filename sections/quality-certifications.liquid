@@ -124,11 +124,11 @@
   }
 
   .quality-certs-{{ section.id }} .badge-text {
-    font-size: 0.85rem;
+    font-size: 2.85rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: {{ accent_color }};
+    color: white;
     background: {{ accent_color | color_modify: 'alpha', 0.1 }};
     padding: 0.6rem 1.25rem;
     border-radius: 50px;
@@ -464,9 +464,7 @@
         </div>
         <span class="badge-text">Certified Quality</span>
       </div>
-      {%- if section.settings.title != blank -%}
-        <h2 class="main-title">{{ section.settings.title }}</h2>
-      {%- endif -%}
+     
       {%- if section.settings.subheading != blank -%}
         <p class="subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
