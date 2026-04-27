@@ -5,201 +5,130 @@
 -%}
 
 {%- style -%}
-  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
-
   .achievements-msg-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
     background-color: {{ bg_color }};
-    position: relative;
-    overflow: hidden;
   }
-
-  /* 4-Corner Swirl Decorations */
-  .achievements-msg-{{ section.id }} .swirl {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 90 Q 30 70 10 50 Q 50 50 70 30 Q 50 10 90 10' fill='none' stroke='%23C5A47E' stroke-width='1'/%3E%3Ccircle cx='90' cy='10' r='2' fill='%23C5A47E'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.35;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .achievements-msg-{{ section.id }} .swirl-tl { top: 0; left: 0; transform: rotate(0deg); }
-  .achievements-msg-{{ section.id }} .swirl-tr { top: 0; right: 0; transform: rotate(90deg); }
-  .achievements-msg-{{ section.id }} .swirl-bl { bottom: 0; left: 0; transform: rotate(-90deg); }
-  .achievements-msg-{{ section.id }} .swirl-br { bottom: 0; right: 0; transform: rotate(180deg); }
 
   .achievements-msg-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    position: relative;
-    z-index: 2;
   }
 
-  /* ── Achievements ── */
   .achievements-msg-{{ section.id }} .achievements-wrap {
     text-align: center;
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
   }
 
   .achievements-msg-{{ section.id }} .main-title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     color: {{ heading_color }};
-    font-family: serif;
-    font-weight: 500;
-    margin-bottom: 3.5rem;
-    letter-spacing: 0.02em;
+    margin: 0 0 2rem;
+    font-weight: 700;
   }
 
   .achievements-msg-{{ section.id }} .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 768px) {
     .achievements-msg-{{ section.id }} .stats-grid {
       grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
+      gap: 1.5rem;
     }
   }
 
   .achievements-msg-{{ section.id }} .stat-card {
     background: #fff;
-    padding: 3rem 1.5rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
-    box-shadow: 0 12px 35px rgba(0,0,0,0.06);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    transition: all 0.3s ease;
-  }
-
-  .achievements-msg-{{ section.id }} .stat-card:hover {
-    transform: translateY(-8px);
-    border-color: {{ accent_color }};
-  }
-
-  .achievements-msg-{{ section.id }} .stat-icon {
-    width: 64px;
-    height: 64px;
-    color: {{ heading_color }};
-    margin-bottom: 0.5rem;
-  }
-
-  .achievements-msg-{{ section.id }} .stat-icon svg {
-    width: 100%;
-    height: auto;
+    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
+    text-align: center;
   }
 
   .achievements-msg-{{ section.id }} .stat-number {
-    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
     color: {{ accent_color }};
+    margin: 0 0 0.5rem;
     line-height: 1;
-    margin: 0;
   }
 
   .achievements-msg-{{ section.id }} .stat-label {
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: {{ heading_color }};
     margin: 0;
   }
 
-  /* ── Messages ── */
   .achievements-msg-{{ section.id }} .messages-wrap {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2rem;
   }
 
   .achievements-msg-{{ section.id }} .message-box {
     background: #fff;
-    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
+    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
     border-radius: 8px;
-    padding: clamp(2.5rem, 6vw, 4.5rem) 2rem;
+    padding: 2rem;
     text-align: center;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
-  .achievements-msg-{{ section.id }} .message-box::before {
-    content: '“';
-    position: absolute;
-    top: -20px;
-    left: 40px;
-    font-size: 11rem;
-    font-family: serif;
-    color: {{ accent_color }};
-    opacity: 0.5;
-    line-height: 1;
-  }
-
   .achievements-msg-{{ section.id }} .message-title {
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: 1.25rem;
     color: {{ heading_color }};
-    font-family: serif;
-    font-weight: 600;
-    margin-bottom: 2.5rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
   }
 
   .achievements-msg-{{ section.id }} .message-text {
-    font-size: clamp(1rem, 1.6vw, 1.25rem);
-    line-height: 1.8;
-    color: #333;
-    margin-bottom: 3rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #444;
+    margin: 0 0 1.5rem;
+  }
+
+  .achievements-msg-{{ section.id }} .message-text p {
+    margin: 0 0 1rem;
+  }
+
+  .achievements-msg-{{ section.id }} .message-text p:last-child {
+    margin-bottom: 0;
   }
 
   .achievements-msg-{{ section.id }} .signature-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    border-top: 1px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
+    padding-top: 1rem;
   }
 
   .achievements-msg-{{ section.id }} .signature-name {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: {{ accent_color }};
-    border-bottom: 1px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+    margin: 0 0 0.25rem;
   }
 
   .achievements-msg-{{ section.id }} .signature-title {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
     color: {{ heading_color }};
+    margin: 0;
   }
 
   @media screen and (max-width: 767px) {
-    .achievements-msg-{{ section.id }} .message-box::before {
-      left: 15px;
-      font-size: 8rem;
-      top: -10px;
+    .achievements-msg-{{ section.id }} .message-box {
+      padding: 1.5rem;
     }
   }
 {%- endstyle -%}
 
 <section class="achievements-msg-{{ section.id }}">
-  <div class="swirl swirl-tl"></div>
-  <div class="swirl swirl-tr"></div>
-  <div class="swirl swirl-bl"></div>
-  <div class="swirl swirl-br"></div>
-
   <div class="container">
     <div class="achievements-wrap">
       <h2 class="main-title">{{ section.settings.achievements_title }}</h2>
@@ -207,22 +136,6 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'stat' -%}
             <div class="stat-card" {{ block.shopify_attributes }}>
-              <div class="stat-icon">
-                {%- if block.settings.icon_svg != blank -%}
-                  {{ block.settings.icon_svg }}
-                {%- else -%}
-                  {%- case forloop.index -%}
-                    {%- when 1 -%}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    {%- when 2 -%}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    {%- when 3 -%}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20M7 22V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v17M14 7h2M14 11h2M14 15h2"></path></svg>
-                    {%- else -%}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                  {%- endcase -%}
-                {%- endif -%}
-              </div>
               <h3 class="stat-number">{{ block.settings.number }}{{ block.settings.suffix }}</h3>
               <p class="stat-label">{{ block.settings.label }}</p>
             </div>
@@ -237,22 +150,19 @@
           <h2 class="message-title">{{ section.settings.chairman_title }}</h2>
           <div class="message-text">{{ section.settings.chairman_message }}</div>
           <div class="signature-wrap">
-            <span class="signature-name">Sougat Foods</span>
-            <span class="signature-title">Chairman Name, Sougat Foods</span>
+            <p class="signature-name">{{ section.settings.chairman_name }}</p>
+            <p class="signature-title">{{ section.settings.chairman_designation }}</p>
           </div>
         </div>
       {%- endif -%}
 
-      {%- if section.settings.director_message_1 != blank -%}
+      {%- if section.settings.director_message != blank -%}
         <div class="message-box">
           <h2 class="message-title">{{ section.settings.director_title }}</h2>
-          <div class="message-text">
-            {{ section.settings.director_message_1 }}
-            {% if section.settings.director_message_2 != blank %}<br><br>{{ section.settings.director_message_2 }}{% endif %}
-          </div>
+          <div class="message-text">{{ section.settings.director_message }}</div>
           <div class="signature-wrap">
-            <span class="signature-name">Duj Hame</span>
-            <span class="signature-title">Director Fullname Name</span>
+            <p class="signature-name">{{ section.settings.director_name }}</p>
+            <p class="signature-title">{{ section.settings.director_designation }}</p>
           </div>
         </div>
       {%- endif -%}
@@ -270,7 +180,7 @@
       "type": "text",
       "id": "achievements_title",
       "label": "Achievements Title",
-      "default": "Achievements"
+      "default": "Our Achievements"
     },
     {
       "type": "header",
@@ -283,10 +193,22 @@
       "default": "Chairman's Message"
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "chairman_message",
       "label": "Chairman Message",
-      "default": "Our journey since 1962 has been guided by integrity..."
+      "default": "<p>Our journey since 1962 has been guided by integrity, quality, and a deep commitment to our customers. We believe in building lasting relationships through trust and excellence.</p>"
+    },
+    {
+      "type": "text",
+      "id": "chairman_name",
+      "label": "Chairman Name",
+      "default": "John Doe"
+    },
+    {
+      "type": "text",
+      "id": "chairman_designation",
+      "label": "Chairman Designation",
+      "default": "Chairman, Sougat Foods"
     },
     {
       "type": "header",
@@ -299,15 +221,32 @@
       "default": "Director's Message"
     },
     {
-      "type": "textarea",
-      "id": "director_message_1",
-      "label": "Director Message Para 1",
-      "default": "At Sougat Foods, our commitment goes beyond business..."
+      "type": "richtext",
+      "id": "director_message",
+      "label": "Director Message",
+      "default": "<p>At Sougat Foods, our commitment goes beyond business. We are dedicated to providing the highest quality products while maintaining sustainable practices.</p>"
     },
     {
-      "type": "textarea",
-      "id": "director_message_2",
-      "label": "Director Message Para 2"
+      "type": "text",
+      "id": "director_name",
+      "label": "Director Name",
+      "default": "Jane Doe"
+    },
+    {
+      "type": "text",
+      "id": "director_designation",
+      "label": "Director Designation",
+      "default": "Director, Sougat Foods"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1200
     },
     {
       "type": "header",
@@ -322,14 +261,18 @@
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading Color (Dark Green)",
-      "default": "#003D2B"
+      "label": "Heading Color",
+      "default": "#14442D"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent Color (Gold)",
-      "default": "#C5A47E"
+      "label": "Accent Color",
+      "default": "#10A560"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
@@ -339,7 +282,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 100
+      "default": 60
     },
     {
       "type": "range",
@@ -349,13 +292,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 100
-    },
-    {
-      "type": "number",
-      "id": "max_width",
-      "label": "Section Max Width (px)",
-      "default": 1200
+      "default": 60
     }
   ],
   "blocks": [
@@ -365,20 +302,15 @@
       "limit": 4,
       "settings": [
         {
-          "type": "html",
-          "id": "icon_svg",
-          "label": "Icon SVG"
-        },
-        {
           "type": "text",
           "id": "number",
-          "label": "Number (e.g. 25)",
+          "label": "Number",
           "default": "25"
         },
         {
           "type": "text",
           "id": "suffix",
-          "label": "Suffix (e.g. K, +, Ton)",
+          "label": "Suffix (e.g. K, +)",
           "default": "K"
         },
         {
@@ -395,7 +327,7 @@
       "name": "Achievements & Message",
       "blocks": [
         { "type": "stat", "settings": { "number": "25", "suffix": "K", "label": "Happy Clients" } },
-        { "type": "stat", "settings": { "number": "15", "suffix": "+", "label": "Export Country" } },
+        { "type": "stat", "settings": { "number": "15", "suffix": "+", "label": "Export Countries" } },
         { "type": "stat", "settings": { "number": "5", "suffix": " Ton", "label": "Manufacturing" } },
         { "type": "stat", "settings": { "number": "50", "suffix": "+", "label": "Products" } }
       ]
