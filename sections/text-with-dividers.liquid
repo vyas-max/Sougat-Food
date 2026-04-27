@@ -3,7 +3,6 @@
   assign heading_color = section.settings.heading_color
   assign accent_color = section.settings.accent_color
   assign section_bg = section.settings.bg_color
-  assign divider_color = section.settings.divider_color
 -%}
 
 {%- style -%}
@@ -12,329 +11,187 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
     background: {{ section_bg }};
     position: relative;
-    overflow: hidden;
-    font-display: swap;
-  }
-
-  @keyframes slowFloat {
-    0%, 100% { transform: translate(0, 0) scale(1.0); }
-    33% { transform: translate(30px, -40px) scale(1.05); }
-    66% { transform: translate(-30px, 40px) scale(0.95); }
-  }
-
-  @keyframes slowFloatAlt {
-    0%, 100% { transform: translate(0, 0) scale(1.0); }
-    33% { transform: translate(-40px, 30px) scale(0.95); }
-    66% { transform: translate(40px, -30px) scale(1.05); }
-  }
-
-  .text-dividers-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    top: -15%;
-    left: -10%;
-    width: 60%;
-    height: 70%;
-    background: radial-gradient(ellipse at center, {{ accent_color | color_modify: 'alpha', 0.05 }} 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-    animation: slowFloat 20s ease-in-out infinite;
-  }
-  
-  .text-dividers-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    bottom: -15%;
-    right: -10%;
-    width: 50%;
-    height: 60%;
-    background: radial-gradient(ellipse at center, {{ heading_color | color_modify: 'alpha', 0.04 }} 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-    animation: slowFloatAlt 25s ease-in-out infinite;
   }
 
   .text-dividers-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
   }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeInLeft {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scaleX(0); }
-    to { opacity: 1; transform: scaleX(1); }
-  }
-  @keyframes slideInIcon {
-    from { opacity: 0; transform: translateX(-15px) rotate(-10deg); }
-    to { opacity: 1; transform: translateX(0) rotate(0deg); }
+  /* ── Decorative Dividers ── */
+  .text-dividers-{{ section.id }} .top-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
 
-  .text-dividers-{{ section.id }} .anim-fade {
-    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-  .text-dividers-{{ section.id }} .anim-block {
-    opacity: 0;
-    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .text-dividers-{{ section.id }} .anim-icon {
-    animation: slideInIcon 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-  .text-dividers-{{ section.id }} .anim-divider {
-    animation: scaleIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    transform-origin: left;
-    opacity: 0;
+  .text-dividers-{{ section.id }} .divider-line {
+    height: 1px;
+    flex-grow: 1;
+    background: linear-gradient(90deg, transparent, {{ accent_color }}, transparent);
+    max-width: 300px;
   }
 
-  .text-dividers-{{ section.id }} .section-header {
-    text-align: center;
-    margin-bottom: clamp(4rem, 8vw, 7rem);
-    position: relative;
+  .text-dividers-{{ section.id }} .divider-diamond {
+    width: 12px;
+    height: 12px;
+    background: {{ accent_color }};
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px {{ accent_color | color_modify: 'alpha', 0.5 }};
   }
 
-  .text-dividers-{{ section.id }} .section-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: {{ heading_color }};
-    margin: 0;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    position: relative;
-    display: inline-block;
-    background: linear-gradient(135deg, {{ heading_color }} 0%, {{ accent_color | color_darken: 15 }} 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .text-dividers-{{ section.id }} .swirl-divider {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+    color: {{ accent_color }};
+    opacity: 0.8;
   }
 
-  .text-dividers-{{ section.id }} .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
-    border-radius: 4px;
-    box-shadow: 0 4px 15px {{ accent_color | color_modify: 'alpha', 0.4 }};
+  .text-dividers-{{ section.id }} .swirl-divider svg {
+    width: 100px;
+    height: auto;
   }
 
-  .text-dividers-{{ section.id }} .blocks-wrap {
+  /* ── Content Cards ── */
+  .text-dividers-{{ section.id }} .blocks-grid {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  .text-dividers-{{ section.id }} .text-block {
-    padding: clamp(2.5rem, 5vw, 3.5rem) 2rem;
-    margin: 0 -2rem;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border-radius: 28px;
-    position: relative;
-    border: 1px solid transparent;
-  }
-
-  .text-dividers-{{ section.id }} .text-block:hover {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 
-      0 30px 60px rgba(0, 0, 0, 0.04),
-      0 1px 3px rgba(0, 0, 0, 0.02),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    transform: translateY(-4px);
-  }
-
-  .text-dividers-{{ section.id }} .text-block:hover .block-title {
-    color: {{ heading_color }};
-    text-shadow: 0 2px 10px rgba(0,0,0,0.02);
-  }
-
-  .text-dividers-{{ section.id }} .text-block:hover .block-icon {
-    transform: translateX(6px) scale(1.05);
-    box-shadow: 0 12px 24px {{ accent_color | color_modify: 'alpha', 0.25 }};
-    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_darken: 10 }} 100%);
-  }
-
-  .text-dividers-{{ section.id }} .text-block:hover .block-icon svg {
-    color: #fff;
-    transform: translateX(2px);
-  }
-
-  .text-dividers-{{ section.id }} .block-header {
+  .text-dividers-{{ section.id }} .content-card {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: 12px;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+    position: relative;
   }
 
-  .text-dividers-{{ section.id }} .block-icon {
-    width: 52px;
-    height: 52px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.02 }} 100%);
-    border-radius: 16px;
+  .text-dividers-{{ section.id }} .content-card:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Card Variants */
+  .text-dividers-{{ section.id }} .card-light {
+    background: #fff;
+    color: #333;
+  }
+
+  .text-dividers-{{ section.id }} .card-dark {
+    background: {{ heading_color }};
+    color: #fff;
+  }
+
+  .text-dividers-{{ section.id }} .card-dark .card-title {
+    color: {{ accent_color }};
+  }
+
+  .text-dividers-{{ section.id }} .card-dark .card-text {
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* Icons */
+  .text-dividers-{{ section.id }} .card-icon-wrap {
+    flex-shrink: 0;
+    width: clamp(80px, 12vw, 120px);
+    height: clamp(80px, 12vw, 120px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, {{ accent_color }} 0%, {{ accent_color | color_darken: 15 }} 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    box-shadow: 0 4px 12px {{ accent_color | color_modify: 'alpha', 0.05 }}, inset 0 1px 0 rgba(255,255,255,0.8);
-    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    border: 2px solid rgba(255,255,255,0.2);
   }
 
-  .text-dividers-{{ section.id }} .block-icon svg {
+  .text-dividers-{{ section.id }} .card-icon-wrap svg {
+    width: 50%;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+
+  .text-dividers-{{ section.id }} .card-info {
+    flex-grow: 1;
+  }
+
+  .text-dividers-{{ section.id }} .card-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-family: serif;
+    font-weight: 500;
+    margin: 0 0 1rem;
     color: {{ accent_color }};
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .text-dividers-{{ section.id }} .block-title {
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    color: {{ heading_color }};
+  .text-dividers-{{ section.id }} .card-text {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.6;
     margin: 0;
-    font-weight: 850;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    transition: all 0.4s ease;
-  }
-
-  .text-dividers-{{ section.id }} .block-content {
-    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-    color: {{ text_color }};
-    line-height: 1.85;
-    margin: 0;
-    font-weight: 400;
-    opacity: 0.88;
-    max-width: 900px;
-    padding-left: calc(52px + 1.5rem);
-  }
-
-  .text-dividers-{{ section.id }} .block-content p {
-    margin-bottom: 1.5rem;
-  }
-  .text-dividers-{{ section.id }} .block-content p:last-child {
-    margin-bottom: 0;
-  }
-
-  .text-dividers-{{ section.id }} .divider {
-    height: 2px;
-    width: 100%;
-    background: linear-gradient(90deg, transparent, {{ divider_color | color_modify: 'alpha', 0.4 }} 5%, {{ divider_color | color_modify: 'alpha', 0.1 }} 80%, transparent);
-    margin-top: clamp(3rem, 5vw, 4.5rem);
-    position: relative;
-  }
-
-  /* Glowing dot on the divider */
-  .text-dividers-{{ section.id }} .divider::after {
-    content: '';
-    position: absolute;
-    left: calc(52px + 1.5rem); /* Align with text */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: {{ accent_color }};
-    box-shadow: 0 0 12px {{ accent_color | color_modify: 'alpha', 0.8 }}, inset 0 1px 2px rgba(255,255,255,0.8);
-  }
-
-  .text-dividers-{{ section.id }} .divider::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -1px;
-    width: calc(52px + 1.5rem);
-    height: 4px;
-    background: linear-gradient(90deg, {{ accent_color | color_modify: 'alpha', 0.8 }}, {{ accent_color | color_lighten: 15 }});
-    border-radius: 2px;
-    transform: translateY(-50%);
-    box-shadow: 0 2px 10px {{ accent_color | color_modify: 'alpha', 0.3 }};
-  }
-
-  .text-dividers-{{ section.id }} .text-block.no-divider .divider {
-    display: none;
   }
 
   @media screen and (max-width: 767px) {
-    .text-dividers-{{ section.id }} .container {
-      padding: 0 1.25rem;
+    .text-dividers-{{ section.id }} .content-card {
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem 1.5rem;
     }
-    .text-dividers-{{ section.id }} .text-block {
-      padding: 2rem 1.25rem;
-      margin: 0 -1.25rem;
-      border-radius: 20px;
-    }
-    .text-dividers-{{ section.id }} .block-content {
-      padding-left: 0;
-      margin-top: 1.25rem;
-    }
-    .text-dividers-{{ section.id }} .block-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-    }
-    .text-dividers-{{ section.id }} .divider::after {
-      left: 10px;
-    }
-    .text-dividers-{{ section.id }} .divider::before {
-      width: 30px;
+    .text-dividers-{{ section.id }} .card-icon-wrap {
+      margin-bottom: 1rem;
     }
   }
 {%- endstyle -%}
 
-<section class="text-dividers-{{ section.id }}" id="TextDividers-{{ section.id }}">
+<section class="text-dividers-{{ section.id }}">
   <div class="container">
     
-    {%- if section.settings.title != blank -%}
-      <div class="section-header anim-fade">
-        <h2 class="section-title">{{ section.settings.title }}</h2>
-      </div>
-    {%- endif -%}
+    <div class="top-divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
 
-    <div class="blocks-wrap">
+    <div class="blocks-grid">
       {%- for block in section.blocks -%}
-        {%- assign delay_factor = forloop.index | times: 0.15 -%}
-        <div class="text-block anim-block {% if block.settings.show_divider == false %}no-divider{% endif %}" style="animation-delay: {{ delay_factor }}s;" {{ block.shopify_attributes }}>
-          
-          {%- if block.settings.title != blank -%}
-            <div class="block-header">
-              {%- if block.settings.show_icon -%}
-                <div class="block-icon anim-icon" style="animation-delay: {{ delay_factor | plus: 0.1 }}s;">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </div>
-              {%- endif -%}
-              <h3 class="block-title">{{ block.settings.title }}</h3>
-            </div>
-          {%- endif -%}
-          
-          {%- if block.settings.text != blank -%}
-            <div class="block-content">
-              {{ block.settings.text }}
-            </div>
-          {%- endif -%}
+        {%- if forloop.index > 1 -%}
+          <div class="swirl-divider">
+            <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 10C20 10 30 0 50 0C70 0 80 10 100 10C80 10 70 20 50 20C30 20 20 10 0 10Z" fill="currentColor" fill-opacity="0.3"/>
+              <circle cx="50" cy="10" r="2" fill="currentColor"/>
+            </svg>
+          </div>
+        {%- endif -%}
 
-          {%- if block.settings.show_divider -%}
-            <div class="divider anim-divider" style="animation-delay: {{ delay_factor | plus: 0.3 }}s;"></div>
-          {%- endif -%}
-
+        <div class="content-card card-{{ block.settings.style_mode }}" {{ block.shopify_attributes }}>
+          <div class="card-icon-wrap">
+            {%- if block.settings.icon_svg != blank -%}
+              {{ block.settings.icon_svg }}
+            {%- else -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2v20M2 12h20"></path>
+              </svg>
+            {%- endif -%}
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">{{ block.settings.title }}</h3>
+            <div class="card-text">{{ block.settings.text }}</div>
+          </div>
         </div>
       {%- endfor -%}
+    </div>
+
+    <div class="top-divider" style="margin-top: 4rem; margin-bottom: 0;">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
     </div>
 
   </div>
@@ -348,56 +205,25 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section Content"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Optional Section Heading"
-    },
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "number",
-      "id": "max_width",
-      "label": "Section Max Width (px)",
-      "default": 1300
-    },
-    {
-      "type": "header",
       "content": "Colors"
     },
     {
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#F8FBFA"
+      "default": "#F9F8F3"
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading Color",
-      "default": "#14442D"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#14442D"
+      "label": "Dark Style Background",
+      "default": "#003D2B"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent / Icon Color",
-      "default": "#B3B3B3"
-    },
-    {
-      "type": "color",
-      "id": "divider_color",
-      "label": "Divider Line Color",
-      "default": "#D1D5DB"
+      "label": "Accent Color (Gold)",
+      "default": "#C5A47E"
     },
     {
       "type": "header",
@@ -411,7 +237,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 80
+      "default": 100
     },
     {
       "type": "range",
@@ -421,37 +247,46 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 80
+      "default": 100
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1100
     }
   ],
   "blocks": [
     {
       "type": "text_block",
-      "name": "Text Block",
+      "name": "Vision/Mission Block",
       "settings": [
         {
-          "type": "checkbox",
-          "id": "show_icon",
-          "label": "Show Arrow Icon",
-          "default": true
+          "type": "select",
+          "id": "style_mode",
+          "label": "Card Style",
+          "default": "light",
+          "options": [
+            { "value": "light", "label": "Light (White)" },
+            { "value": "dark", "label": "Dark (Deep Green)" }
+          ]
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG Code"
         },
         {
           "type": "text",
           "id": "title",
-          "label": "Heading",
-          "default": "Content Heading"
+          "label": "Title",
+          "default": "Our Vision"
         },
         {
-          "type": "richtext",
+          "type": "textarea",
           "id": "text",
-          "label": "Description text",
-          "default": "<p>Add your detailed description here. This block is perfect for conveying long-form information elegantly.</p>"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_divider",
-          "label": "Show Line Below Block",
-          "default": true
+          "label": "Description",
+          "default": "To become a trusted global food brand..."
         }
       ]
     }
@@ -460,24 +295,9 @@
     {
       "name": "Text with Dividers",
       "blocks": [
-        {
-          "type": "text_block",
-          "settings": {
-            "title": "Global Presence",
-            "show_icon": true,
-            "text": "<p>With a strong export network, we cater to clients across multiple international markets. Our focus is on building long-term partnerships by offering reliability, competitive pricing, and premium quality products.</p>",
-            "show_divider": true
-          }
-        },
-        {
-          "type": "text_block",
-          "settings": {
-            "title": "Our Vision",
-            "show_icon": false,
-            "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>",
-            "show_divider": true
-          }
-        }
+        { "type": "text_block", "settings": { "title": "Global Presence", "style_mode": "light" } },
+        { "type": "text_block", "settings": { "title": "Our Vision", "style_mode": "dark" } },
+        { "type": "text_block", "settings": { "title": "Our Mission", "style_mode": "light" } }
       ]
     }
   ]

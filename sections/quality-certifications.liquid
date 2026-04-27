@@ -2,186 +2,71 @@
   assign text_color = section.settings.text_color
   assign heading_color = section.settings.heading_color
   assign accent_color = section.settings.accent_color
-  assign card_bg = section.settings.card_bg
   assign section_bg = section.settings.bg_color
+  assign footer_bg = section.settings.footer_bg_color
 -%}
 
 {%- style -%}
   .quality-certs-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    background: {{ section_bg }};
-    overflow: hidden;
+    background-color: {{ section_bg }};
     position: relative;
-    font-display: swap;
-  }
-
-  .quality-certs-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    right: -15%;
-    width: 70%;
-    height: 70%;
-    background: radial-gradient(ellipse, {{ accent_color | color_modify: 'alpha', 0.05 }} 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .quality-certs-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    left: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(ellipse, {{ heading_color | color_modify: 'alpha', 0.03 }} 0%, transparent 50%);
-    filter: blur(60px);
-    pointer-events: none;
-    z-index: 0;
   }
 
   .quality-certs-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
   }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  .quality-certs-{{ section.id }} .anim-header {
-    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-  .quality-certs-{{ section.id }} .anim-card {
-    animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-  .quality-certs-{{ section.id }} .anim-footer {
-    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-    animation-delay: 0.5s;
-  }
-  .quality-certs-{{ section.id }} .d-1 { animation-delay: 0.1s; }
-  .quality-certs-{{ section.id }} .d-2 { animation-delay: 0.15s; }
-  .quality-certs-{{ section.id }} .d-3 { animation-delay: 0.2s; }
-  .quality-certs-{{ section.id }} .d-4 { animation-delay: 0.25s; }
-  .quality-certs-{{ section.id }} .d-5 { animation-delay: 0.3s; }
-  .quality-certs-{{ section.id }} .d-6 { animation-delay: 0.35s; }
-
+  /* ── Header ── */
   .quality-certs-{{ section.id }} .header-wrap {
     text-align: center;
-    margin-bottom: clamp(3.5rem, 7vw, 5rem);
-    max-width: 900px;
+    margin-bottom: 4rem;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  .quality-certs-{{ section.id }} .header-badge {
+  .quality-certs-{{ section.id }} .main-title-wrap {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
-  .quality-certs-{{ section.id }} .badge-icon {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 15 }} 100%);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    box-shadow: 0 8px 20px {{ accent_color | color_modify: 'alpha', 0.3 }};
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .quality-certs-{{ section.id }} .badge-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .quality-certs-{{ section.id }} .badge-text {
-    font-size: 2.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: white;
-    background: {{ accent_color | color_modify: 'alpha', 0.1 }};
-    padding: 0.6rem 1.25rem;
-    border-radius: 50px;
-    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
+  .quality-certs-{{ section.id }} .title-icon {
+    width: 48px;
+    height: 48px;
+    color: {{ accent_color }};
+    flex-shrink: 0;
   }
 
   .quality-certs-{{ section.id }} .main-title {
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
     color: {{ heading_color }};
-    margin: 0 0 1.5rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    position: relative;
-    display: inline-block;
-  }
-
-  .quality-certs-{{ section.id }} .main-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
-    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0;
+    font-family: serif;
+    letter-spacing: 0.05em;
   }
 
   .quality-certs-{{ section.id }} .subheading {
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
-    color: {{ text_color }};
-    opacity: 0.85;
-    line-height: 1.7;
-    margin: 1.75rem 0 0;
-    font-weight: 400;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
   }
 
+  /* ── Grid ── */
   .quality-certs-{{ section.id }} .certs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    margin-bottom: clamp(4rem, 9vw, 6rem);
-  }
-
-  @media screen and (min-width: 640px) {
-    .quality-certs-{{ section.id }} .certs-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
+    gap: 1.5rem;
+    margin-bottom: 4rem;
   }
 
   @media screen and (min-width: 1024px) {
@@ -192,279 +77,116 @@
   }
 
   .quality-certs-{{ section.id }} .cert-card {
-    background: linear-gradient(145deg, {{ card_bg }} 0%, rgba(255,255,255,0.9) 100%);
-    padding: 2rem 1.5rem;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.03),
-      0 1px 3px rgba(0, 0, 0, 0.02),
-      inset 0 1px 0 rgba(255,255,255,1);
+    background: #fff;
+    padding: 2.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     gap: 1rem;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .quality-certs-{{ section.id }} .cert-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, {{ accent_color | color_lighten: 20 }}, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .quality-certs-{{ section.id }} .cert-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: transform 0.3s ease;
   }
 
   .quality-certs-{{ section.id }} .cert-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(255, 255, 255, 1);
-    box-shadow: 
-      0 20px 40px rgba(20, 68, 45, 0.1),
-      0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.1 }};
+    transform: translateY(-5px);
   }
 
-  .quality-certs-{{ section.id }} .cert-card:hover::before {
-    opacity: 1;
-  }
-
-  .quality-certs-{{ section.id }} .cert-card:hover::after {
-    opacity: 1;
-  }
-
-  .quality-certs-{{ section.id }} .cert-icon-wrap {
-    position: relative;
-    z-index: 1;
-  }
-
-  .quality-certs-{{ section.id }} .cert-icon-bg {
-    width: 72px;
-    height: 72px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .quality-certs-{{ section.id }} .cert-icon-bg::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 22px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.3 }}, transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .quality-certs-{{ section.id }} .cert-card:hover .cert-icon-bg {
-    transform: scale(1.08);
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.18 }} 0%, {{ accent_color | color_modify: 'alpha', 0.08 }} 100%);
-  }
-
-  .quality-certs-{{ section.id }} .cert-card:hover .cert-icon-bg::before {
-    opacity: 1;
-  }
-
-  .quality-certs-{{ section.id }} .cert-icon {
-    width: 36px;
-    height: 36px;
-    color: {{ accent_color }};
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .quality-certs-{{ section.id }} .cert-card:hover .cert-icon {
-    transform: scale(1.1);
-  }
-
-  .quality-certs-{{ section.id }} .cert-check {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 24px;
-    height: 24px;
-    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 10 }} 100%);
+  .quality-certs-{{ section.id }} .cert-stamp {
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
+    background-color: {{ heading_color }};
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    box-shadow: 0 4px 12px {{ accent_color | color_modify: 'alpha', 0.4 }};
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: {{ accent_color }};
+    margin-bottom: 0.5rem;
+    border: 2px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
   }
 
-  .quality-certs-{{ section.id }} .cert-card:hover .cert-check {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .quality-certs-{{ section.id }} .cert-check svg {
-    width: 14px;
-    height: 14px;
+  .quality-certs-{{ section.id }} .cert-stamp svg {
+    width: 32px;
+    height: 32px;
   }
 
   .quality-certs-{{ section.id }} .cert-name {
-    font-size: 1.1rem;
-    font-weight: 800;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: {{ heading_color }};
     margin: 0;
-    letter-spacing: 0.02em;
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s ease;
-  }
-
-  .quality-certs-{{ section.id }} .cert-card:hover .cert-name {
-    color: {{ accent_color }};
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
   .quality-certs-{{ section.id }} .cert-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: {{ text_color }};
-    opacity: 0.6;
-    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #888;
     text-transform: uppercase;
-    margin-top: -0.25rem;
-    position: relative;
-    z-index: 1;
+    letter-spacing: 0.1em;
   }
 
-  .quality-certs-{{ section.id }} .footer-box {
-    background: linear-gradient(145deg, {{ card_bg }} 0%, rgba(255,255,255,0.8) 100%);
-    padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3.5rem);
-    border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 
-      0 20px 50px rgba(0, 0, 0, 0.04),
-      0 1px 3px rgba(0, 0, 0, 0.02),
-      inset 0 1px 0 rgba(255,255,255,1);
-    position: relative;
+  /* ── Footer Box ── */
+  .quality-certs-{{ section.id }} .footer-banner {
+    background-color: {{ footer_bg }};
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.5 }};
+    padding: 3rem 2rem;
+    border-radius: 12px;
     text-align: center;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
 
-  .quality-certs-{{ section.id }} .footer-box::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background: linear-gradient(180deg, {{ accent_color | color_lighten: 15 }} 0%, {{ accent_color }} 100%);
-    box-shadow: 4px 0 20px {{ accent_color | color_modify: 'alpha', 0.3 }};
-  }
-
-  .quality-certs-{{ section.id }} .footer-box::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .quality-certs-{{ section.id }} .footer-icon-wrap {
-    display: inline-flex;
+  .quality-certs-{{ section.id }} .banner-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: {{ heading_color }};
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.15 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .quality-certs-{{ section.id }} .footer-icon-wrap svg {
-    width: 28px;
-    height: 28px;
     color: {{ accent_color }};
   }
 
-  .quality-certs-{{ section.id }} .footer-text {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-    color: {{ text_color }};
-    line-height: 1.8;
-    margin: 0;
-    font-weight: 450;
-    opacity: 0.9;
-    position: relative;
-    z-index: 1;
-    max-width: 850px;
-    margin: 0 auto;
-  }
-
-  .quality-certs-{{ section.id }} .footer-text p {
-    margin: 0;
+  .quality-certs-{{ section.id }} .banner-text {
+    font-size: 1.2rem;
+    color: #333;
+    max-width: 800px;
+    line-height: 1.5;
+    font-weight: 500;
   }
 
   @media screen and (max-width: 767px) {
-    .quality-certs-{{ section.id }} .container { 
-      padding: 0 1.25rem; 
+    .quality-certs-{{ section.id }} .main-title-wrap {
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    .quality-certs-{{ section.id }} .cert-card {
-      padding: 1.5rem 1rem;
+    .quality-certs-{{ section.id }} .footer-banner {
+      padding: 2rem 1rem;
     }
-    .quality-certs-{{ section.id }} .cert-icon-bg {
-      width: 60px;
-      height: 60px;
-    }
-    .quality-certs-{{ section.id }} .cert-icon {
-      width: 28px;
-      height: 28px;
-    }
-    .quality-certs-{{ section.id }} .footer-box {
-      padding: 2rem 1.5rem;
-      border-radius: 24px;
-    }
-    .quality-certs-{{ section.id }} .footer-icon-wrap {
-      width: 48px;
-      height: 48px;
-    }
-    .quality-certs-{{ section.id }} .footer-icon-wrap svg {
-      width: 22px;
-      height: 22px;
+    .quality-certs-{{ section.id }} .banner-text {
+      font-size: 1.05rem;
     }
   }
 {%- endstyle -%}
 
-<section class="quality-certs-{{ section.id }}" id="Quality-{{ section.id }}">
+<section class="quality-certs-{{ section.id }}">
   <div class="container">
-    
-    <div class="header-wrap anim-header">
-      <div class="header-badge">
-        <div class="badge-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="header-wrap">
+      <div class="main-title-wrap">
+        <div class="title-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <path d="M9 12l2 2 4-4"></path>
           </svg>
         </div>
-        <span class="badge-text">Certified Quality</span>
+        <h2 class="main-title">{{ section.settings.title }}</h2>
       </div>
-     
       {%- if section.settings.subheading != blank -%}
         <p class="subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
@@ -472,43 +194,32 @@
 
     <div class="certs-grid">
       {%- for block in section.blocks -%}
-        {%- assign delay_class = forloop.index | modulo: 6 | plus: 1 -%}
-        <div class="cert-card anim-card d-{{ delay_class }}" {{ block.shopify_attributes }}>
-          <div class="cert-icon-wrap">
-            <div class="cert-icon-bg">
-              <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9 12l2 2 4-4"></path>
-              </svg>
-              <div class="cert-check">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-            </div>
+        <div class="cert-card" {{ block.shopify_attributes }}>
+          <div class="cert-stamp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
           </div>
-          {%- if block.settings.title != blank -%}
-            <h4 class="cert-name">{{ block.settings.title | escape }}</h4>
-            <span class="cert-label">Certified</span>
-          {%- endif -%}
+          <h4 class="cert-name">{{ block.settings.title | escape }}</h4>
+          <span class="cert-label">Certified</span>
         </div>
       {%- endfor -%}
     </div>
 
     {%- if section.settings.footer_text != blank -%}
-      <div class="footer-box anim-footer">
-        <div class="footer-icon-wrap">
+      <div class="footer-banner">
+        <div class="banner-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9 12l2 2 4-4"></path>
           </svg>
         </div>
-        <div class="footer-text">
+        <div class="banner-text">
           {{ section.settings.footer_text }}
         </div>
       </div>
     {%- endif -%}
-
   </div>
 </section>
 
@@ -519,14 +230,10 @@
   "class": "section-quality-certs",
   "settings": [
     {
-      "type": "header",
-      "content": "Content"
-    },
-    {
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Quality & Certifications"
+      "default": "CERTIFIED QUALITY"
     },
     {
       "type": "textarea",
@@ -537,27 +244,8 @@
     {
       "type": "richtext",
       "id": "footer_text",
-      "label": "Footer Text",
+      "label": "Footer Banner Text",
       "default": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Layout Settings"
-    },
-    {
-      "type": "range",
-      "id": "columns",
-      "min": 2,
-      "max": 6,
-      "step": 1,
-      "label": "Columns on Desktop",
-      "default": 4
-    },
-    {
-      "type": "number",
-      "id": "max_width",
-      "label": "Section Max Width (px)",
-      "default": 1300
     },
     {
       "type": "header",
@@ -567,31 +255,25 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#F8FBFA"
-    },
-    {
-      "type": "color",
-      "id": "card_bg",
-      "label": "Card Background",
-      "default": "#FFFFFF"
+      "default": "#F9F8F3"
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading Color",
-      "default": "#14442D"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#14442D"
+      "label": "Heading & Stamp Color (Dark Green)",
+      "default": "#003D2B"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent Color",
-      "default": "#10A560"
+      "label": "Accent Color (Gold)",
+      "default": "#C5A47E"
+    },
+    {
+      "type": "color",
+      "id": "footer_bg_color",
+      "label": "Footer Banner Background (Mint)",
+      "default": "#E8F5F1"
     },
     {
       "type": "header",
@@ -605,7 +287,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 100
+      "default": 80
     },
     {
       "type": "range",
@@ -615,7 +297,13 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 100
+      "default": 80
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1200
     }
   ],
   "blocks": [
