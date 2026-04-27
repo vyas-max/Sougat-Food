@@ -416,6 +416,7 @@
       "block_order": [
         "ai_gen_block_b676a2f_MkVtwn"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -490,6 +491,7 @@
         "gallery_image_cKRgVz",
         "gallery_image_ztAeVU"
       ],
+      "disabled": true,
       "name": "Scrolling image marquee",
       "settings": {
         "hero_badge": "Nutty goodness",
@@ -650,6 +652,7 @@
         "image_4jw33Y",
         "group_bCUUd9"
       ],
+      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -715,6 +718,7 @@
         "team_member_fQDb3F",
         "team_member_iRML7K"
       ],
+      "disabled": true,
       "name": "Team spotlight slider",
       "settings": {
         "heading": "Meet the team",
@@ -867,6 +871,7 @@
       "blocks": {
         "ai_gen_block_051045c_U8CzBU": {
           "type": "ai_gen_block_051045c",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Gemini_Generated_Image_4ljsg64ljsg64ljs.png",
             "image_border_radius": 8,
@@ -907,6 +912,7 @@
       "block_order": [
         "ai_gen_block_051045c_U8CzBU"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
