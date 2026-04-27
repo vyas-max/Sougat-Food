@@ -4,6 +4,8 @@
   assign accent_color = section.settings.accent_color
   assign card_bg = section.settings.card_bg
   assign section_bg = section.settings.bg_color
+  assign bg_image = section.settings.bg_image
+  assign bg_overlay = section.settings.bg_overlay | divided_by: 100.0
 -%}
 
 {%- style -%}
@@ -11,33 +13,57 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
     background: {{ section_bg }};
+    {%- if bg_image != blank -%}
+    background-image: url({{ bg_image | image_url: width: 1920 }});
+    background-position: {{ section.settings.bg_position }};
+    background-size: {{ section.settings.bg_size }};
+    background-repeat: no-repeat;
+    {%- endif -%}
     overflow: hidden;
     position: relative;
   }
 
+  {%- if bg_image != blank and bg_overlay > 0 -%}
+  .our-expertise-{{ section.id }} .bg-overlay {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: {{ section_bg }};
+    opacity: {{ bg_overlay }};
+    z-index: 0;
+    pointer-events: none;
+  }
+  {%- endif -%}
+
   .our-expertise-{{ section.id }}::before {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 70%;
-    height: 100%;
-    background: radial-gradient(ellipse, {{ accent_color | color_modify: 'alpha', 0.04 }} 0%, transparent 60%);
+    top: -60%;
+    right: -25%;
+    width: 80%;
+    height: 120%;
+    background: radial-gradient(ellipse, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 55%);
     pointer-events: none;
     z-index: 0;
+    animation: pulse 8s ease-in-out infinite;
   }
 
   .our-expertise-{{ section.id }}::after {
     content: '';
     position: absolute;
-    bottom: -30%;
-    left: -15%;
-    width: 80%;
-    height: 80%;
-    background: radial-gradient(ellipse, {{ heading_color | color_modify: 'alpha', 0.03 }} 0%, transparent 50%);
-    filter: blur(80px);
+    bottom: -40%;
+    left: -20%;
+    width: 90%;
+    height: 100%;
+    background: radial-gradient(ellipse, {{ heading_color | color_modify: 'alpha', 0.04 }} 0%, transparent 50%);
+    filter: blur(60px);
     pointer-events: none;
     z-index: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
   }
 
   .our-expertise-{{ section.id }} .container {
@@ -49,160 +75,223 @@
   }
 
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(50px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @keyframes fadeInLeft {
-    from { opacity: 0; transform: translateX(-40px); }
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(30px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(-30px); }
     to { opacity: 1; transform: translateX(0); }
   }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
-  }
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
   }
   @keyframes shimmer {
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
+  @keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  @keyframes iconPulse {
+    0%, 100% { box-shadow: 0 0 0 0 {{ accent_color | color_modify: 'alpha', 0.4 }}; }
+    50% { box-shadow: 0 0 0 12px {{ accent_color | color_modify: 'alpha', 0 }}; }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   .our-expertise-{{ section.id }} .anim-header {
-    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   .our-expertise-{{ section.id }} .anim-item {
     opacity: 0;
-    animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInScale 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .our-expertise-{{ section.id }} .anim-footer {
     animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
-    animation-delay: 0.6s;
+    animation-delay: 0.8s;
   }
-  .our-expertise-{{ section.id }} .d-1 { animation-delay: 0.1s; }
-  .our-expertise-{{ section.id }} .d-2 { animation-delay: 0.2s; }
-  .our-expertise-{{ section.id }} .d-3 { animation-delay: 0.3s; }
-  .our-expertise-{{ section.id }} .d-4 { animation-delay: 0.4s; }
-  .our-expertise-{{ section.id }} .d-5 { animation-delay: 0.5s; }
-  .our-expertise-{{ section.id }} .d-6 { animation-delay: 0.6s; }
+  .our-expertise-{{ section.id }} .d-1 { animation-delay: 0.15s; }
+  .our-expertise-{{ section.id }} .d-2 { animation-delay: 0.25s; }
+  .our-expertise-{{ section.id }} .d-3 { animation-delay: 0.35s; }
+  .our-expertise-{{ section.id }} .d-4 { animation-delay: 0.45s; }
+  .our-expertise-{{ section.id }} .d-5 { animation-delay: 0.55s; }
+  .our-expertise-{{ section.id }} .d-6 { animation-delay: 0.65s; }
+  .our-expertise-{{ section.id }} .d-7 { animation-delay: 0.75s; }
+  .our-expertise-{{ section.id }} .d-8 { animation-delay: 0.85s; }
 
   .our-expertise-{{ section.id }} .header-wrap {
     text-align: center;
-    margin: 0 auto clamp(3.5rem, 6vw, 5rem) auto;
-    max-width: 900px;
+    margin: 0 auto clamp(4rem, 7vw, 6rem) auto;
+    max-width: 950px;
   }
 
   .our-expertise-{{ section.id }} .title-decoration {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
   .our-expertise-{{ section.id }} .title-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 15 }} 100%);
-    border-radius: 14px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 20 }} 100%);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    box-shadow: 0 8px 24px {{ accent_color | color_modify: 'alpha', 0.3 }};
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .our-expertise-{{ section.id }} .title-badge {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: {{ accent_color }};
-    background: {{ accent_color | color_modify: 'alpha', 0.1 }};
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
-  }
-
-  .our-expertise-{{ section.id }} .main-title {
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
-    color: {{ heading_color }};
-    margin: 0 0 1.5rem;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 1.05;
+    box-shadow: 
+      0 12px 32px {{ accent_color | color_modify: 'alpha', 0.35 }},
+      inset 0 1px 0 rgba(255,255,255,0.2);
+    animation: float 5s ease-in-out infinite;
     position: relative;
   }
 
-  .our-expertise-{{ section.id }} .main-title::after {
+  .our-expertise-{{ section.id }} .title-icon::before {
     content: '';
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
-    border-radius: 2px;
+    inset: -3px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.3 }}, transparent);
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+  }
+
+  .our-expertise-{{ section.id }} .title-badge {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: {{ accent_color }};
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
+    padding: 0.65rem 1.25rem;
+    border-radius: 50px;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.25 }};
+    position: relative;
+    overflow: hidden;
+  }
+
+  .our-expertise-{{ section.id }} .title-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 3s infinite;
+  }
+
+  .our-expertise-{{ section.id }} .main-title {
+    font-size: clamp(2.75rem, 7vw, 4.5rem);
+    color: {{ heading_color }};
+    margin: 0 0 2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    position: relative;
+    display: inline-block;
+  }
+
+  .our-expertise-{{ section.id }} .main-title span {
+    background: linear-gradient(135deg, {{ heading_color }} 0%, {{ accent_color }} 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .our-expertise-{{ section.id }} .title-underline {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .our-expertise-{{ section.id }} .title-underline span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: {{ accent_color }};
+    opacity: 0.3;
+    transition: all 0.3s ease;
+  }
+
+  .our-expertise-{{ section.id }} .title-underline span:nth-child(2) {
+    opacity: 1;
+    width: 40px;
+    border-radius: 6px;
+    animation: pulse 2s ease-in-out infinite;
   }
 
   .our-expertise-{{ section.id }} .subheading {
-    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
     color: {{ text_color }};
-    opacity: 0.8;
-    line-height: 1.7;
-    margin: 1.75rem 0 0;
+    opacity: 0.75;
+    line-height: 1.8;
+    margin: 0;
     font-weight: 400;
-    max-width: 700px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .our-expertise-{{ section.id }} .expertise-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-bottom: clamp(4rem, 8vw, 6rem);
+    gap: 1.5rem;
+    margin-bottom: clamp(5rem, 10vw, 7rem);
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 640px) {
     .our-expertise-{{ section.id }} .expertise-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
     }
   }
 
   @media screen and (min-width: 1024px) {
     .our-expertise-{{ section.id }} .expertise-grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
     }
   }
 
   .our-expertise-{{ section.id }} .expert-item {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(145deg, {{ card_bg }} 0%, rgba(255,255,255,0.9) 100%);
-    padding: 1.75rem 2rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: linear-gradient(165deg, {{ card_bg }} 0%, rgba(255,255,255,0.95) 100%);
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
     box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.03),
-      0 1px 3px rgba(0, 0, 0, 0.02),
+      0 4px 24px rgba(0, 0, 0, 0.04),
+      0 1px 4px rgba(0, 0, 0, 0.02),
       inset 0 1px 0 rgba(255,255,255,1);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: default;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 
   .our-expertise-{{ section.id }} .expert-item::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.08 }} 0%, transparent 50%);
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 60%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
   }
 
   .our-expertise-{{ section.id }} .expert-item::after {
@@ -211,21 +300,22 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, {{ accent_color }}, transparent);
+    height: 3px;
+    background: linear-gradient(90deg, {{ accent_color | color_lighten: 15 }}, {{ accent_color }}, {{ accent_color | color_lighten: 15 }});
     opacity: 0;
-    transition: opacity 0.5s ease;
     transform: scaleX(0);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
   }
 
   .our-expertise-{{ section.id }} .expert-item:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-12px) scale(1.02);
     background: #fff;
-    border-color: rgba(255, 255, 255, 1);
+    border-color: {{ accent_color | color_modify: 'alpha', 0.15 }};
     box-shadow: 
-      0 25px 50px rgba(20, 68, 45, 0.1),
-      0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.08 }};
+      0 32px 64px rgba(20, 68, 45, 0.12),
+      0 0 0 1px {{ accent_color | color_modify: 'alpha', 0.1 }},
+      inset 0 1px 0 rgba(255,255,255,1);
   }
 
   .our-expertise-{{ section.id }} .expert-item:hover::before {
@@ -237,70 +327,102 @@
     transform: scaleX(1);
   }
 
-  .our-expertise-{{ section.id }} .check-icon {
+  .our-expertise-{{ section.id }} .item-number {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    margin-right: 1.5rem;
-    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.15 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
-    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.12 }} 0%, {{ accent_color | color_modify: 'alpha', 0.04 }} 100%);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
     color: {{ accent_color }};
-    box-shadow: 0 4px 15px {{ accent_color | color_modify: 'alpha', 0.2 }};
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.15 }};
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     z-index: 1;
   }
 
-  .our-expertise-{{ section.id }} .check-icon svg {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .our-expertise-{{ section.id }} .expert-item:hover .item-number {
+    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 15 }} 100%);
+    color: #fff;
+    border-color: transparent;
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 8px 24px {{ accent_color | color_modify: 'alpha', 0.35 }};
   }
 
   .our-expertise-{{ section.id }} .item-content {
+    flex: 1;
     display: flex;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
   }
 
   .our-expertise-{{ section.id }} .item-label {
-    flex: 1;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: {{ heading_color }};
     margin: 0;
     letter-spacing: -0.01em;
-    position: relative;
-    z-index: 1;
     transition: color 0.4s ease;
-    text-align: left;
-    padding-left: 0;
+    line-height: 1.4;
   }
 
-  .our-expertise-{{ section.id }} .expert-item:hover .check-icon {
-    transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 10 }} 100%);
-    color: #fff;
-    box-shadow: 0 8px 25px {{ accent_color | color_modify: 'alpha', 0.35 }};
+  .our-expertise-{{ section.id }} .item-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .our-expertise-{{ section.id }} .expert-item:hover .check-icon svg {
-    transform: scale(1.1);
+  .our-expertise-{{ section.id }} .expert-item:hover .item-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .our-expertise-{{ section.id }} .item-icon svg {
+    width: 18px;
+    height: 18px;
+    color: {{ accent_color }};
+  }
+
+  .our-expertise-{{ section.id }} .item-icon span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: {{ accent_color }};
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .our-expertise-{{ section.id }} .expert-item:hover .item-label {
     color: {{ accent_color }};
   }
 
+  .our-expertise-{{ section.id }} .expert-item:nth-child(3n+1) {
+    animation-delay: 0.1s;
+  }
+  .our-expertise-{{ section.id }} .expert-item:nth-child(3n+2) {
+    animation-delay: 0.2s;
+  }
+  .our-expertise-{{ section.id }} .expert-item:nth-child(3n) {
+    animation-delay: 0.3s;
+  }
+
   .our-expertise-{{ section.id }} .footer-content {
-    background: linear-gradient(145deg, {{ card_bg }} 0%, rgba(255,255,255,0.6) 100%);
-    padding: clamp(2.5rem, 4.5vw, 4.5rem) clamp(2rem, 4vw, 4rem);
+    background: linear-gradient(165deg, {{ card_bg }} 0%, rgba(255,255,255,0.85) 100%);
+    padding: clamp(3rem, 5vw, 5rem) clamp(2.5rem, 5vw, 5rem);
     border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.04),
-      0 1px 3px rgba(0, 0, 0, 0.02),
+      0 24px 80px rgba(0, 0, 0, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.02),
       inset 0 1px 0 rgba(255,255,255,1);
     position: relative;
     overflow: hidden;
@@ -314,54 +436,145 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 6px;
-    background: linear-gradient(180deg, {{ accent_color | color_lighten: 15 }}, {{ accent_color }});
-    box-shadow: 4px 0 20px {{ accent_color | color_modify: 'alpha', 0.4 }};
+    width: 5px;
+    background: linear-gradient(180deg, {{ accent_color | color_lighten: 20 }}, {{ accent_color }}, {{ accent_color | color_lighten: 20 }});
+    box-shadow: 4px 0 30px {{ accent_color | color_modify: 'alpha', 0.5 }};
   }
 
   .our-expertise-{{ section.id }} .footer-content::after {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.05 }} 0%, transparent 70%);
+    top: -60%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, {{ accent_color | color_modify: 'alpha', 0.06 }} 0%, transparent 65%);
     pointer-events: none;
+  }
+
+  .our-expertise-{{ section.id }} .footer-decoration {
+    position: absolute;
+    bottom: -20px;
+    right: 40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: {{ accent_color | color_modify: 'alpha', 0.03 }};
+    filter: blur(40px);
   }
 
   .our-expertise-{{ section.id }} .footer-inner {
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: flex-start;
-    gap: 2rem;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .our-expertise-{{ section.id }} .footer-icon-wrap {
+    flex-shrink: 0;
+    position: relative;
   }
 
   .our-expertise-{{ section.id }} .footer-icon {
-    flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.15 }} 0%, {{ accent_color | color_modify: 'alpha', 0.05 }} 100%);
-    border-radius: 18px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: {{ accent_color }};
-    box-shadow: 0 8px 25px {{ accent_color | color_modify: 'alpha', 0.15 }};
+    border: 2px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
+    position: relative;
+    z-index: 1;
+    transition: all 0.5s ease;
+  }
+
+  .our-expertise-{{ section.id }} .footer-icon::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 26px;
+    border: 2px dashed {{ accent_color | color_modify: 'alpha', 0.2 }};
+    animation: spin 20s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .our-expertise-{{ section.id }} .footer-content:hover .footer-icon {
+    background: linear-gradient(135deg, {{ accent_color }} 0%, {{ accent_color | color_lighten: 15 }} 100%);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 12px 32px {{ accent_color | color_modify: 'alpha', 0.3 }};
+  }
+
+  .our-expertise-{{ section.id }} .footer-text-wrap {
+    flex: 1;
+  }
+
+  .our-expertise-{{ section.id }} .footer-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: {{ accent_color }};
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .our-expertise-{{ section.id }} .footer-label::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: {{ accent_color }};
+    border-radius: 1px;
   }
 
   .our-expertise-{{ section.id }} .footer-text {
-    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
     color: {{ text_color }};
-    line-height: 1.8;
+    line-height: 1.85;
     margin: 0;
-    opacity: 0.9;
+    opacity: 0.85;
     font-weight: 450;
   }
 
   .our-expertise-{{ section.id }} .footer-text p {
     margin: 0;
+  }
+
+  .our-expertise-{{ section.id }} .footer-badge {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, {{ accent_color | color_modify: 'alpha', 0.08 }} 0%, {{ accent_color | color_modify: 'alpha', 0.02 }} 100%);
+    border-radius: 16px;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.15 }};
+  }
+
+  .our-expertise-{{ section.id }} .footer-badge-count {
+    font-size: 2rem;
+    font-weight: 900;
+    color: {{ accent_color }};
+    line-height: 1;
+  }
+
+  .our-expertise-{{ section.id }} .footer-badge-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: {{ text_color }};
+    opacity: 0.7;
   }
 
   @media screen and (max-width: 767px) {
@@ -371,36 +584,59 @@
     }
     .our-expertise-{{ section.id }} .footer-inner {
       flex-direction: column;
-      gap: 1.5rem;
+      text-align: center;
+      gap: 1.75rem;
     }
     .our-expertise-{{ section.id }} .footer-icon {
-      width: 52px;
-      height: 52px;
-    }
-    .our-expertise-{{ section.id }} .main-title::after {
       width: 60px;
-      height: 3px;
+      height: 60px;
+    }
+    .our-expertise-{{ section.id }} .footer-badge {
+      flex-direction: row;
+      gap: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+    .our-expertise-{{ section.id }} .footer-label {
+      justify-content: center;
+    }
+    .our-expertise-{{ section.id }} .expert-item {
+      padding: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .our-expertise-{{ section.id }} .footer-inner {
+      flex-wrap: wrap;
+    }
+    .our-expertise-{{ section.id }} .footer-badge {
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
     }
   }
 {%- endstyle -%}
 
 <section class="our-expertise-{{ section.id }}" id="Expertise-{{ section.id }}">
+  {%- if bg_image != blank and bg_overlay > 0 -%}
+    <div class="bg-overlay"></div>
+  {%- endif -%}
   <div class="container">
     
     <div class="header-wrap anim-header">
       <div class="title-decoration">
         <div class="title-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
             <path d="M2 17l10 5 10-5"></path>
             <path d="M2 12l10 5 10-5"></path>
           </svg>
         </div>
-        <span class="title-badge">Expertise</span>
+        <span class="title-badge">Our Expertise</span>
       </div>
-      {%- if section.settings.title != blank -%}
-        <h2 class="main-title">{{ section.settings.title }}</h2>
-      {%- endif -%}
+   
       {%- if section.settings.subheading != blank -%}
         <p class="subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
@@ -408,13 +644,17 @@
 
     <div class="expertise-grid">
       {%- for block in section.blocks -%}
-        {%- assign delay_class = forloop.index | modulo: 6 | plus: 1 -%}
+        {%- assign delay_class = forloop.index | modulo: 8 | plus: 1 -%}
         <div class="expert-item anim-item d-{{ delay_class }}" {{ block.shopify_attributes }}>
+          <div class="item-number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
           <div class="item-content">
-            <div class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
             <p class="item-label">{{ block.settings.title | escape }}</p>
+            <div class="item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Premium Quality</span>
+            </div>
           </div>
         </div>
       {%- endfor -%}
@@ -422,16 +662,25 @@
 
     {%- if section.settings.footer_text != blank -%}
       <div class="footer-content anim-footer">
+        <div class="footer-decoration"></div>
         <div class="footer-inner">
-          <div class="footer-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
+          <div class="footer-icon-wrap">
+            <div class="footer-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
           </div>
-          <div class="footer-text">
-            {{ section.settings.footer_text }}
+          <div class="footer-text-wrap">
+            <div class="footer-label">Quality Assurance</div>
+            <div class="footer-text">
+              {{ section.settings.footer_text }}
+            </div>
+          </div>
+          <div class="footer-badge">
+            <span class="footer-badge-count">{{ section.blocks.size }}</span>
+            <span class="footer-badge-label">Products</span>
           </div>
         </div>
       </div>
@@ -454,13 +703,13 @@
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Our Expertises"
+      "default": "Our Expertise"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "We manufacture and export a wide range of high-quality food products, including:"
+      "default": "We manufacture and export a wide range of high-quality food products, delivering excellence across global markets."
     },
     {
       "type": "richtext",
@@ -496,6 +745,49 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "select",
+      "id": "bg_position",
+      "label": "Background Position",
+      "default": "center center",
+      "options": [
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "center left", "label": "Center Left" },
+        { "value": "center center", "label": "Center Center" },
+        { "value": "center right", "label": "Center Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "bg_size",
+      "label": "Background Size",
+      "default": "cover",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0,
+      "unit": "%"
     },
     {
       "type": "color",

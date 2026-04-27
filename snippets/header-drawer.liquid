@@ -688,6 +688,9 @@
             </drawer-localization-component>
           {% endif %}
         {%- endif -%}
+        <div class="menu-drawer__cta desktop:hidden">
+           {% render 'header-cta-buttons' %}
+        </div>
       </div>
 
       {% liquid
@@ -1212,6 +1215,21 @@
     margin-block: auto var(--padding-sm);
     margin-inline-start: var(--padding-xl);
     background-color: rgb(var(--color-foreground) 0.03);
+  }
+
+  .menu-drawer__cta {
+    padding: var(--padding-md) var(--padding-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    margin-block-start: var(--padding-md);
+
+    .header-cta-btn {
+      width: 100%;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 14px;
+    }
   }
 
   .menu-drawer__account {

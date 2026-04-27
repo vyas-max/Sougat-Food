@@ -61,22 +61,7 @@
   endcapture
 
   capture header_cta_buttons
-    if section.settings.enable_button_1 and section.settings.button_text_1 != blank
-      assign b1_style = section.settings.button_style_1 | default: 'primary'
-      assign b1_px = section.settings.button_padding_h_1 | default: 20
-      assign b1_py = section.settings.button_padding_v_1 | default: 10
-      assign b1_fs = section.settings.button_font_size_1 | default: 13
-      assign b1_radius = section.settings.button_border_radius_1 | default: 20
-      echo '<a href="' | append: section.settings.button_link_1 | append: '" class="header-cta-btn header-cta-btn--' | append: b1_style | append: '" style="--btn-px:' | append: b1_px | append: 'px;--btn-py:' | append: b1_py | append: 'px;--btn-fs:' | append: b1_fs | append: 'px;--btn-radius:' | append: b1_radius | append: 'px;--btn-bg:' | append: section.settings.button_bg_color_1 | append: ';--btn-text:' | append: section.settings.button_text_color_1 | append: ';--btn-border:' | append: section.settings.button_border_color_1 | append: ';">' | append: section.settings.button_text_1 | append: '</a>'
-    endif
-    if section.settings.enable_button_2 and section.settings.button_text_2 != blank
-      assign b2_style = section.settings.button_style_2 | default: 'secondary'
-      assign b2_px = section.settings.button_padding_h_2 | default: 20
-      assign b2_py = section.settings.button_padding_v_2 | default: 10
-      assign b2_fs = section.settings.button_font_size_2 | default: 13
-      assign b2_radius = section.settings.button_border_radius_2 | default: 20
-      echo '<a href="' | append: section.settings.button_link_2 | append: '" class="header-cta-btn header-cta-btn--' | append: b2_style | append: '" style="--btn-px:' | append: b2_px | append: 'px;--btn-py:' | append: b2_py | append: 'px;--btn-fs:' | append: b2_fs | append: 'px;--btn-radius:' | append: b2_radius | append: 'px;--btn-bg:' | append: section.settings.button_bg_color_2 | append: ';--btn-text:' | append: section.settings.button_text_color_2 | append: ';--btn-border:' | append: section.settings.button_border_color_2 | append: ';">' | append: section.settings.button_text_2 | append: '</a>'
-    endif
+    render 'header-cta-buttons', class: 'mobile:hidden'
   endcapture
 
   capture actions
