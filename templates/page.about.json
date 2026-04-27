@@ -110,37 +110,37 @@
       "type": "our-expertise",
       "blocks": {
         "expertise_item_F9LFqU": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Freeze-Dried Fruits & Vegetables"
           }
         },
         "expertise_item_Yebjgt": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Pulses & Lentils"
           }
         },
         "expertise_item_b3HQA9": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Spices & Whole Spices"
           }
         },
         "expertise_item_z9kTqz": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Herbs & Dehydrated Products"
           }
         },
         "expertise_item_TqmCCR": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Millets & Traditional Indian Grains"
           }
         },
         "expertise_item_P9KREj": {
-          "type": "expertise_item",
+          "type": "expert",
           "settings": {
             "title": "Jaggery & Natural Sweeteners"
           }

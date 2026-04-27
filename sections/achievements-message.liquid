@@ -1,49 +1,271 @@
+{%- liquid
+  assign bg_color = section.settings.background_color
+  assign heading_color = section.settings.heading_color
+  assign accent_color = section.settings.accent_color
+-%}
+
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+  .achievements-msg-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ bg_color }};
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 4-Corner Swirl Decorations */
+  .achievements-msg-{{ section.id }} .swirl {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 90 Q 30 70 10 50 Q 50 50 70 30 Q 50 10 90 10' fill='none' stroke='%23C5A47E' stroke-width='1'/%3E%3Ccircle cx='90' cy='10' r='2' fill='%23C5A47E'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .achievements-msg-{{ section.id }} .swirl-tl { top: 0; left: 0; transform: rotate(0deg); }
+  .achievements-msg-{{ section.id }} .swirl-tr { top: 0; right: 0; transform: rotate(90deg); }
+  .achievements-msg-{{ section.id }} .swirl-bl { bottom: 0; left: 0; transform: rotate(-90deg); }
+  .achievements-msg-{{ section.id }} .swirl-br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+  .achievements-msg-{{ section.id }} .container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Achievements ── */
+  .achievements-msg-{{ section.id }} .achievements-wrap {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+
+  .achievements-msg-{{ section.id }} .main-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    color: {{ heading_color }};
+    font-family: serif;
+    font-weight: 500;
+    margin-bottom: 3.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .achievements-msg-{{ section.id }} .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .achievements-msg-{{ section.id }} .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .achievements-msg-{{ section.id }} .stat-card {
+    background: #fff;
+    padding: 3rem 1.5rem;
+    border-radius: 8px;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
+    box-shadow: 0 12px 35px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .achievements-msg-{{ section.id }} .stat-card:hover {
+    transform: translateY(-8px);
+    border-color: {{ accent_color }};
+  }
+
+  .achievements-msg-{{ section.id }} .stat-icon {
+    width: 64px;
+    height: 64px;
+    color: {{ heading_color }};
+    margin-bottom: 0.5rem;
+  }
+
+  .achievements-msg-{{ section.id }} .stat-icon svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .achievements-msg-{{ section.id }} .stat-number {
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: {{ accent_color }};
+    line-height: 1;
+    margin: 0;
+  }
+
+  .achievements-msg-{{ section.id }} .stat-label {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: {{ heading_color }};
+    margin: 0;
+  }
+
+  /* ── Messages ── */
+  .achievements-msg-{{ section.id }} .messages-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .achievements-msg-{{ section.id }} .message-box {
+    background: #fff;
+    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
+    border-radius: 8px;
+    padding: clamp(2.5rem, 6vw, 4.5rem) 2rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .achievements-msg-{{ section.id }} .message-box::before {
+    content: '“';
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    font-size: 11rem;
+    font-family: serif;
+    color: {{ accent_color }};
+    opacity: 0.5;
+    line-height: 1;
+  }
+
+  .achievements-msg-{{ section.id }} .message-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    color: {{ heading_color }};
+    font-family: serif;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+  }
+
+  .achievements-msg-{{ section.id }} .message-text {
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .achievements-msg-{{ section.id }} .signature-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .achievements-msg-{{ section.id }} .signature-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: {{ accent_color }};
+    border-bottom: 1px solid {{ accent_color | color_modify: 'alpha', 0.4 }};
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+  }
+
+  .achievements-msg-{{ section.id }} .signature-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: {{ heading_color }};
+  }
+
+  @media screen and (max-width: 767px) {
+    .achievements-msg-{{ section.id }} .message-box::before {
+      left: 15px;
+      font-size: 8rem;
+      top: -10px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="achievements-msg-{{ section.id }}">
+  <div class="swirl swirl-tl"></div>
+  <div class="swirl swirl-tr"></div>
+  <div class="swirl swirl-bl"></div>
+  <div class="swirl swirl-br"></div>
+
+  <div class="container">
+    <div class="achievements-wrap">
+      <h2 class="main-title">{{ section.settings.achievements_title }}</h2>
+      <div class="stats-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="stat-card" {{ block.shopify_attributes }}>
+              <div class="stat-icon">
+                {%- if block.settings.icon_svg != blank -%}
+                  {{ block.settings.icon_svg }}
+                {%- else -%}
+                  {%- case forloop.index -%}
+                    {%- when 1 -%}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    {%- when 2 -%}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    {%- when 3 -%}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20M7 22V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v17M14 7h2M14 11h2M14 15h2"></path></svg>
+                    {%- else -%}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+              <h3 class="stat-number">{{ block.settings.number }}{{ block.settings.suffix }}</h3>
+              <p class="stat-label">{{ block.settings.label }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="messages-wrap">
+      {%- if section.settings.chairman_message != blank -%}
+        <div class="message-box">
+          <h2 class="message-title">{{ section.settings.chairman_title }}</h2>
+          <div class="message-text">{{ section.settings.chairman_message }}</div>
+          <div class="signature-wrap">
+            <span class="signature-name">Sougat Foods</span>
+            <span class="signature-title">Chairman Name, Sougat Foods</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.director_message_1 != blank -%}
+        <div class="message-box">
+          <h2 class="message-title">{{ section.settings.director_title }}</h2>
+          <div class="message-text">
+            {{ section.settings.director_message_1 }}
+            {% if section.settings.director_message_2 != blank %}<br><br>{{ section.settings.director_message_2 }}{% endif %}
+          </div>
+          <div class="signature-wrap">
+            <span class="signature-name">Duj Hame</span>
+            <span class="signature-title">Director Fullname Name</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
 {% schema %}
 {
   "name": "Achievements & Message",
+  "tag": "section",
+  "class": "section-achievements-msg",
   "settings": [
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8fdfaf5"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "Accent Color",
-      "default": "#10b981"
-    },
-    {
-      "type": "color",
-      "id": "secondary_accent",
-      "label": "Secondary Accent",
-      "default": "#f59e0b"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 60
-    },
-    {
-      "type": "header",
-      "content": "Achievements Section"
-    },
     {
       "type": "text",
       "id": "achievements_title",
@@ -52,65 +274,105 @@
     },
     {
       "type": "header",
-      "content": "Chairman's Message Section"
+      "content": "Chairman's Message"
     },
     {
       "type": "text",
       "id": "chairman_title",
-      "label": "Chairman's Title",
+      "label": "Chairman Title",
       "default": "Chairman's Message"
     },
     {
       "type": "textarea",
       "id": "chairman_message",
-      "label": "Message Content",
-      "default": "At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering."
-    },
-    {
-      "type": "text",
-      "id": "chairman_sub_message",
-      "label": "Sub Message (Bold)",
-      "default": "Tradition rooted. Future focused."
+      "label": "Chairman Message",
+      "default": "Our journey since 1962 has been guided by integrity..."
     },
     {
       "type": "header",
-      "content": "Director's Message Section"
+      "content": "Director's Message"
     },
     {
       "type": "text",
       "id": "director_title",
-      "label": "Director's Title",
+      "label": "Director Title",
       "default": "Director's Message"
     },
     {
       "type": "textarea",
       "id": "director_message_1",
-      "label": "Message Paragraph 1",
-      "default": "At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives."
+      "label": "Director Message Para 1",
+      "default": "At Sougat Foods, our commitment goes beyond business..."
     },
     {
       "type": "textarea",
       "id": "director_message_2",
-      "label": "Message Paragraph 2",
-      "default": "Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles."
+      "label": "Director Message Para 2"
     },
     {
-      "type": "text",
-      "id": "director_sub_message",
-      "label": "Sub Message (Bold)",
-      "default": "With honesty in our process and care in every pack, we serve with purpose."
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F9F8F3"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color (Dark Green)",
+      "default": "#003D2B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Gold)",
+      "default": "#C5A47E"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 100
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1200
     }
   ],
   "blocks": [
     {
       "type": "stat",
-      "name": "Statistic",
-      "limit": 6,
+      "name": "Achievement",
+      "limit": 4,
       "settings": [
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG"
+        },
         {
           "type": "text",
           "id": "number",
-          "label": "Number",
+          "label": "Number (e.g. 25)",
           "default": "25"
         },
         {
@@ -124,18 +386,6 @@
           "id": "label",
           "label": "Label",
           "default": "Happy Clients"
-        },
-        {
-          "type": "color",
-          "id": "number_color",
-          "label": "Number Color",
-          "default": "#f59e0b"
-        },
-        {
-          "type": "color",
-          "id": "suffix_color",
-          "label": "Suffix Color",
-          "default": "#10b981"
         }
       ]
     }
@@ -144,625 +394,12 @@
     {
       "name": "Achievements & Message",
       "blocks": [
-        {
-          "type": "stat",
-          "settings": {
-            "number": "25",
-            "suffix": "K",
-            "label": "Happy Clients"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "15",
-            "suffix": "+",
-            "label": "Export Country"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "5",
-            "suffix": "Ton",
-            "label": "Manufacturing"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "50",
-            "suffix": "+",
-            "label": "Products"
-          }
-        }
+        { "type": "stat", "settings": { "number": "25", "suffix": "K", "label": "Happy Clients" } },
+        { "type": "stat", "settings": { "number": "15", "suffix": "+", "label": "Export Country" } },
+        { "type": "stat", "settings": { "number": "5", "suffix": " Ton", "label": "Manufacturing" } },
+        { "type": "stat", "settings": { "number": "50", "suffix": "+", "label": "Products" } }
       ]
     }
   ]
 }
 {% endschema %}
-
-{%- liquid
-  assign bg_color = section.settings.background_color
-  assign accent = section.settings.accent_color
-  assign secondary = section.settings.secondary_accent
--%}
-
-<style>
-  .section-{{ section.id }} {
-    background: linear-gradient(180deg, {{ bg_color }} 0%, rgba(248, 253, 250, 1) 100%);
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-    font-family: var(--font-body-family, sans-serif);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .section-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 50%;
-    height: 60%;
-    background: radial-gradient(ellipse, {{ accent | color_modify: 'alpha', 0.06 }} 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .section-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    bottom: -10%;
-    left: -5%;
-    width: 40%;
-    height: 50%;
-    background: radial-gradient(ellipse, {{ secondary | color_modify: 'alpha', 0.04 }} 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  {% if request.design_mode %}
-  .section-{{ section.id }} .am-fade-up {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  {% endif %}
-
-  .am-container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes countUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-
-  .am-achievements-header {
-    text-align: center;
-    margin-bottom: clamp(3rem, 6vw, 5rem);
-  }
-
-  .am-achievements-title {
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: white;
-    letter-spacing: -0.03em;
-    margin: 0;
-    position: relative;
-    display: inline-block;
-  }
-
-  .am-achievements-title::after {
-    content: '';
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(90deg, {{ accent }}, {{ secondary }});
-    border-radius: 2px;
-  }
-
-  .am-stats-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: clamp(4rem, 8vw, 6rem);
-  }
-
-  @media (min-width: 640px) {
-    .am-stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .am-stats-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
-  }
-
-  .am-stat-card {
-    background: linear-gradient(145deg, #ffffff 0%, rgba(248, 253, 250, 0.8) 100%);
-    border-radius: 24px;
-    padding: 2.5rem 1.5rem;
-    text-align: center;
-    box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.04),
-      0 1px 3px rgba(0, 0, 0, 0.02),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .am-stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, {{ accent }}, {{ secondary }});
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .am-stat-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-
-  .am-stat-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 
-      0 25px 50px rgba(16, 185, 129, 0.12),
-      0 0 0 1px {{ accent | color_modify: 'alpha', 0.1 }};
-  }
-
-  .am-stat-card:hover::before {
-    opacity: 1;
-  }
-
-  .am-stat-card:hover::after {
-    opacity: 1;
-  }
-
-  .am-stat-icon {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, {{ accent | color_modify: 'alpha', 0.1 }} 0%, {{ secondary | color_modify: 'alpha', 0.1 }} 100%);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
-    transition: all 0.4s ease;
-  }
-
-  .am-stat-card:hover .am-stat-icon {
-    transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, {{ accent | color_modify: 'alpha', 0.15 }} 0%, {{ secondary | color_modify: 'alpha', 0.15 }} 100%);
-  }
-
-  .am-stat-icon svg {
-    width: 28px;
-    height: 28px;
-    color: {{ accent }};
-    transition: transform 0.3s ease;
-  }
-
-  .am-stat-card:hover .am-stat-icon svg {
-    transform: scale(1.1);
-  }
-
-  .am-stat-value-container {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .am-stat-number {
-    font-size: clamp(2.75rem, 5vw, 3.5rem);
-    font-weight: 900;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--num-color) 0%, var(--num-color-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transition: transform 0.3s ease;
-  }
-
-  .am-stat-suffix {
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 800;
-    margin-left: 4px;
-    letter-spacing: -0.01em;
-  }
-
-  .am-stat-label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #4b5563;
-    position: relative;
-    z-index: 2;
-    letter-spacing: 0.02em;
-  }
-
-  .am-message-section {
-    max-width: 900px;
-    margin: 0;
-    background: linear-gradient(145deg, #ffffff 0%, rgba(248, 253, 250, 0.95) 100%);
-    padding: clamp(2.5rem, 5vw, 4rem);
-    border-radius: 32px;
-    box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.06),
-      0 1px 3px rgba(0, 0, 0, 0.02),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-  }
-
-  .am-message-section::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background: linear-gradient(180deg, {{ accent }}, {{ secondary }});
-    border-radius: 32px 0 0 32px;
-  }
-
-  .am-message-section::after {
-    content: '"';
-    position: absolute;
-    top: 1.5rem;
-    left: 2.5rem;
-    font-size: 8rem;
-    line-height: 1;
-    color: {{ accent | color_modify: 'alpha', 0.08 }};
-    font-family: Georgia, 'Times New Roman', serif;
-    pointer-events: none;
-  }
-
-  .am-message-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .am-message-icon-wrap {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, {{ accent }} 0%, {{ secondary }} 100%);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px {{ accent | color_modify: 'alpha', 0.3 }};
-  }
-
-  .am-message-icon-wrap svg {
-    width: 24px;
-    height: 24px;
-    color: #fff;
-  }
-
-  .am-message-badge {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: {{ accent }};
-    background: {{ accent | color_modify: 'alpha', 0.1 }};
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    border: 1px solid {{ accent | color_modify: 'alpha', 0.2 }};
-  }
-
-  .am-message-title {
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    color: #111827;
-    position: relative;
-    z-index: 2;
-    letter-spacing: -0.02em;
-  }
-
-  .am-message-text {
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
-    line-height: 1.9;
-    color: #4b5563;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .am-message-text:last-of-type {
-    margin-bottom: 2rem;
-  }
-
-  .am-message-sub {
-    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-    font-weight: 700;
-    color: {{ accent }};
-    position: relative;
-    z-index: 2;
-    padding-left: 1.25rem;
-    border-left: 3px solid {{ secondary }};
-    line-height: 1.5;
-  }
-
-  .am-divider {
-    border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, {{ accent | color_modify: 'alpha', 0.2 }}, transparent);
-    margin: 2rem 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  @media (max-width: 768px) {
-    .am-message-section {
-      padding: 2rem 1.5rem;
-      border-radius: 24px;
-    }
-
-    .am-message-section::before {
-      width: 4px;
-    }
-
-    .am-message-section::after {
-      font-size: 5rem;
-      top: 1rem;
-      left: 1.5rem;
-    }
-
-    .am-stat-card {
-      padding: 2rem 1rem;
-    }
-
-    .am-message-icon-wrap {
-      width: 42px;
-      height: 42px;
-    }
-
-    .am-message-icon-wrap svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  .am-fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .am-fade-up.am-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .am-fade-up {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-    .am-stat-card:hover {
-      transform: none;
-    }
-  }
-</style>
-
-<div class="section-{{ section.id }}">
-  <div class="am-container">
-    {% if section.settings.achievements_title != blank %}
-      <div class="am-achievements-header am-fade-up">
-        <h2 class="am-achievements-title">{{ section.settings.achievements_title }}</h2>
-      </div>
-    {% endif %}
-
-    <div class="am-stats-grid">
-      {% for block in section.blocks %}
-        <div class="am-stat-card am-fade-up" style="--num-color: {{ block.settings.number_color }}; --num-color-light: {{ block.settings.number_color | color_lighten: 15 }}; transition-delay: {{ forloop.index | times: 100 }}ms;" {{ block.shopify_attributes }}>
-          <div class="am-stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              {% case forloop.index %}
-                {% when 1 %}
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                {% when 2 %}
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                {% when 3 %}
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                {% else %}
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              {% endcase %}
-            </svg>
-          </div>
-          <div class="am-stat-value-container">
-            <span class="am-stat-number am-number-{{ section.id }}" style="color: {{ block.settings.number_color }};">
-              {{ block.settings.number }}
-            </span>
-            <span class="am-stat-suffix" style="color: {{ block.settings.suffix_color }};">
-              {{ block.settings.suffix }}
-            </span>
-          </div>
-          <div class="am-stat-label">
-            {{ block.settings.label }}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    <div class="am-message-section am-fade-up" style="transition-delay: 400ms;">
-      <div class="am-message-icon">
-        <div class="am-message-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
-          </svg>
-        </div>
-        <span class="am-message-badge">Leadership</span>
-      </div>
-      {% if section.settings.chairman_title != blank %}
-        <h2 class="am-message-title">{{ section.settings.chairman_title }}</h2>
-      {% endif %}
-      
-      {% if section.settings.chairman_message != blank %}
-        <p class="am-message-text">{{ section.settings.chairman_message }}</p>
-      {% endif %}
-      
-      {% if section.settings.chairman_sub_message != blank %}
-        <p class="am-message-sub">{{ section.settings.chairman_sub_message }}</p>
-      {% endif %}
-    </div>
-
-    <div class="am-message-section am-fade-up" style="transition-delay: 500ms; margin-top: 2.5rem;">
-      <div class="am-message-icon">
-        <div class="am-message-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-        </div>
-        <span class="am-message-badge">Leadership</span>
-      </div>
-      {% if section.settings.director_title != blank %}
-        <h2 class="am-message-title">{{ section.settings.director_title }}</h2>
-      {% endif %}
-      
-      {% if section.settings.director_message_1 != blank %}
-        <p class="am-message-text">{{ section.settings.director_message_1 }}</p>
-      {% endif %}
-      
-      {% if section.settings.director_message_2 != blank %}
-        <hr class="am-divider">
-        <p class="am-message-text">{{ section.settings.director_message_2 }}</p>
-      {% endif %}
-      
-      {% if section.settings.director_sub_message != blank %}
-        <p class="am-message-sub">{{ section.settings.director_sub_message }}</p>
-      {% endif %}
-    </div>
-  </div>
-</div>
-
-<script>
-  (function() {
-    function initAchievements() {
-      // Intersection Observer for fade up animations
-      const observerOptions = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                  entry.target.classList.add('am-visible');
-                  // Optional: Counter animation
-                  const numberElement = entry.target.querySelector('.am-stat-number');
-                  if (numberElement && !numberElement.dataset.animated) {
-                     const finalValue = parseInt(numberElement.textContent, 10);
-                     if (!isNaN(finalValue)) {
-                         animateValue(numberElement, 0, finalValue, 1500);
-                         numberElement.dataset.animated = "true";
-                     }
-                  }
-                  observer.unobserve(entry.target);
-              }
-          });
-      }, observerOptions);
-
-      const fadeElements = document.querySelectorAll('.section-{{ section.id }} .am-fade-up');
-      fadeElements.forEach(el => observer.observe(el));
-      
-      // Counter animation function
-      function animateValue(obj, start, end, duration) {
-          let startTimestamp = null;
-          const step = (timestamp) => {
-              if (!startTimestamp) startTimestamp = timestamp;
-              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-              // easeOutQuart
-              const easeProgress = 1 - Math.pow(1 - progress, 4);
-              obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
-              if (progress < 1) {
-                  window.requestAnimationFrame(step);
-              } else {
-                  obj.innerHTML = end;
-              }
-          };
-          window.requestAnimationFrame(step);
-      }
-    }
-
-    // Run immediately
-    initAchievements();
-
-    // Re-run when section is loaded in Shopify theme editor
-    document.addEventListener('shopify:section:load', function(event) {
-      if (event.detail.sectionId === '{{ section.id }}') {
-        initAchievements();
-      }
-    });
-  })();
-</script>
