@@ -320,9 +320,9 @@
       "settings": {
         "title": "",
         "max_width": 1300,
-        "bg_color": "#f8fbfa",
-        "heading_color": "#14442d",
-        "text_color": "#14442d",
+        "bg_color": "#38aa3d",
+        "heading_color": "#333333",
+        "text_color": "#333333",
         "accent_color": "#b3b3b3",
         "divider_color": "#d1d5db",
         "padding_top": 80,
