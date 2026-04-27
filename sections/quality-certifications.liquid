@@ -11,7 +11,6 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
     background-color: {{ section_bg }};
-    position: relative;
   }
 
   .quality-certs-{{ section.id }} .container {
@@ -20,173 +19,111 @@
     padding: 0 1.5rem;
   }
 
-  /* ── Header ── */
   .quality-certs-{{ section.id }} .header-wrap {
     text-align: center;
-    margin-bottom: 4rem;
-    max-width: 800px;
+    margin-bottom: 3rem;
+  }
+
+  .quality-certs-{{ section.id }} .main-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: {{ heading_color }};
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+
+  .quality-certs-{{ section.id }} .subheading {
+    font-size: 1rem;
+    color: {{ text_color }};
+    line-height: 1.6;
+    margin: 0;
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  .quality-certs-{{ section.id }} .main-title-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .quality-certs-{{ section.id }} .title-icon {
-    width: 48px;
-    height: 48px;
-    color: {{ accent_color }};
-    flex-shrink: 0;
-  }
-
-  .quality-certs-{{ section.id }} .main-title {
-    font-size: clamp(2.25rem, 5vw, 3.25rem);
-    color: {{ heading_color }};
-    text-transform: uppercase;
-    font-weight: 600;
-    margin: 0;
-    font-family: serif;
-    letter-spacing: 0.05em;
-  }
-
-  .quality-certs-{{ section.id }} .subheading {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    color: #444;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* ── Grid ── */
   .quality-certs-{{ section.id }} .certs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 4rem;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  @media screen and (min-width: 640px) {
+    .quality-certs-{{ section.id }} .certs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media screen and (min-width: 1024px) {
     .quality-certs-{{ section.id }} .certs-grid {
       grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
+      gap: 1.5rem;
     }
   }
 
   .quality-certs-{{ section.id }} .cert-card {
     background: #fff;
-    padding: 2.5rem 1.5rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .quality-certs-{{ section.id }} .cert-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   }
 
   .quality-certs-{{ section.id }} .cert-stamp {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background-color: {{ heading_color }};
+    background-color: {{ accent_color }};
     display: flex;
     align-items: center;
     justify-content: center;
-    color: {{ accent_color }};
-    margin-bottom: 0.5rem;
-    border: 2px solid {{ accent_color | color_modify: 'alpha', 0.2 }};
+    color: #fff;
+    margin: 0 auto 1rem;
   }
 
   .quality-certs-{{ section.id }} .cert-stamp svg {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
 
   .quality-certs-{{ section.id }} .cert-name {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 700;
     color: {{ heading_color }};
     margin: 0;
-    line-height: 1.2;
-    text-transform: uppercase;
+    line-height: 1.3;
   }
 
-  .quality-certs-{{ section.id }} .cert-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* ── Footer Box ── */
   .quality-certs-{{ section.id }} .footer-banner {
     background-color: {{ footer_bg }};
-    border: 1.5px solid {{ accent_color | color_modify: 'alpha', 0.5 }};
-    padding: 3rem 2rem;
-    border-radius: 12px;
+    border: 1px solid {{ accent_color | color_modify: 'alpha', 0.3 }};
+    padding: 2rem;
+    border-radius: 8px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .quality-certs-{{ section.id }} .banner-icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background-color: {{ heading_color }};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: {{ accent_color }};
   }
 
   .quality-certs-{{ section.id }} .banner-text {
-    font-size: 1.2rem;
-    color: #333;
-    max-width: 800px;
-    line-height: 1.5;
-    font-weight: 500;
+    font-size: 1rem;
+    color: {{ text_color }};
+    line-height: 1.7;
+    margin: 0;
   }
 
-  @media screen and (max-width: 767px) {
-    .quality-certs-{{ section.id }} .main-title-wrap {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .quality-certs-{{ section.id }} .footer-banner {
-      padding: 2rem 1rem;
-    }
-    .quality-certs-{{ section.id }} .banner-text {
-      font-size: 1.05rem;
-    }
+  .quality-certs-{{ section.id }} .banner-text p {
+    margin: 0;
   }
 {%- endstyle -%}
 
 <section class="quality-certs-{{ section.id }}">
   <div class="container">
     <div class="header-wrap">
-      <div class="main-title-wrap">
-        <div class="title-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M9 12l2 2 4-4"></path>
-          </svg>
-        </div>
-        <h2 class="main-title">{{ section.settings.title }}</h2>
-      </div>
+      <h2 class="main-title">{{ section.settings.title }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
@@ -197,24 +134,16 @@
         <div class="cert-card" {{ block.shopify_attributes }}>
           <div class="cert-stamp">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
               <path d="M9 12l2 2 4-4"></path>
             </svg>
           </div>
           <h4 class="cert-name">{{ block.settings.title | escape }}</h4>
-          <span class="cert-label">Certified</span>
         </div>
       {%- endfor -%}
     </div>
 
     {%- if section.settings.footer_text != blank -%}
       <div class="footer-banner">
-        <div class="banner-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M9 12l2 2 4-4"></path>
-          </svg>
-        </div>
         <div class="banner-text">
           {{ section.settings.footer_text }}
         </div>
@@ -233,19 +162,29 @@
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "CERTIFIED QUALITY"
+      "default": "Certified Quality"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Quality is at the heart of everything we do. Our manufacturing processes strictly follow international food safety standards. We are proud to be certified with:"
+      "default": "Quality is at the heart of everything we do. Our manufacturing processes strictly follow international food safety standards."
     },
     {
       "type": "richtext",
       "id": "footer_text",
-      "label": "Footer Banner Text",
+      "label": "Footer Text",
       "default": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "default": 1200
     },
     {
       "type": "header",
@@ -260,19 +199,25 @@
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading & Stamp Color (Dark Green)",
+      "label": "Heading Color",
       "default": "#003D2B"
     },
     {
       "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
       "id": "accent_color",
-      "label": "Accent Color (Gold)",
-      "default": "#C5A47E"
+      "label": "Accent Color",
+      "default": "#10A560"
     },
     {
       "type": "color",
       "id": "footer_bg_color",
-      "label": "Footer Banner Background (Mint)",
+      "label": "Footer Background Color",
       "default": "#E8F5F1"
     },
     {
@@ -287,7 +232,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -297,13 +242,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 80
-    },
-    {
-      "type": "number",
-      "id": "max_width",
-      "label": "Section Max Width (px)",
-      "default": 1200
+      "default": 60
     }
   ],
   "blocks": [
