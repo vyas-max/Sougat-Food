@@ -11,6 +11,13 @@
     background-color: {{ bg_color }};
   }
 
+  @media screen and (max-width: 767px) {
+    .achievements-msg-{{ section.id }} {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
   .achievements-msg-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
@@ -20,6 +27,12 @@
   .achievements-msg-{{ section.id }} .achievements-wrap {
     text-align: center;
     margin-bottom: 3rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .achievements-msg-{{ section.id }} .achievements-wrap {
+      margin-bottom: 1.5rem;
+    }
   }
 
   .achievements-msg-{{ section.id }} .main-title {
@@ -282,7 +295,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 60
+      "default": 0
     },
     {
       "type": "range",

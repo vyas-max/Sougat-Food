@@ -13,6 +13,13 @@
     background-color: {{ section_bg }};
   }
 
+  @media screen and (max-width: 767px) {
+    .quality-certs-{{ section.id }} {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
   .quality-certs-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
@@ -22,6 +29,12 @@
   .quality-certs-{{ section.id }} .header-wrap {
     text-align: center;
     margin-bottom: 3rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .quality-certs-{{ section.id }} .header-wrap {
+      margin-bottom: 1.5rem;
+    }
   }
 
   .quality-certs-{{ section.id }} .main-title {

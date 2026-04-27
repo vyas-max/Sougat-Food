@@ -13,6 +13,13 @@
     color: #fff;
   }
 
+  @media screen and (max-width: 767px) {
+    .infra-tech-{{ section.id }} {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
   .infra-tech-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
@@ -22,6 +29,12 @@
   .infra-tech-{{ section.id }} .header-wrap {
     text-align: center;
     margin-bottom: 3rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .infra-tech-{{ section.id }} .header-wrap {
+      margin-bottom: 1.5rem;
+    }
   }
 
   .infra-tech-{{ section.id }} .main-title {
@@ -217,7 +230,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 60
+      "default": 0
     }
   ],
   "blocks": [

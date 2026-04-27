@@ -15,6 +15,13 @@
     overflow: hidden;
   }
 
+  @media screen and (max-width: 767px) {
+    .text-dividers-{{ section.id }} {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
   .text-dividers-{{ section.id }} .container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
@@ -27,7 +34,13 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 4rem;
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    .text-dividers-{{ section.id }} .section-divider {
+      margin-bottom: 2rem;
+    }
   }
 
   .text-dividers-{{ section.id }} .divider-line {
@@ -148,7 +161,7 @@
       {%- endfor -%}
     </div>
 
-    <div class="section-divider" style="margin-top: 4rem; margin-bottom: 0;">
+    <div class="section-divider" style="margin-top: 2rem; margin-bottom: 0;">
       <div class="divider-line"></div>
       <div class="divider-leaf">
         <svg viewBox="0 0 100 50" fill="currentColor" style="transform: rotate(180deg)"><path d="M50 0C50 0 100 25 100 50C100 50 50 50 50 50C50 50 0 50 0 50C0 25 50 0 50 0Z"/></svg>
@@ -185,7 +198,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 100
+      "default": 0
     },
     {
       "type": "range",
@@ -195,7 +208,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 100
+      "default": 20
     },
     {
       "type": "number",

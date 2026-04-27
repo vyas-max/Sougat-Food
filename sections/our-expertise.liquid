@@ -7,9 +7,19 @@
 {%- style -%}
   .our-expertise-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: 0;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
     background-color: {{ section_bg }};
     position: relative;
+  }
+
+  @media screen and (max-width: 767px) {
+    .our-expertise-{{ section.id }},
+    .achievements-msg-{{ section.id }},
+    .quality-certifications-{{ section.id }},
+    .infrastructure-technology-{{ section.id }} {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
   }
 
   .our-expertise-{{ section.id }} .container {
@@ -22,6 +32,12 @@
   .our-expertise-{{ section.id }} .header-wrap {
     text-align: center;
     margin-bottom: 4rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .our-expertise-{{ section.id }} .header-wrap {
+      margin-bottom: 2rem;
+    }
   }
 
   .our-expertise-{{ section.id }} .main-title {
@@ -55,6 +71,16 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
     margin-bottom: 5rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    .our-expertise-{{ section.id }} .expertise-grid {
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .our-expertise-{{ section.id }} .expert-item {
+      padding: 1.5rem;
+    }
   }
 
   @media screen and (min-width: 768px) {
@@ -101,6 +127,13 @@
     border-top: 3px solid {{ accent_color }};
     margin-top: 2rem;
     color: #fff;
+  }
+
+  @media screen and (max-width: 767px) {
+    .our-expertise-{{ section.id }} .footer-bar {
+      padding: 2rem 0;
+      margin-top: 1rem;
+    }
   }
 
   .our-expertise-{{ section.id }} .footer-inner {
@@ -306,6 +339,16 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
       "default": 80
     },
     {
