@@ -118,7 +118,7 @@
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "enable_autoplay": true,
-        "autoplay_speed": 3,
+        "autoplay_speed": 4,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
