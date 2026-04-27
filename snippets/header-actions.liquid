@@ -47,35 +47,6 @@
         {% render 'account-actions' %}
       </div>
     </anchored-popover-component>
-
-    <dialog-component
-      class="account-drawer"
-      {{ block.shopify_attributes }}
-    >
-      {% render 'account-button', attributes: 'on:click="/showDialog"' %}
-      <dialog
-        ref="dialog"
-        class="color-{{ settings.popover_color_scheme }} dialog-modal dialog-drawer dialog-bottom-sheet account-drawer__dialog"
-        scroll-lock
-        aria-labelledby="account-drawer-heading"
-      >
-        <button
-          ref="closeButton"
-          on:click="/closeDialog"
-          class="button button-unstyled close-button account-drawer__close-button"
-          aria-label="{{ 'actions.close_dialog' | t }}"
-          autofocus
-        >
-          <span
-            class="svg-wrapper"
-            aria-hidden="true"
-          >
-            {{- 'icon-close.svg' | inline_asset_content -}}
-          </span>
-        </button>
-        {% render 'account-actions' %}
-      </dialog>
-    </dialog-component>
   {% endif %}
 
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}

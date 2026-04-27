@@ -53,6 +53,7 @@
 
   capture mobile_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
+    render 'header-account-mobile'
   endcapture
 
   capture navigation_bar
@@ -625,43 +626,44 @@
     }
 
     @media screen and (max-width: 749px) {
-      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend) 1fr
-        var(--header-mobile-bookend) auto;
-
-      grid-template-areas: 'leftA leftB center rightA rightB';
+      --header-template-columns: 1fr auto 1fr;
+      grid-template-areas: 'left center right';
       column-gap: 0;
       align-items: center;
       padding-block: 0;
-      padding-inline: var(--padding-xs);
+      padding-inline: 5px;
+
+      .header__column--left {
+        display: flex !important;
+        grid-area: left;
+        justify-content: flex-start;
+        margin-left: -5px; /* Moves menu button further left */
+        gap: 5px; /* Gap between menu and account icon */
+      }
 
       .header-logo {
         grid-area: center;
+        justify-self: center;
+        display: flex;
+        justify-content: center;
+      }
+
+      .header__column--right {
+        display: flex !important;
+        grid-area: right;
+        justify-content: flex-end;
+      }
+
+      .header__actions-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .header-logo__image {
         --header-logo-image-width-mobile: 85px !important;
         --header-logo-image-height-mobile: auto !important;
         max-width: 85px;
-      }
-
-      &:not(:has(header-actions)) .search-action {
-        grid-area: leftB;
-      }
-
-      &:not(:has(.account-actions)) .search-action {
-        grid-area: rightA;
-      }
-
-      .search-action {
-        grid-area: leftB;
-      }
-
-      .header__actions-wrapper {
-        grid-area: rightB;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        justify-self: end;
       }
     }
   }
