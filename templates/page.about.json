@@ -100,7 +100,7 @@
         "content_direction": "column",
         "gap": 32,
         "content_gap": 24,
-        "color_scheme": "scheme-about-cream",
+        "color_scheme": "scheme-5",
         "padding_top": 56,
         "padding-block-end": 40,
         "header_bottom_spacing": 32
