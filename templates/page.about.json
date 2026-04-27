@@ -257,13 +257,14 @@
         "offering_qK9Vja"
       ],
       "custom_css": [
-        ".description {color: black;}"
+        ".description {color: black;}",
+        ".offer-title{color: black;}"
       ],
       "name": "Infrastructure & Tech",
       "settings": {
         "title": "INFRASTRUCTURE & TECHNOLOGY",
         "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
-        "offer_title": "We offer:",
+        "offer_title": "We offer :",
         "bg_color": "#dfdfdf",
         "accent_color": "#38aa3d",
         "padding_top": 100,
