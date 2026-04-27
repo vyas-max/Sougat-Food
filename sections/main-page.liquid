@@ -1,89 +1,87 @@
-{% stylesheet %}
-  .main-page-section {
-    position: relative;
+{%- style -%}
+  .main-page-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#F9F7F2' }};
+    padding-top: {{ section.settings.padding-block-start }}px;
+    padding-bottom: {{ section.settings.padding-block-end }}px;
   }
 
-  .main-page-wrapper {
+  .ethos-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+
+  .ethos-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #888;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
+
+  .ethos-title {
+    font-family: serif;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    letter-spacing: -0.01em;
+  }
+
+  .ethos-description {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #555;
+    max-width: 720px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  .main-page-blocks {
     max-width: var(--page-width);
     margin: 0 auto;
-    padding-left: var(--page-margin);
-    padding-right: var(--page-margin);
-  }
-
-  .main-page-header {
-    text-align: {{ section.settings.text_alignment }};
-    padding: var(--padding-block-start) 0 {{ section.settings.header_bottom_spacing }}px;
-  }
-
-  .main-page-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    color: rgb(var(--color-foreground-rgb));
-    margin: 0 0 0.5rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-
-  .main-page-subtitle {
-    font-size: clamp(1rem, 2vw, 1.125rem);
-    color: rgb(var(--color-foreground-rgb));
-    opacity: 0.75;
-    margin: 0;
-    max-width: {{ section.settings.subtitle_max_width }}px;
-    line-height: 1.6;
-    {% if section.settings.text_alignment == 'center' %}
-      margin-left: auto;
-      margin-right: auto;
-    {% elsif section.settings.text_alignment == 'right' %}
-      margin-left: auto;
-    {% endif %}
-  }
-
-  .main-page-content {
-    position: relative;
-  }
-
-  .main-page-content > * + * {
-    margin-top: {{ section.settings.content_gap }}px;
+    padding: 0 var(--page-margin);
   }
 
   @media screen and (max-width: 749px) {
-    .main-page-header {
-      padding: calc(var(--padding-block-start) / 2) 0 {{ section.settings.header_bottom_spacing | divided_by: 2 }}px;
+    .ethos-title {
+      font-size: 2rem;
     }
-
-    .main-page-title {
-      font-size: 1.75rem;
-    }
-
-    .main-page-subtitle {
+    .ethos-description {
       font-size: 1rem;
     }
   }
-{% endstylesheet %}
+{%- endstyle -%}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div class="section main-page-section color-{{ section.settings.color_scheme }}">
-  <div
-    class="
-      spacing-style
-      layout-panel-flex
-      layout-panel-flex--column
-      main-page-wrapper
-      section-content-wrapper
-    "
-    style="
-      {% render 'layout-panel-style', settings: section.settings %}
-      {% render 'spacing-style', settings: section.settings %}
-    "
-  >
+<div class="main-page-section-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="ethos-header">
+    {%- if section.settings.top_label != blank -%}
+      <span class="ethos-label">{{ section.settings.top_label }}</span>
+    {%- endif -%}
+    
+    {%- if section.settings.title != blank -%}
+      <h1 class="ethos-title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <div class="ethos-description">
+        {{ section.settings.description }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="main-page-blocks">
     {% content_for 'blocks' %}
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "t:names.page",
+  "name": "Main Page (Ethos Style)",
   "class": "section-wrapper",
   "blocks": [
     {
@@ -96,72 +94,38 @@
       "type": "_divider"
     }
   ],
-  "disabled_on": {
-    "groups": ["header"]
-  },
   "settings": [
     {
-      "type": "select",
-      "id": "text_alignment",
-      "label": "Text Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center"
+      "type": "header",
+      "content": "Ethos Header Content"
     },
     {
-      "type": "range",
-      "id": "subtitle_max_width",
-      "label": "Subtitle Max Width",
-      "min": 400,
-      "max": 900,
-      "step": 50,
-      "unit": "px",
-      "default": 600
+      "type": "text",
+      "id": "top_label",
+      "label": "Top Small Label",
+      "default": "THE SOUGAT ETHOS"
     },
     {
-      "type": "select",
-      "id": "content_direction",
-      "label": "t:settings.direction",
-      "options": [
-        {
-          "value": "column",
-          "label": "t:options.vertical"
-        }
-      ],
-      "default": "column",
-      "visible_if": "{{ section.settings.gap < 0 }}"
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "Preserving Nature's Purity"
     },
     {
-      "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 12
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "In a world of synthetic additives and over-processing, we choose the path of quiet integrity. We believe the most powerful ingredients are those left untouched by modern shortcuts, captured at their peak through the art of artisanal freeze-drying."
     },
     {
-      "type": "range",
-      "id": "content_gap",
-      "label": "Content Block Gap",
-      "min": 8,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 24
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F9F7F2"
     },
     {
       "type": "color_scheme",
@@ -170,38 +134,24 @@
       "default": "scheme-1"
     },
     {
-      "type": "header",
-      "content": "t:content.padding"
-    },
-    {
       "type": "range",
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 100,
+      "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 100
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 100,
+      "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "header_bottom_spacing",
-      "label": "Bottom Spacing",
-      "min": 0,
-      "max": 60,
-      "step": 4,
-      "unit": "px",
-      "default": 32
+      "default": 80
     }
   ]
 }
