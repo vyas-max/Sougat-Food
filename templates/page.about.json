@@ -99,7 +99,7 @@
       "settings": {
         "top_label": "THE SOUGAT ETHOS",
         "title": "Welcome to Shubhalaxmi Food Industry",
-        "description": "Established in 1962, Shubhalaxmi Food Industry has grown into a trustedname in the Indian food manufacturing sector, built on a strong foundation ofquality, integrity, and innovation. With decades of expertise and afuture-focused vision, we specialize in delivering safe, hygienic, and globallycompliant food products to domestic and international markets.",
+        "description": "<p>Established in 1962, Shubhalaxmi Food Industry has grown into a trusted name in the Indian food manufacturing sector, built on a strong foundation of quality, integrity, and innovation. With decades of expertise and a future-focused vision, we specialize in delivering safe, hygienic, and globally compliant food products to domestic and international markets.</p>",
         "bg_color": "#f9f7f2",
         "color_scheme": "scheme-3",
         "padding-block-start": 40,
@@ -263,7 +263,7 @@
       "name": "Infrastructure & Tech",
       "settings": {
         "title": "INFRASTRUCTURE & TECHNOLOGY",
-        "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
+        "description": "<p>Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.</p>",
         "offer_title": "We offer :",
         "bg_color": "#dfdfdf",
         "accent_color": "#38aa3d",
@@ -325,7 +325,6 @@
         "stat_VpMJ3t": {
           "type": "stat",
           "settings": {
-            "icon_svg": "",
             "number": "25",
             "suffix": "K",
             "label": "Happy Clients"
@@ -334,7 +333,6 @@
         "stat_HgJFz3": {
           "type": "stat",
           "settings": {
-            "icon_svg": "",
             "number": "15",
             "suffix": "+",
             "label": "Export Country"
@@ -343,7 +341,6 @@
         "stat_TWexwF": {
           "type": "stat",
           "settings": {
-            "icon_svg": "",
             "number": "5",
             "suffix": "Ton",
             "label": "Manufacturing"
@@ -352,7 +349,6 @@
         "stat_wwKxtV": {
           "type": "stat",
           "settings": {
-            "icon_svg": "",
             "number": "50",
             "suffix": "+",
             "label": "Products"
@@ -369,10 +365,13 @@
       "settings": {
         "achievements_title": "Achievements",
         "chairman_title": "Chairman’s Message",
-        "chairman_message": "At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.",
-        "director_title": "Director’s Message",
-        "director_message_1": "At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives.",
-        "director_message_2": "Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles.",
+        "chairman_message": "<p>At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.</p>",
+        "director_title": "Director's Message",
+        "director_message": "<p>At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives.</p><p>Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles.</p>",
+        "chairman_name": "Sougat Foods",
+        "chairman_designation": "Chairman, Sougat Foods",
+        "director_name": "Duj Hame",
+        "director_designation": "Director, Sougat Foods",
         "background_color": "#dfdfdf",
         "heading_color": "#38aa3d",
         "accent_color": "#38aa3d",
