@@ -26,6 +26,7 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
+  {{ cta_buttons }}
   {% if shop.customer_accounts_enabled %}
     <script
       src="{{ 'dialog.js' | asset_url }}"
@@ -563,9 +564,12 @@
 
   header-actions {
     display: flex;
+    align-items: center;
+    gap: var(--gap-md);
 
     @media screen and (max-width: 749px) {
       justify-self: flex-end;
+      gap: var(--gap-sm);
     }
   }
 

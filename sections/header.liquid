@@ -79,8 +79,10 @@
   endcapture
 
   capture actions
+    echo '<div class="header__actions-wrapper">'
     render 'header-actions'
     echo header_cta_buttons
+    echo '</div>'
   endcapture
 
   if shop.customer_accounts_enabled
@@ -585,6 +587,10 @@
     /* Mobile layout */
     --header-mobile-bookend: 44px;
 
+    @media screen and (max-width: 749px) {
+      --header-mobile-bookend: 36px;
+    }
+
     display: grid;
     grid-template-areas: 'left center right';
     grid-gap: var(--gap-xl);
@@ -620,17 +626,22 @@
 
     @media screen and (max-width: 749px) {
       --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend) 1fr
-        var(--header-mobile-bookend) var(--header-mobile-bookend);
+        var(--header-mobile-bookend) auto;
 
       grid-template-areas: 'leftA leftB center rightA rightB';
-      grid-column: span 3;
       column-gap: 0;
       align-items: center;
       padding-block: 0;
-      padding-inline: 0 var(--padding-3xs);
+      padding-inline: var(--padding-xs);
 
       .header-logo {
         grid-area: center;
+      }
+
+      .header-logo__image {
+        --header-logo-image-width-mobile: 85px !important;
+        --header-logo-image-height-mobile: auto !important;
+        max-width: 85px;
       }
 
       &:not(:has(header-actions)) .search-action {
@@ -645,8 +656,12 @@
         grid-area: leftB;
       }
 
-      header-actions {
+      .header__actions-wrapper {
         grid-area: rightB;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-self: end;
       }
     }
   }
@@ -780,6 +795,13 @@
     transition: all 0.25s ease;
     cursor: pointer;
     flex-shrink: 0;
+
+    @media screen and (max-width: 749px) {
+      --btn-px: 10px !important;
+      --btn-py: 5px !important;
+      --btn-fs: 9px !important;
+      min-height: 26px;
+    }
   }
 
   .header-cta-btn--primary {
@@ -810,14 +832,14 @@
     }
   }
 
-  @media screen and (max-width: 749px) {
-    .header-cta-btn {
-      --btn-px: 12px;
-      --btn-py: 6px;
-      --btn-fs: 11px;
-      --btn-radius: 16px;
-    }
+  .header__actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-md);
+    justify-content: flex-end;
+    height: 100%;
   }
+
 {% endstylesheet %}
 
 {% unless request.design_mode %}
