@@ -454,6 +454,7 @@
     --hero-border-width: {{ section.settings.border_width }}px;
     --hero-border-opacity: {{ section.settings.border_opacity }}%;
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
+    --autoplay-speed: {{ section.settings.autoplay_speed }}s;
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
     {% elsif section.settings.section_height == "full-screen" %}
@@ -507,7 +508,7 @@
       ></a>
     {%- endif -%}
     <div
-      class="hero__media-wrapper"
+      class="hero__media-wrapper {% if section.settings.enable_autoplay and media_count > 1 %}hero__media-wrapper--slider{% endif %}"
       style="--hero-media-count: {{ media_count }};--hero-media-count-mobile: {{ media_count_mobile }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
       data-testid="hero-media-wrapper"
     >
@@ -680,6 +681,25 @@
     :is(a, button, input, textarea, select) {
       pointer-events: auto;
     }
+  }
+
+  /* Slider Styles */
+  .hero__media-wrapper--slider {
+    display: block !important;
+  }
+
+  .hero__media-wrapper--slider > * {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    visibility: hidden;
+  }
+
+  .hero__media-wrapper--slider > .is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
   }
 
   .hero__content-wrapper--design-mode * {
@@ -1227,6 +1247,27 @@
     },
     {
       "type": "header",
+      "content": "Auto-Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Auto-Slider",
+      "default": false,
+      "info": "Automatically switch between Media 1 and Media 2."
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Auto-Slide Speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
@@ -1507,3 +1548,36 @@
   ]
 }
 {% endschema %}
+
+<script>
+  (function() {
+    function initHeroSlider() {
+      const wrapper = document.querySelector('#Hero-{{ section.id }} .hero__media-wrapper--slider');
+      if (!wrapper) return;
+
+      const slides = Array.from(wrapper.children).filter(el => !el.classList.contains('overlay'));
+      if (slides.length < 2) return;
+
+      let currentIndex = 0;
+      slides[currentIndex].classList.add('is-active');
+
+      const intervalTime = {{ section.settings.autoplay_speed | default: 5 }} * 1000;
+
+      setInterval(() => {
+        slides[currentIndex].classList.remove('is-active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('is-active');
+      }, intervalTime);
+    }
+
+    // Run immediately
+    initHeroSlider();
+
+    // Re-run when section is loaded in Shopify theme editor
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initHeroSlider();
+      }
+    });
+  })();
+</script>
