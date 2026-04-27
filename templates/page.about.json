@@ -266,7 +266,7 @@
       ],
       "name": "Infrastructure & Tech",
       "settings": {
-        "title": "Infrastructure                                                                    &                                                                                                                        Technology",
+        "badge_text": "Infrastructure & Technology",
         "description": "Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.",
         "offer_title": "We offer:",
         "max_width": 1300,
@@ -381,7 +381,7 @@
       ],
       "name": "Achievements & Message",
       "settings": {
-        "background_color": "#fcfcfc",
+        "background_color": "#38aa3d",
         "accent_color": "#14442d",
         "secondary_accent": "#38aa3d",
         "padding_top": 60,
