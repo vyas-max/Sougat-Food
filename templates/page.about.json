@@ -15,6 +15,7 @@
         "title": {
           "type": "text",
           "name": "t:names.title",
+          "disabled": true,
           "settings": {
             "text": "<p><strong>Welcome to Shubhalaxmi Food Industry</strong></p>",
             "width": "100%",
@@ -41,6 +42,7 @@
         "content": {
           "type": "text",
           "name": "t:names.content",
+          "disabled": true,
           "settings": {
             "text": "<p>Established in 1962, Shubhalaxmi Food Industry has grown into a trusted<br/>name in the Indian food manufacturing sector, built on a strong foundation of<br/>quality, integrity, and innovation. With decades of expertise and a<br/>future-focused vision, we specialize in delivering safe, hygienic, and globally<br/>compliant food products to domestic and international markets.</p>",
             "width": "100%",
@@ -95,15 +97,13 @@
         "image_WNQ9DD"
       ],
       "settings": {
-        "text_alignment": "center",
-        "subtitle_max_width": 600,
-        "content_direction": "column",
-        "gap": 32,
-        "content_gap": 24,
+        "top_label": "THE SOUGAT ETHOS",
+        "title": "Welcome to Shubhalaxmi Food Industry",
+        "description": "Established in 1962, Shubhalaxmi Food Industry has grown into a trustedname in the Indian food manufacturing sector, built on a strong foundation ofquality, integrity, and innovation. With decades of expertise and afuture-focused vision, we specialize in delivering safe, hygienic, and globallycompliant food products to domestic and international markets.",
+        "bg_color": "#f9f7f2",
         "color_scheme": "scheme-3",
         "padding-block-start": 40,
-        "padding-block-end": 40,
-        "header_bottom_spacing": 32
+        "padding-block-end": 40
       }
     },
     "our_expertise_cQm4Ni": {
@@ -258,7 +258,7 @@
       ],
       "custom_css": [
         ".description {color: black;}",
-        ".offer-title{color: black;}"
+        ".offer-title {color: black;}"
       ],
       "name": "Infrastructure & Tech",
       "settings": {
