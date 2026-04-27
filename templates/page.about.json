@@ -160,7 +160,7 @@
         "subheading": "We manufacture and export a wide range of high-quality food products, including:",
         "footer_label": "QUALITY ASSURANCE",
         "footer_text": "<p>Our advanced processing technology ensures superior taste retention, nutritional value preservation, and extended shelf life — especially in our freeze-drying segment, where we focus on premium quality and global export standards.</p>",
-        "bg_color": "#dfdfdf",
+        "bg_color": "#fff8f0",
         "accent_color": "#38aa3d",
         "footer_bg_color": "#003d2b",
         "padding_top": 40,
@@ -206,13 +206,14 @@
         "title": "Quality & Certifications",
         "subheading": "Quality is at the heart of everything we do. Our manufacturing processes strictly follow international food safety standards. We are proud to be certified with:",
         "footer_text": "<p>These certifications reflect our commitment to food safety, ethical sourcing, transparency, and global compliance.</p>",
-        "bg_color": "#dfdfdf",
+        "max_width": 1300,
+        "bg_color": "#fff8f0",
         "heading_color": "#38aa3d",
+        "text_color": "#333333",
         "accent_color": "#ffc213",
         "footer_bg_color": "#e8f5f1",
         "padding_top": 100,
-        "padding_bottom": 100,
-        "max_width": 1300
+        "padding_bottom": 100
       }
     },
     "infrastructure_technology_arLyFK": {
@@ -258,18 +259,19 @@
       ],
       "custom_css": [
         ".description {color: black;}",
-        ".offer-title {color: black;}"
+        ".offer-title {color: black;}",
+        ".item-text {color: black;}"
       ],
       "name": "Infrastructure & Tech",
       "settings": {
         "title": "INFRASTRUCTURE & TECHNOLOGY",
         "description": "<p>Our modern processing facility is equipped with advanced machinery, hygienic production lines, and strict quality control systems. From raw material procurement to final packaging, every step is carefully monitored to ensure consistency and excellence.</p>",
         "offer_title": "We offer :",
-        "bg_color": "#dfdfdf",
+        "max_width": 1300,
+        "bg_color": "#fff8f0",
         "accent_color": "#38aa3d",
         "padding_top": 100,
-        "padding_bottom": 100,
-        "max_width": 1300
+        "padding_bottom": 100
       }
     },
     "text_with_dividers_mKpVPk": {
@@ -278,7 +280,6 @@
         "text_block_UaDDcf": {
           "type": "text_block",
           "settings": {
-            "style_mode": "light",
             "icon_svg": "",
             "title": "Global Presence",
             "text": "<p>With a strong export network, we cater to clients across multiple international markets. Our focus is on building long-term partnerships by offering reliability, competitive pricing, and premium quality products.</p>"
@@ -287,7 +288,6 @@
         "text_block_pCtaHp": {
           "type": "text_block",
           "settings": {
-            "style_mode": "light",
             "icon_svg": "",
             "title": "Our Vision",
             "text": "<p>To become a trusted global food brand that promotes healthier eating habits, especially for children, by offering natural and nutritious freeze-dried foods. We aim to support a healthier future while staying honest, responsible, and true to our values.</p>"
@@ -296,7 +296,6 @@
         "text_block_r4FFhj": {
           "type": "text_block",
           "settings": {
-            "style_mode": "light",
             "icon_svg": "",
             "title": "Our Mission",
             "text": "<p>To provide safe, high-quality freeze-dried fruits and vegetables that<br>help families choose better snacking options. At a time when childhood obesity<br>is rising due to junk food consumption, we want to offer natural,<br>preservative-free alternatives that are light, nutritious, and convenient. We<br>are committed to ethical practices, food safety, and creating products that<br>truly support children’s health and overall well-being.</p>"
@@ -311,11 +310,10 @@
       "custom_css": [],
       "name": "Text with Dividers",
       "settings": {
-        "bg_color": "#dfdfdf",
-        "heading_color": "#000000",
-        "accent_color": "#38aa3d",
-        "padding_top": 80,
-        "padding_bottom": 64,
+        "bg_color": "#fff8f0",
+        "accent_color": "#fff8f0",
+        "padding_top": 0,
+        "padding_bottom": 8,
         "max_width": 1300
       }
     },
@@ -366,18 +364,18 @@
         "achievements_title": "Achievements",
         "chairman_title": "Chairman’s Message",
         "chairman_message": "<p>At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.</p>",
-        "director_title": "Director's Message",
-        "director_message": "<p>At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives.</p><p>Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles.</p>",
         "chairman_name": "Sougat Foods",
         "chairman_designation": "Chairman, Sougat Foods",
+        "director_title": "Director's Message",
+        "director_message": "<p>At Sougat Foods, our commitment goes beyond business — it is about responsibility. We believe food should be safe, honest, and nourishing for every family. In a world where unhealthy eating habits are increasing, especially among children, we strive to offer natural and trustworthy alternatives.</p><p>Through ethical sourcing, strict quality standards, and responsible manufacturing, we ensure that every product reflects our values of integrity, transparency, and care. Our goal is not just to grow as a company, but to contribute positively to society by promoting healthier lifestyles.</p>",
         "director_name": "Duj Hame",
         "director_designation": "Director, Sougat Foods",
-        "background_color": "#dfdfdf",
+        "max_width": 1200,
+        "background_color": "#fff8f0",
         "heading_color": "#38aa3d",
         "accent_color": "#38aa3d",
         "padding_top": 60,
-        "padding_bottom": 60,
-        "max_width": 1200
+        "padding_bottom": 60
       }
     },
     "176923639961994b9e": {
