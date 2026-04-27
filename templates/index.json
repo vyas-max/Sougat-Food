@@ -91,6 +91,7 @@
         "media_type_1": "image",
         "image_1": "shopify://shop_images/Nation_since_1962._Reliable._Quality_Products._1.jpg",
         "media_type_2": "image",
+        "image_2": "shopify://shop_images/WhatsApp_Image_2026-04-27_at_16.11.36.jpg",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
@@ -103,12 +104,12 @@
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-start",
         "gap": 16,
-        "section_width": "page-width",
+        "section_width": "full-width",
         "section_height": "full-screen",
-        "section_height_custom": 50,
+        "section_height_custom": 100,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
         "overlay_color": "#1c1b1b7a",
@@ -116,6 +117,8 @@
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
         "reflection_opacity": 75,
+        "enable_autoplay": true,
+        "autoplay_speed": 3,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
@@ -1543,6 +1546,8 @@
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
         "reflection_opacity": 75,
+        "enable_autoplay": false,
+        "autoplay_speed": 5,
         "padding-block-start": 100,
         "padding-block-end": 72
       }
