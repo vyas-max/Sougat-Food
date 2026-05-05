@@ -124,7 +124,7 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default",
         "enable_button_1": true,
-        "button_text_1": "Visit Site",
+        "button_text_1": "Explore grocery",
         "button_link_1": "https://grocery.sougatfoods.com/",
         "button_style_1": "primary",
         "button_padding_h_1": 20,
