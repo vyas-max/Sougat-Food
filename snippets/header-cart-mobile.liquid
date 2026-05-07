@@ -1,0 +1,18 @@
+{%- liquid
+  assign cart_icon_svg = 'icon-cart.svg' | inline_asset_content
+-%}
+
+<a
+  href="{{ routes.cart_url }}"
+  class="header-actions__action action__cart desktop:hidden"
+  aria-label="{{ 'accessibility.cart' | t }}"
+>
+  <cart-icon
+    class="header-actions__cart-icon {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
+  >
+    <span class="svg-wrapper" aria-hidden="true">
+      {{ cart_icon_svg }}
+    </span>
+    {% render 'cart-bubble', limit: 100, live_region: true %}
+  </cart-icon>
+</a>

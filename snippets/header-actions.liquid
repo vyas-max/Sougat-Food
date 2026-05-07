@@ -57,7 +57,7 @@
     ></script>
 
     <cart-drawer-component
-      class="cart-drawer"
+      class="cart-drawer mobile:hidden"
       {{ block.shopify_attributes }}
       {% if settings.auto_open_cart_drawer %}
         auto-open
@@ -165,7 +165,7 @@
   {% else %}
     <a
       href="{{ routes.cart_url }}"
-      class="header-actions__action action__cart"
+      class="header-actions__action action__cart mobile:hidden"
       aria-label="{{ 'accessibility.cart' | t }}"
       aria-describedby="cart-bubble-text"
     >
@@ -537,6 +537,10 @@
     display: flex;
     align-items: center;
     gap: var(--gap-md);
+
+    @media screen and (min-width: 750px) {
+      gap: 2rem;
+    }
 
     @media screen and (max-width: 749px) {
       justify-self: flex-end;

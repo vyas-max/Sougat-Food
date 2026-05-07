@@ -36,6 +36,18 @@
     {% endif %}
 
     {{ content_for_header }}
+
+    <style>
+      p {
+        font-size: 19px;
+      }
+
+      @media screen and (min-width: 750px) {
+        p {
+          font-size: 21px;
+        }
+      }
+    </style>
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">

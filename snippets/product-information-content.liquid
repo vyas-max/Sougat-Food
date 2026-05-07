@@ -777,32 +777,47 @@
 
   @media screen and (max-width: 989px) {
     .product-information--revamp {
-      padding: 10px 0;
-      background: #fff;
-      gap: 0;
+      padding: 1.5rem 0;
+      background: #fdfdfa; /* Soft off-white for section separation */
+      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-information--revamp .product-information__grid--revamp {
-      gap: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .product-information--revamp .product-information__media {
-      padding: 0;
-      background: #fff;
+      padding: 0 1rem;
+      background: transparent;
     }
 
     .product-information--revamp .product-details {
-      padding: 0;
-      gap: 0;
+      padding: 0 1.25rem;
+      gap: 1.5rem;
     }
 
     .product-information--revamp .product-details > .group-block {
-      padding: clamp(0.75rem, 4vw, 1.5rem) 0; /* More balanced padding for smaller screens */
+      padding: 1.75rem 1.25rem;
       background: #fff;
-      border: none;
-      box-shadow: none;
+      border: 1px solid rgba(26, 115, 75, 0.1);
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(10, 24, 15, 0.06);
       margin: 0;
-      gap: 0;
+      gap: 1.25rem;
+    }
+
+    .product-information--revamp .product-details h1 {
+      font-size: 1.85rem;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .product-information--revamp .product-details .price {
+      font-size: 1.4rem;
     }
   }
 

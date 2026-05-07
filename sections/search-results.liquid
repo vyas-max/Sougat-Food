@@ -6,6 +6,25 @@
   fetchpriority="low"
 ></script>
 
+{% style %}
+  @media screen and (max-width: 749px) {
+    results-list {
+      padding-top: 0 !important;
+    }
+    .collection-wrapper {
+      gap: 1.5rem !important;
+    }
+    .product-grid {
+      column-gap: 12px !important;
+      row-gap: 28px !important;
+      padding-inline: 15px !important;
+    }
+    .product-grid__item {
+      margin-bottom: 0 !important;
+    }
+  }
+{% endstyle %}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
 <results-list

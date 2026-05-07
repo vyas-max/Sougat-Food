@@ -74,16 +74,33 @@
         color-{{ block_settings.color_scheme }}
       "
     >
-      <button
-        class="button button-unstyled close-button menu-drawer__close-button"
-        type="button"
-        aria-label="{{ 'actions.close' | t }}"
-        on:click="/close"
-      >
-        <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-      </button>
+      <div class="menu-drawer__header">
+        <div class="menu-drawer__logo">
+          <a href="{{ routes.root_url }}">
+            {% if settings.logo != blank %}
+              <img 
+                src="{{ settings.logo | image_url: width: 250 }}" 
+                alt="{{ shop.name }}"
+                width="{{ settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil }}"
+                height="{{ settings.logo_height_mobile }}"
+                loading="lazy"
+              >
+            {% else %}
+              <span class="h4">{{ shop.name }}</span>
+            {% endif %}
+          </a>
+        </div>
+        <button
+          class="button button-unstyled close-button menu-drawer__close-button"
+          type="button"
+          aria-label="{{ 'actions.close' | t }}"
+          on:click="/close"
+        >
+          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
       <nav
         class="menu-drawer__navigation"
         style="
@@ -102,12 +119,27 @@
             {% assign first_accordion_open = false %}
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
-              {% assign animation_index = animation_index | plus: 1 %}
+              {% liquid
+                assign animation_index = animation_index | plus: 1
+                assign is_shop_now = false
+                assign downcase_title = link.title | downcase | strip
+                if downcase_title == 'shop now'
+                  assign is_shop_now = true
+                endif
+              %}
               <li
                 style="--menu-drawer-animation-index: {{ animation_index }};"
-                class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+                class="{%- if block_settings.drawer_accordion or is_shop_now -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
               >
-                {% if block_settings.drawer_accordion and link.links != blank %}
+              {% liquid
+                assign show_accordion = false
+                if block_settings.drawer_accordion or is_shop_now
+                  if link.links != blank
+                    assign show_accordion = true
+                  endif
+                endif
+              %}
+                {% if show_accordion %}
                   {%- comment -%}
                     Accordion for links with children, in menus with fewer than 3 levels of links
                   {%- endcomment -%}
@@ -174,7 +206,7 @@
                       </ul>
                     </details>
                   </accordion-custom>
-                {% elsif block_settings.drawer_accordion == false and link.links != blank %}
+                {% elsif block_settings.drawer_accordion == false and is_shop_now == false and link.links != blank %}
                   {%- comment -%}
                     Flat menus for links with children, in menus with fewer than 3 levels of links
                   {%- endcomment -%}
@@ -688,6 +720,38 @@
             </drawer-localization-component>
           {% endif %}
         {%- endif -%}
+        <div class="menu-drawer__search-container menu-drawer__animated-element" style="--menu-drawer-animation-index: 0.5;">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="menu-drawer__search-form">
+            <div class="field">
+              <input
+                class="search__input field__input"
+                id="Search-In-Drawer"
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="Search for yummy treats..."
+                {%- if settings.predictive_search_enabled -%}
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-owns="predictive-search-results"
+                  aria-controls="predictive-search-results"
+                  aria-haspopup="listbox"
+                  aria-autocomplete="list"
+                  autocorrect="off"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                {%- endif -%}
+              >
+              <input type="hidden" name="options[prefix]" value="last">
+              <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                <span class="svg-wrapper">
+                  {{- 'icon-search.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
         <div class="menu-drawer__cta desktop:hidden">
            {% render 'header-cta-buttons' %}
         </div>
@@ -711,42 +775,63 @@
           endfor
         endif
       -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
-        <div
-          class="menu-drawer__featured-content"
-          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
-        >
-          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
-            {% if top_level_featured_collections.size > 0 %}
-              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
-                  {% render 'resource-card',
-                    resource: collection.object,
-                    resource_type: 'collection',
-                    style: 'overlay',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
-            {% elsif top_level_featured_products_collection.products_count > 0 %}
-              {% paginate top_level_featured_products_collection.products by max_featured_items %}
-                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
-                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+        {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
+          <div
+            class="menu-drawer__featured-content"
+            style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
+          >
+            <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
+              {% if top_level_featured_collections.size > 0 %}
+                {%- for collection in top_level_featured_collections limit: max_featured_items -%}
+                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
                     {% render 'resource-card',
-                      resource: product,
-                      resource_type: 'product',
+                      resource: collection.object,
+                      resource_type: 'collection',
+                      style: 'overlay',
                       image_aspect_ratio: ratio,
                       image_sizes: 'auto, 400px'
                     %}
                   </li>
                 {%- endfor -%}
-              {% endpaginate %}
-            {% endif %}
-          </ul>
+              {% elsif top_level_featured_products_collection.products_count > 0 %}
+                {% paginate top_level_featured_products_collection.products by max_featured_items %}
+                  {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
+                    <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
+                      {% render 'resource-card',
+                        resource: product,
+                        resource_type: 'product',
+                        image_aspect_ratio: ratio,
+                        image_sizes: 'auto, 400px'
+                      %}
+                    </li>
+                  {%- endfor -%}
+                {% endpaginate %}
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
+
+
+        <div class="menu-drawer__creative-footer menu-drawer__animated-element" style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 4 }};">
+          <div class="menu-drawer__social-list">
+            {%- liquid
+              assign social_platforms = 'facebook,instagram,youtube,tiktok,twitter,pinterest' | split: ','
+              for platform in social_platforms
+                assign social_key = platform | append: '_url'
+                if settings[social_key] != blank
+                  echo '<a href="' | append: settings[social_key] | append: '" class="social-icon-link" aria-label="' | append: platform | append: '">'
+                  render 'icon', icon: platform
+                  echo '</a>'
+                endif
+              endfor
+            -%}
+          </div>
+          <div class="menu-drawer__footer-branding">
+            <p>© {{ 'now' | date: "%Y" }} {{ shop.name }}</p>
+            <p class="branding-tagline">Pure Nutrition. Real Flavor.</p>
+          </div>
         </div>
-      {% endif %}
-    </div>
+      </div>
     <div
       class="menu-drawer__backdrop"
       on:click="header-drawer/close"
@@ -830,11 +915,13 @@
     left: 0;
     top: 0;
     padding: 0;
-    background-color: var(--color-background);
-    overflow: auto;
+    background: linear-gradient(180deg, #ffffff 0%, #f9faf9 100%);
+    backdrop-filter: blur(10px);
+    overflow-x: hidden;
+    overflow-y: auto;
     display: flex;
-    border-right: var(--style-border-drawer);
-    box-shadow: var(--shadow-drawer);
+    border-right: 1px solid rgba(26, 115, 75, 0.1);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.05);
     flex-direction: column;
 
     @media screen and (min-width: 750px) {
@@ -844,6 +931,40 @@
     .header__drawer--desktop & {
       height: 100vh;
     }
+  }
+
+  .menu-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-md) var(--drawer-padding);
+    border-bottom: 1px solid rgba(26, 115, 75, 0.05);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .menu-drawer__logo img {
+    max-height: 40px;
+    width: auto;
+  }
+
+  .menu-drawer__close-button {
+    padding: 10px !important;
+    background: #f5f7f6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .menu-drawer__close-button:hover {
+    background: #e1e6e3;
+    transform: rotate(90deg);
   }
 
   .menu-drawer:has(details[open]) {
@@ -1019,15 +1140,19 @@
     min-height: calc(2 * var(--padding-lg) + var(--icon-size-xs));
     font-family: var(--menu-top-level-font-family);
     font-style: var(--menu-top-level-font-style);
-    font-weight: var(--menu-top-level-font-weight);
-    font-size: var(--menu-top-level-font-size);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
     line-height: var(--menu-top-level-font-line-height);
     text-transform: var(--menu-top-level-font-case);
-    color: var(--menu-top-level-font-color);
+    color: #1a3e2b;
     justify-content: space-between;
+    transition: all 0.3s ease;
+    padding-block: var(--padding-sm);
 
     &:hover {
-      color: var(--menu-top-level-font-color);
+      color: #1a734b;
+      transform: translateX(5px);
     }
   }
 
@@ -1254,6 +1379,100 @@
     margin-left: -0.45rem;
   }
 
+  .menu-drawer__search-container {
+    padding: var(--padding-lg) var(--drawer-padding);
+    background: #fff;
+  }
+
+  .menu-drawer__search-form .field {
+    background: #f5f7f6;
+    border-radius: 12px;
+    border: 1px solid rgba(26, 115, 75, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .menu-drawer__search-form .field:focus-within {
+    border-color: #1a734b;
+    box-shadow: 0 0 0 3px rgba(26, 115, 75, 0.05);
+    background: #fff;
+  }
+
+  .menu-drawer__search-form .field__input {
+    padding-left: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .menu-drawer__search-form .field__input::placeholder {
+    opacity: 0.6;
+    font-style: italic;
+    font-family: var(--font-body--family);
+  }
+
+  .menu-drawer__search-form .field__button {
+    width: 44px;
+    background: transparent;
+    color: #1a3e2b;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-drawer__search-form .field__button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menu-drawer__creative-footer {
+    padding: var(--padding-xl) var(--drawer-padding);
+    border-top: 1px solid rgba(26, 115, 75, 0.08);
+    background: #ffffff;
+    margin-top: auto;
+  }
+
+  .menu-drawer__social-list {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-icon-link {
+    color: #1a3e2b;
+    background: #f5f7f6;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .social-icon-link:hover {
+    background: #1a734b;
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  .social-icon-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menu-drawer__footer-branding p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #1a3e2b;
+    font-weight: 500;
+  }
+
+  .branding-tagline {
+    opacity: 0.6;
+    font-size: 0.75rem !important;
+    margin-top: 2px !important;
+  }
+
   .menu-drawer__link-image,
   .menu-drawer__featured-product-image,
   .menu-drawer__featured-collection-image,
@@ -1288,4 +1507,5 @@
       transform: translateX(-1rem);
     }
   }
+
 {% endstylesheet %}
