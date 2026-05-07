@@ -34,6 +34,12 @@
       "unit": "px",
       "label": "Image corner radius",
       "default": 12
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
     }
   ],
   "blocks": [
@@ -111,7 +117,7 @@
 
 {% style %}
   #freeze-dried-hero-slider-{{ section.id }} {
-    background: #fff;
+    background: {{ section.settings.background_color }};
     position: relative;
   }
 
