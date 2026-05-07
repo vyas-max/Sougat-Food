@@ -104,9 +104,11 @@
           # For all other modes, column span is determined by the number of links in the parent link
           assign span_class = 'mega-menu__column--span-' | append: column_span
         endif
-        echo '<li class="mega-menu__column ' | append: span_class | append: '">'
       endif
     %}
+    <li
+      class="mega-menu__column {{ span_class }}"
+    >
     <div>
       <a
         href="{{ link.url }}"
