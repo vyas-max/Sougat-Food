@@ -6,7 +6,7 @@
 <style>
   .on-trend-picks {
     padding: 50px 0;
-    background: #fff;
+    background: {{ section.settings.background_color }};
     border-radius: 32px;
     overflow: hidden;
     margin: 0 clamp(12px, 4vw, 48px);
@@ -535,6 +535,12 @@
       "id": "title_color",
       "label": "Title color",
       "default": "#2b2b2b"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
     }
   ],
   "blocks": [

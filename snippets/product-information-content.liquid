@@ -514,7 +514,7 @@
     --style-border-radius-inputs: 0;
     --variant-picker-button-radius: 0;
     background: var(--product-hero-gradient);
-    padding: clamp(1.5rem, 3vw, 3.75rem) clamp(1rem, 3vw, 4rem);
+    padding: clamp(1.25rem, 2.5vw, 3.25rem) clamp(0.75rem, 2.5vw, 3.5rem);
     border-radius: 36px;
     border: 1px solid rgba(20, 68, 45, 0.08);
     box-shadow: none;
@@ -590,12 +590,13 @@
     background: #ffffff;
     border: 1px solid rgba(26, 115, 75, 0.12);
     border-radius: 36px;
-    padding: clamp(1.85rem, 3vw, 3.25rem);
+    padding: clamp(1.4rem, 2.4vw, 2.85rem);
+    padding-block-start: clamp(1.15rem, 2vw, 2.15rem); /* Reduced top padding for title focus */
     box-shadow: 0 35px 70px rgba(18, 51, 35, 0.12);
     max-width: none;
     display: flex;
     flex-direction: column;
-    gap: clamp(1rem, 2vw, 1.6rem);
+    gap: clamp(0.85rem, 1.6vw, 1.45rem);
     overflow: hidden;
   }
 
@@ -616,8 +617,8 @@
 
   .product-information--revamp .product-details h1 {
     font-size: clamp(1.75rem, 2.6vw, 2.6rem);
-    line-height: 1.05;
-    margin-bottom: 0.35rem;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
     color: #1a3e2b;
     word-break: keep-all;
   }
@@ -629,11 +630,13 @@
   .product-information--revamp .product-details p {
     color: rgba(23, 56, 38, 0.8);
     font-size: 1rem;
+    margin-block: 0;
   }
 
   .product-information--revamp .product-details p:first-of-type {
     font-size: 1.05rem;
     color: rgba(10, 64, 39, 0.7);
+    margin-top: -0.15rem; /* Pull subtitle closer to title */
   }
 
   .product-information--revamp .product-details .price {
@@ -794,7 +797,7 @@
     }
 
     .product-information--revamp .product-details > .group-block {
-      padding: 10px 0;
+      padding: clamp(0.75rem, 4vw, 1.5rem) 0; /* More balanced padding for smaller screens */
       background: #fff;
       border: none;
       box-shadow: none;
