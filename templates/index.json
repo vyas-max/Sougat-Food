@@ -154,7 +154,7 @@
       "name": "Scrolling marquee strip",
       "settings": {
         "label": "Promotional marquee",
-        "background": "#ffffff",
+        "background": "#fff8f0",
         "text_color": "#111111",
         "accent_color": "#cddfcf",
         "speed": 40,
@@ -221,7 +221,8 @@
       "settings": {
         "title": "Shop By Collection",
         "subtitle": "Find the perfect freeze-dried snacks for every need and moment.",
-        "title_color": "#2b2b2b"
+        "title_color": "#2b2b2b",
+        "background_color": "#fafafa"
       }
     },
     "best_sellers_carousel_home": {
@@ -1000,6 +1001,7 @@
         "slide_AKJ9M9",
         "slide_m3VKzG"
       ],
+      "custom_css": [],
       "name": "Freeze Dried Hero Slider",
       "settings": {
         "autoplay": true,
@@ -1086,7 +1088,7 @@
         "cta_link": "",
         "accent_color": "#ff7a45",
         "section_width": "page-width",
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-3",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -2084,8 +2086,8 @@
         "show_divider": true,
         "columns": 4,
         "max_width": 10000,
-        "bg_color": "#f8fbfa",
-        "card_bg": "#ffffff",
+        "bg_color": "#ffffff",
+        "card_bg": "#f9f9f4",
         "heading_color": "#14442d",
         "text_color": "#14442d",
         "accent_color": "#10a560",
