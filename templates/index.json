@@ -1006,7 +1006,8 @@
       "settings": {
         "autoplay": true,
         "autoplay_speed": 4,
-        "image_radius": 20
+        "image_radius": 20,
+        "background_color": "#fff8f0"
       }
     },
     "testimonials_product_slider_brAPUD": {
