@@ -382,7 +382,7 @@
           "type": "center_image",
           "settings": {
             "image": "shopify://shop_images/IMG_5584_1_1.heic",
-            "image_offset": 100,
+            "image_offset": 8,
             "image_offset_mobile": 8
           }
         },
