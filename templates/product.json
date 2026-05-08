@@ -374,7 +374,7 @@
           "type": "center_image",
           "settings": {
             "image": "shopify://shop_images/IMG_5579_e083cb98-877e-4aa4-827f-88f381a4d04e.heic",
-            "image_offset": 0,
+            "image_offset": 100,
             "image_offset_mobile": 0
           }
         },
@@ -382,8 +382,8 @@
           "type": "center_image",
           "settings": {
             "image": "shopify://shop_images/IMG_5584_1_1.heic",
-            "image_offset": -100,
-            "image_offset_mobile": 100
+            "image_offset": 100,
+            "image_offset_mobile": 0
           }
         },
         "center_image_g9nwGT": {
@@ -447,8 +447,8 @@
         "heading_text": "Why Sougat",
         "center_image": "shopify://shop_images/Gemini_Generated_Image_vz240uvz240uvz24.png",
         "center_image_size": 400,
-        "image_offset_desktop": -110,
-        "image_offset_mobile": 0,
+        "image_offset_desktop": 200,
+        "image_offset_mobile": -30,
         "slide_duration": 2000,
         "bg_color": "#ffffff",
         "show_connector_lines": true,
