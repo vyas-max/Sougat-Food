@@ -447,7 +447,7 @@
         "heading_text": "Why Sougat",
         "center_image": "shopify://shop_images/Gemini_Generated_Image_vz240uvz240uvz24.png",
         "center_image_size": 400,
-        "image_offset_desktop": -110,
+        "image_offset_desktop": 0,
         "image_offset_mobile": 0,
         "slide_duration": 2000,
         "bg_color": "#ffffff",
