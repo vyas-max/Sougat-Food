@@ -123,11 +123,78 @@
   }
 
   @media screen and (max-width: 749px) {
-    .text-dividers-{{ section.id }} .blocks-grid {
-      grid-template-columns: 1fr;
+    .text-dividers-{{ section.id }} .container {
+      padding: 0;
     }
+
+    .text-dividers-{{ section.id }} .blocks-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 14px;
+      padding: 4px 20px 8px;
+      scroll-padding-left: 20px;
+    }
+
+    .text-dividers-{{ section.id }} .blocks-grid::-webkit-scrollbar {
+      display: none;
+    }
+
     .text-dividers-{{ section.id }} .content-card {
+      flex: 0 0 calc(88vw - 40px);
+      min-width: calc(88vw - 40px);
+      max-width: calc(88vw - 40px);
+      height: auto;
+      scroll-snap-align: start;
+      box-sizing: border-box;
       padding: 1.5rem;
+      margin: 0;
+    }
+
+    .text-dividers-{{ section.id }} .blocks-grid .content-card:last-child {
+      margin-right: 20px;
+    }
+
+    .text-dividers-{{ section.id }} .slider-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 0 20px;
+    }
+
+    .text-dividers-{{ section.id }} .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: {{ accent_color | default: '#C5A47E' | color_modify: 'alpha', 0.25 }};
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .text-dividers-{{ section.id }} .slider-dot.is-active {
+      width: 24px;
+      border-radius: 10px;
+      background: {{ accent_color | default: '#C5A47E' }};
+    }
+
+    .text-dividers-{{ section.id }} .section-divider {
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .text-dividers-{{ section.id }} .slider-nav {
+      display: none;
     }
   }
 {%- endstyle -%}
@@ -143,7 +210,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <div class="blocks-grid">
+    <div class="blocks-grid" data-slider-track>
       {%- for block in section.blocks -%}
         <div class="content-card" {{ block.shopify_attributes }}>
           <div class="card-icon-wrap">
@@ -161,6 +228,14 @@
       {%- endfor -%}
     </div>
 
+    {%- if section.blocks.size > 1 -%}
+      <div class="slider-nav" data-slider-nav>
+        {%- for block in section.blocks -%}
+          <button type="button" class="slider-dot{% if forloop.first %} is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
     <div class="section-divider" style="margin-top: 2rem; margin-bottom: 0;">
       <div class="divider-line"></div>
       <div class="divider-leaf">
@@ -171,6 +246,113 @@
 
   </div>
 </section>
+
+<script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var sectionEl = document.querySelector('.text-dividers-' + sectionId);
+    if (!sectionEl) return;
+
+    var track = sectionEl.querySelector('[data-slider-track]');
+    var nav = sectionEl.querySelector('[data-slider-nav]');
+    if (!track) return;
+
+    var cards = Array.from(track.querySelectorAll('.content-card'));
+    var dots = nav ? Array.from(nav.querySelectorAll('.slider-dot')) : [];
+    if (cards.length <= 1) return;
+
+    var currentIndex = 0;
+    var autoPlayInterval;
+    var autoPlayDelay = 3000;
+
+    function getPadding() {
+      var style = window.getComputedStyle(track);
+      return parseFloat(style.paddingLeft) || 0;
+    }
+
+    function scrollToIndex(index) {
+      if (index < 0) index = 0;
+      if (index >= cards.length) index = cards.length - 1;
+      currentIndex = index;
+
+      var card = cards[index];
+      var paddingLeft = getPadding();
+      var scrollLeft = card.offsetLeft - paddingLeft;
+      track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('is-active', i === index);
+      });
+    }
+
+    function handleScroll() {
+      var scrollLeft = track.scrollLeft;
+      var closest = 0;
+      var minDist = Infinity;
+      cards.forEach(function(card, i) {
+        var paddingLeft = getPadding();
+        var dist = Math.abs(card.offsetLeft - paddingLeft - scrollLeft);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      currentIndex = closest;
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('is-active', i === closest);
+      });
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayInterval = setInterval(function() {
+        var next = (currentIndex + 1) % cards.length;
+        scrollToIndex(next);
+      }, autoPlayDelay);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+    }
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        scrollToIndex(parseInt(dot.dataset.slideIndex));
+        startAutoPlay();
+      });
+    });
+
+    var scrollRaf;
+    track.addEventListener('scroll', function() {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(handleScroll);
+    }, { passive: true });
+
+    track.addEventListener('touchstart', stopAutoPlay, { passive: true });
+    track.addEventListener('mouseenter', stopAutoPlay);
+
+    function isMobile() {
+      return window.innerWidth <= 749;
+    }
+
+    function init() {
+      if (isMobile()) {
+        startAutoPlay();
+      }
+    }
+
+    init();
+
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        stopAutoPlay();
+        if (isMobile()) startAutoPlay();
+      }, 250);
+    });
+  })();
+</script>
 
 {% schema %}
 {
