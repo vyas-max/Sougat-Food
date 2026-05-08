@@ -12,6 +12,12 @@
     text-align: center;
   }
 
+  @media (max-width: 768px) {
+    .afd-{{ section.id }} {
+      padding: 0; /* Remove padding here to allow slider to go edge-to-edge */
+    }
+  }
+
   .afd-header-{{ section.id }} {
     margin-bottom: 50px;
   }
@@ -219,39 +225,139 @@
   }
 
   @media (max-width: 768px) {
-    .afd-cards-{{ section.id }} {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+    #shopify-section-{{ section.id }} {
+      padding-top: clamp(40px, 10vw, 60px);
+      padding-bottom: clamp(40px, 10vw, 60px);
     }
-    .afd-card-{{ section.id }} {
-      max-width: 100%;
-      min-width: unset;
-      padding: 25px 15px;
+
+    .afd-header-{{ section.id }} {
+      margin-bottom: 30px;
+      padding: 0 20px;
     }
-    .afd-card-number-{{ section.id }} {
-      width: 24px;
-      height: 24px;
-      font-size: 10px;
-      top: 10px;
-      right: 10px;
+
+    .afd-title-{{ section.id }} {
+      font-size: 28px;
     }
-    .afd-card-icon-{{ section.id }} {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 12px;
-    }
-    .afd-card-icon-{{ section.id }} svg,
-    .afd-card-icon-{{ section.id }} img {
-      width: 26px;
-      height: 26px;
-    }
-    .afd-card-title-{{ section.id }} {
+
+    .afd-subheading-{{ section.id }} {
       font-size: 15px;
-      margin: 0 0 10px;
     }
+
+    .afd-why-title-{{ section.id }} {
+      font-size: 24px;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+
+    .afd-cards-{{ section.id }} {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 16px;
+      padding: 20px 16px 40px;
+      margin: 0;
+      scroll-padding-left: 16px;
+      align-items: stretch;
+    }
+
+    .afd-cards-{{ section.id }}::-webkit-scrollbar {
+      display: none;
+    }
+
+    .afd-cards-{{ section.id }} .afd-card-{{ section.id }}:last-child {
+      margin-right: 16px;
+    }
+
+    .afd-card-{{ section.id }} {
+      flex: 0 0 calc(85vw - 32px);
+      min-width: calc(85vw - 32px);
+      max-width: calc(85vw - 32px);
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      padding: 35px 25px;
+      margin: 0;
+      background: #ffffff;
+      border: 1px solid rgba(20, 68, 45, 0.08);
+      box-shadow: 0 8px 20px rgba(20, 68, 45, 0.04);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.4s ease;
+      box-sizing: border-box;
+    }
+
+    .afd-card-{{ section.id }}.is-active {
+      box-shadow: 0 15px 35px rgba(20, 68, 45, 0.08);
+      border-color: {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
+    }
+
+    .afd-card-icon-{{ section.id }} {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+      background: {{ section.settings.accent_color | color_modify: 'alpha', 0.05 }};
+      border-radius: 18px;
+    }
+
+    .afd-card-title-{{ section.id }} {
+      font-size: 19px;
+      margin: 0 0 12px;
+    }
+
     .afd-card-text-{{ section.id }} {
-      font-size: 13px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .afd-slider-nav-{{ section.id }} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 0;
+    }
+
+    .afd-slider-dots-{{ section.id }} {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(20, 68, 45, 0.04);
+      padding: 8px 16px;
+      border-radius: 30px;
+    }
+
+    .afd-slider-dot-{{ section.id }} {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
+      transition: all 0.3s ease;
+      padding: 0;
+      border: none;
+    }
+
+    .afd-slider-dot-{{ section.id }}.active {
+      width: 24px;
+      border-radius: 10px;
+      background: {{ section.settings.accent_color }};
+    }
+
+    .afd-slider-btn-{{ section.id }} {
+      display: none;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .afd-slider-nav-{{ section.id }} {
+      display: none;
     }
   }
 {%- endstyle -%}
@@ -294,52 +400,147 @@
     <h3 class="afd-why-title-{{ section.id }}">{{ section.settings.why_title }}</h3>
   {%- endif -%}
 
-  <div class="afd-cards-{{ section.id }}">
-    {%- for block in section.blocks -%}
-      <div class="afd-card-{{ section.id }}" {{ block.shopify_attributes }}>
-        <div class="afd-card-number-{{ section.id }}">{{ forloop.index }}</div>
-        
-        <div class="afd-card-icon-{{ section.id }}">
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 80 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="40" height="40">
-          {%- else -%}
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              {%- case forloop.index -%}
-                {%- when 1 -%}
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                {%- when 2 -%}
-                  <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-                {%- when 3 -%}
-                  <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                {%- else -%}
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
-              {%- endcase -%}
-            </svg>
+  <div class="afd-cards-wrapper-{{ section.id }}">
+    <div class="afd-cards-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <div class="afd-card-{{ section.id }}" {{ block.shopify_attributes }}>
+          <div class="afd-card-number-{{ section.id }}">{{ forloop.index }}</div>
+          
+          <div class="afd-card-icon-{{ section.id }}">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 80 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="40" height="40">
+            {%- else -%}
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                {%- case forloop.index -%}
+                  {%- when 1 -%}
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  {%- when 2 -%}
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                  {%- when 3 -%}
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                  {%- else -%}
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/>
+                {%- endcase -%}
+              </svg>
+            {%- endif -%}
+          </div>
+          
+          {%- if block.settings.title != blank -%}
+            <h4 class="afd-card-title-{{ section.id }}">{{ block.settings.title }}</h4>
+          {%- endif -%}
+          
+          {%- if block.settings.text != blank -%}
+            <div class="afd-card-text-{{ section.id }}">
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="afd-card-link-{{ section.id }}">
+              Learn more
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
           {%- endif -%}
         </div>
-        
-        {%- if block.settings.title != blank -%}
-          <h4 class="afd-card-title-{{ section.id }}">{{ block.settings.title }}</h4>
-        {%- endif -%}
-        
-        {%- if block.settings.text != blank -%}
-          <div class="afd-card-text-{{ section.id }}">
-            {{ block.settings.text }}
-          </div>
-        {%- endif -%}
+      {%- endfor -%}
+    </div>
 
-        {%- if block.settings.link != blank -%}
-          <a href="{{ block.settings.link }}" class="afd-card-link-{{ section.id }}">
-            Learn more
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        {%- endif -%}
+    <div class="afd-slider-nav-{{ section.id }}">
+      <button type="button" class="afd-slider-btn-{{ section.id }} afd-slider-prev-{{ section.id }}" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="afd-slider-dots-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <button type="button" class="afd-slider-dot-{{ section.id }}{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {%- endfor -%}
       </div>
-    {%- endfor -%}
+      <button type="button" class="afd-slider-btn-{{ section.id }} afd-slider-next-{{ section.id }}" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var slider = document.querySelector('.afd-cards-' + sectionId);
+    var dots = document.querySelectorAll('.afd-slider-dot-' + sectionId);
+    var prevBtn = document.querySelector('.afd-slider-prev-' + sectionId);
+    var nextBtn = document.querySelector('.afd-slider-next-' + sectionId);
+    if (!slider) return;
+
+    function getCards() {
+      return slider.querySelectorAll('.afd-card-' + sectionId);
+    }
+
+    function updateDots(index) {
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === index);
+      });
+      
+      var cards = getCards();
+      cards.forEach(function(card, i) {
+        card.classList.toggle('is-active', i === index);
+      });
+    }
+
+    function scrollToIndex(index) {
+      var cards = getCards();
+      if (index < 0) index = 0;
+      if (index >= cards.length) index = cards.length - 1;
+
+      var card = cards[index];
+      var sliderPaddingLeft = parseInt(getComputedStyle(slider).paddingLeft) || 0;
+      var scrollLeft = card.offsetLeft - sliderPaddingLeft;
+      slider.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+
+    // Use Intersection Observer for better performance and accuracy
+    var observerOptions = {
+      root: slider,
+      threshold: 0.6,
+      rootMargin: '0px'
+    };
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var index = Array.from(getCards()).indexOf(entry.target);
+          updateDots(index);
+        }
+      });
+    }, observerOptions);
+
+    getCards().forEach(function(card) {
+      observer.observe(card);
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', function() {
+      var cards = getCards();
+      var current = Array.from(cards).findIndex(card => card.classList.contains('is-active'));
+      scrollToIndex(current - 1);
+    });
+
+    if (nextBtn) nextBtn.addEventListener('click', function() {
+      var cards = getCards();
+      var current = Array.from(cards).findIndex(card => card.classList.contains('is-active'));
+      scrollToIndex(current + 1);
+    });
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        scrollToIndex(parseInt(dot.dataset.index));
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
