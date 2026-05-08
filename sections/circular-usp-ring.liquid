@@ -58,7 +58,7 @@
           {%- if center_images.size > 0 -%}
             <div class="circular-usp-ring__carousel" data-slide-duration="{{ slide_duration }}">
               {%- for block in center_images -%}
-                <div class="circular-usp-ring__slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+                <div class="circular-usp-ring__slide{% if forloop.first %} is-active{% endif %}" style="--slide-offset-x: {{ block.settings.image_offset | default: 0 }}px; --slide-offset-mobile: {{ block.settings.image_offset_mobile | default: 0 }}px;" {{ block.shopify_attributes }}>
                   {%- if block.settings.image != blank -%}
                     {{ block.settings.image | image_url: width: 1200 | image_tag:
                       class: 'circular-usp-ring__image',
@@ -558,6 +558,13 @@
     align-items: center;
     justify-content: center;
     transition: opacity 0.6s ease-in-out;
+    transform: translateX(var(--slide-offset-x, 0px));
+  }
+
+  @media screen and (max-width: 899px) {
+    .circular-usp-ring__slide {
+      transform: translateX(var(--slide-offset-mobile, var(--slide-offset-x, 0px)));
+    }
   }
 
   .circular-usp-ring__slide.is-active {
@@ -706,6 +713,32 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Image position offset"
+        },
+        {
+          "type": "range",
+          "id": "image_offset",
+          "label": "Desktop: shift left / right",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "default": 0,
+          "unit": "px",
+          "info": "Negative = left, Positive = right"
+        },
+        {
+          "type": "range",
+          "id": "image_offset_mobile",
+          "label": "Mobile / Tablet: shift left / right",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "default": 0,
+          "unit": "px",
+          "info": "Negative = left, Positive = right"
         }
       ]
     },
