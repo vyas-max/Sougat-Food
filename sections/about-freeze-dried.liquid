@@ -12,12 +12,6 @@
     text-align: center;
   }
 
-  @media (max-width: 768px) {
-    .afd-{{ section.id }} {
-      padding: 0; /* Remove padding here to allow slider to go edge-to-edge */
-    }
-  }
-
   .afd-header-{{ section.id }} {
     margin-bottom: 50px;
   }
@@ -232,7 +226,6 @@
 
     .afd-header-{{ section.id }} {
       margin-bottom: 30px;
-      padding: 0 20px;
     }
 
     .afd-title-{{ section.id }} {
@@ -246,41 +239,32 @@
     .afd-why-title-{{ section.id }} {
       font-size: 24px;
       margin-bottom: 30px;
-      padding: 0 20px;
     }
 
     .afd-cards-{{ section.id }} {
       display: flex;
       flex-wrap: nowrap;
-      justify-content: flex-start;
       overflow-x: auto;
-      overflow-y: hidden;
-      overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       gap: 16px;
-      padding: 20px 16px 40px;
-      margin: 0;
-      scroll-padding-left: 16px;
-      align-items: stretch;
+      padding: 10px 20px 40px; /* Side padding allows first/last card to align */
+      margin: 0 -20px; /* Break out of parent padding */
+      scroll-padding: 0 20px;
     }
 
     .afd-cards-{{ section.id }}::-webkit-scrollbar {
       display: none;
     }
 
-    .afd-cards-{{ section.id }} .afd-card-{{ section.id }}:last-child {
-      margin-right: 16px;
-    }
-
     .afd-card-{{ section.id }} {
-      flex: 0 0 calc(85vw - 32px);
-      min-width: calc(85vw - 32px);
-      max-width: calc(85vw - 32px);
-      scroll-snap-align: start;
-      scroll-snap-stop: normal;
+      flex: 0 0 85%;
+      min-width: 85%;
+      max-width: 85%;
+      scroll-snap-align: start; /* Changed to start for more reliable full scrolling */
+      scroll-snap-stop: always;
       padding: 35px 25px;
       margin: 0;
       background: #ffffff;
@@ -291,7 +275,6 @@
       flex-direction: column;
       align-items: center;
       transition: all 0.4s ease;
-      box-sizing: border-box;
     }
 
     .afd-card-{{ section.id }}.is-active {
@@ -495,11 +478,12 @@
       var cards = getCards();
       if (index < 0) index = 0;
       if (index >= cards.length) index = cards.length - 1;
-
-      var card = cards[index];
-      var sliderPaddingLeft = parseInt(getComputedStyle(slider).paddingLeft) || 0;
-      var scrollLeft = card.offsetLeft - sliderPaddingLeft;
-      slider.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      
+      cards[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start'
+      });
     }
 
     // Use Intersection Observer for better performance and accuracy
