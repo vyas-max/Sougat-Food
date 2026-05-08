@@ -374,7 +374,7 @@
           "type": "center_image",
           "settings": {
             "image": "shopify://shop_images/IMG_5579_e083cb98-877e-4aa4-827f-88f381a4d04e.heic",
-            "image_offset": 0,
+            "image_offset": 100,
             "image_offset_mobile": 0
           }
         },
@@ -382,7 +382,7 @@
           "type": "center_image",
           "settings": {
             "image": "shopify://shop_images/IMG_5584_1_1.heic",
-            "image_offset": 0,
+            "image_offset": 100,
             "image_offset_mobile": 0
           }
         },
