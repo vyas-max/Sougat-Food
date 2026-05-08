@@ -330,6 +330,31 @@
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
+    <style>
+      @media screen and (max-width: 749px) {
+        .product-information--revamp .product-information__media,
+        .product-information--revamp .product-information__media .media-gallery,
+        .product-information--revamp .product-information__media .media-gallery slideshow-component,
+        .product-information--revamp .product-information__media .media-gallery slideshow-container,
+        .product-information--revamp .product-information__media .media-gallery slideshow-slides,
+        .product-information--revamp .product-information__media .media-gallery .slideshow-slide,
+        .product-information--revamp .product-information__media .media-gallery slideshow-slide {
+          width: 100vw !important;
+          max-width: 100vw !important;
+          margin-left: calc(-50vw + 50%) !important;
+          padding: 0 !important;
+          margin-right: 0 !important;
+          border-radius: 0 !important;
+          --slideshow-gap: 0px !important;
+          --gap: 0px !important;
+        }
+        .product-information--revamp .product-information__media .media-gallery .product-media img {
+          width: 100% !important;
+          height: auto !important;
+          object-fit: cover !important;
+        }
+      }
+    </style>
     {% capture slides %}
       {% for media in sorted_media %}
         {% capture children %}
@@ -786,12 +811,69 @@
       --slideshow-gap: var(--gap-2xs);
 
       :not(.dialog-zoomed-gallery) > .product-media-container:not(:only-child) {
-        width: 90%;
+        width: 100%;
 
         .product-media img {
           object-fit: cover;
         }
       }
+    }
+
+    /* Force full width for the gallery and its children on mobile */
+    .media-gallery,
+    media-gallery,
+    .slideshow,
+    slideshow-component,
+    slideshow-container,
+    slideshow-slides,
+    .slideshow-slide,
+    slideshow-slide {
+      width: 100% !important;
+      max-width: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      --slideshow-gap: 0px !important;
+      --gap: 0px !important;
+    }
+
+    .product-media img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: cover !important;
+    }
+    .media-gallery--hint {
+      --slideshow-gap: var(--gap-2xs);
+
+      :not(.dialog-zoomed-gallery) > .product-media-container:not(:only-child) {
+        width: 100%;
+
+        .product-media img {
+          object-fit: cover;
+        }
+      }
+    }
+
+    /* Force full width for the gallery and its children on mobile */
+    .media-gallery,
+    media-gallery,
+    .slideshow,
+    slideshow-component,
+    slideshow-container,
+    slideshow-slides,
+    .slideshow-slide,
+    slideshow-slide {
+      width: 100% !important;
+      max-width: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      --slideshow-gap: 0px !important;
+      --gap: 0px !important;
+    }
+
+    .product-media img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: cover !important;
     }
   }
 
