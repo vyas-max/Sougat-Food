@@ -11,7 +11,7 @@
 
 <section
   class="circular-usp-ring circular-usp-ring--{{ section.id }}{% if section.settings.show_connector_lines %} circular-usp-ring--with-lines{% endif %}"
-  style="background-color: {{ bg_color }}; padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; --circle-size: {{ circle_size }}px;"
+  style="background-color: {{ bg_color }}; padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; --circle-size: {{ circle_size }}px; --image-offset-desktop: {{ section.settings.image_offset_desktop | default: 0 }}px; --image-offset-mobile: {{ section.settings.image_offset_mobile | default: 0 }}px;"
 >
   <div class="circular-usp-ring__inner">
     <div class="circular-usp-ring__heading-group">
@@ -191,6 +191,7 @@
     min-height: auto;
     justify-content: center;
     position: relative;
+    transform: translateX(var(--image-offset-desktop, 0px));
   }
 
   /* Orbit container */
@@ -447,6 +448,7 @@
     .circular-usp-ring__col--center {
       grid-column: 1 / -1;
       grid-row: 1;
+      transform: translateX(var(--image-offset-mobile, 0px));
     }
 
     .circular-usp-ring__col--left,
@@ -496,6 +498,7 @@
 
     .circular-usp-ring__col--center {
       grid-row: 1;
+      transform: translateX(var(--image-offset-mobile, 0px));
     }
 
     .circular-usp-ring__col--left,
@@ -623,6 +626,32 @@
       "step": 10,
       "default": 400,
       "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Image horizontal offset"
+    },
+    {
+      "type": "range",
+      "id": "image_offset_desktop",
+      "label": "Desktop: shift left / right",
+      "min": -200,
+      "max": 200,
+      "step": 5,
+      "default": 0,
+      "unit": "px",
+      "info": "Negative = left, Positive = right"
+    },
+    {
+      "type": "range",
+      "id": "image_offset_mobile",
+      "label": "Mobile / Tablet: shift left / right",
+      "min": -200,
+      "max": 200,
+      "step": 5,
+      "default": 0,
+      "unit": "px",
+      "info": "Negative = left, Positive = right"
     },
     {
       "type": "range",
