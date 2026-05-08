@@ -11,7 +11,7 @@
 
 <section
   class="circular-usp-ring circular-usp-ring--{{ section.id }}{% if section.settings.show_connector_lines %} circular-usp-ring--with-lines{% endif %}"
-  style="background-color: {{ bg_color }}; padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; --circle-size: {{ circle_size }}px; --image-offset-desktop: {{ section.settings.image_offset_desktop | default: 0 }}px; --image-offset-mobile: {{ section.settings.image_offset_mobile | default: 0 }}px;"
+  style="background-color: {{ bg_color }}; padding-top: {{ padding_top }}px; padding-bottom: {{ padding_bottom }}px; --circle-size: {{ circle_size }}px;"
 >
   <div class="circular-usp-ring__inner">
     <div class="circular-usp-ring__heading-group">
@@ -58,7 +58,7 @@
           {%- if center_images.size > 0 -%}
             <div class="circular-usp-ring__carousel" data-slide-duration="{{ slide_duration }}">
               {%- for block in center_images -%}
-                <div class="circular-usp-ring__slide{% if forloop.first %} is-active{% endif %}" style="--slide-offset-x: {{ block.settings.image_offset | default: 0 }}px; --slide-offset-mobile: {{ block.settings.image_offset_mobile | default: 0 }}px;" {{ block.shopify_attributes }}>
+                <div class="circular-usp-ring__slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.image != blank -%}
                     {{ block.settings.image | image_url: width: 1200 | image_tag:
                       class: 'circular-usp-ring__image',
@@ -191,7 +191,6 @@
     min-height: auto;
     justify-content: center;
     position: relative;
-    transform: translateX(var(--image-offset-desktop, 0px));
   }
 
   /* Orbit container */
@@ -448,7 +447,6 @@
     .circular-usp-ring__col--center {
       grid-column: 1 / -1;
       grid-row: 1;
-      transform: translateX(var(--image-offset-mobile, 0px));
     }
 
     .circular-usp-ring__col--left,
@@ -498,7 +496,6 @@
 
     .circular-usp-ring__col--center {
       grid-row: 1;
-      transform: translateX(var(--image-offset-mobile, 0px));
     }
 
     .circular-usp-ring__col--left,
@@ -558,13 +555,6 @@
     align-items: center;
     justify-content: center;
     transition: opacity 0.6s ease-in-out;
-    transform: translateX(var(--slide-offset-x, 0px));
-  }
-
-  @media screen and (max-width: 899px) {
-    .circular-usp-ring__slide {
-      transform: translateX(var(--slide-offset-mobile, var(--slide-offset-x, 0px)));
-    }
   }
 
   .circular-usp-ring__slide.is-active {
@@ -635,32 +625,6 @@
       "unit": "px"
     },
     {
-      "type": "header",
-      "content": "Image horizontal offset"
-    },
-    {
-      "type": "range",
-      "id": "image_offset_desktop",
-      "label": "Desktop: shift left / right",
-      "min": -200,
-      "max": 200,
-      "step": 5,
-      "default": 0,
-      "unit": "px",
-      "info": "Negative = left, Positive = right"
-    },
-    {
-      "type": "range",
-      "id": "image_offset_mobile",
-      "label": "Mobile / Tablet: shift left / right",
-      "min": -200,
-      "max": 200,
-      "step": 5,
-      "default": 0,
-      "unit": "px",
-      "info": "Negative = left, Positive = right"
-    },
-    {
       "type": "range",
       "id": "slide_duration",
       "label": "Slide duration",
@@ -713,32 +677,6 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
-        },
-        {
-          "type": "header",
-          "content": "Image position offset"
-        },
-        {
-          "type": "range",
-          "id": "image_offset",
-          "label": "Desktop: shift left / right",
-          "min": -100,
-          "max": 100,
-          "step": 2,
-          "default": 0,
-          "unit": "px",
-          "info": "Negative = left, Positive = right"
-        },
-        {
-          "type": "range",
-          "id": "image_offset_mobile",
-          "label": "Mobile / Tablet: shift left / right",
-          "min": -100,
-          "max": 100,
-          "step": 2,
-          "default": 0,
-          "unit": "px",
-          "info": "Negative = left, Positive = right"
         }
       ]
     },
