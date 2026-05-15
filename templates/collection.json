@@ -86,6 +86,7 @@
         "text_RcRXqJ": {
           "type": "text",
           "name": "Description",
+          "disabled": true,
           "settings": {
             "text": "<p>Uses:</p><p>• Healthy Snacking</p><p>• Breakfast Cereals</p><p>• Smoothies & Shakes</p><p>• Baking & Desserts</p><p>• Travel Snacks</p>",
             "width": "fit-content",
