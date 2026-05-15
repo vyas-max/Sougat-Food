@@ -86,6 +86,7 @@
         "text_RcRXqJ": {
           "type": "text",
           "name": "Description",
+          "disabled": true,
           "settings": {
             "text": "<p></p><p>Uses:</p><p>• Instant Cooking</p><p>• Soups & Noodles</p><p>• Ready Meals</p><p>• Camping / Travel Food</p><p>• HoReCa Supply</p><p> </p>",
             "width": "fit-content",
@@ -115,7 +116,6 @@
         "text_twGGkJ",
         "text_RcRXqJ"
       ],
-      "disabled": true,
       "name": "Collection heading",
       "settings": {
         "content_direction": "column",
