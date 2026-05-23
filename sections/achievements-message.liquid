@@ -158,10 +158,10 @@
     </div>
 
     <div class="messages-wrap">
-      {%- if section.settings.chairman_message != blank -%}
+      {%- if section.settings.chairman_message_rich != blank -%}
         <div class="message-box">
           <h2 class="message-title">{{ section.settings.chairman_title }}</h2>
-          <div class="message-text">{{ section.settings.chairman_message }}</div>
+          <div class="message-text">{{ section.settings.chairman_message_rich }}</div>
           <div class="signature-wrap">
             <p class="signature-name">{{ section.settings.chairman_name }}</p>
             <p class="signature-title">{{ section.settings.chairman_designation }}</p>
@@ -207,7 +207,7 @@
     },
     {
       "type": "richtext",
-      "id": "chairman_message",
+      "id": "chairman_message_rich",
       "label": "Chairman Message",
       "default": "<p>Our journey since 1962 has been guided by integrity, quality, and a deep commitment to our customers. We believe in building lasting relationships through trust and excellence.</p>"
     },

@@ -364,7 +364,7 @@
       "settings": {
         "achievements_title": "Achievements",
         "chairman_title": "Chairman’s Message",
-        "chairman_message": "<p>At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.</p>",
+        "chairman_message_rich": "<p>At Shubhalaxmi Food Industry, our journey since 1962 has been guided by integrity, quality, and long-term vision. We believe sustainable success comes from trust, ethical practices, and continuous improvement. As we grow globally, our commitment to purity and excellence remains unwavering.</p>",
         "chairman_name": "Sougat Foods",
         "chairman_designation": "Chairman, Sougat Foods",
         "director_title": "Director's Message",
